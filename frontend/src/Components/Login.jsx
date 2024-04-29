@@ -46,7 +46,7 @@ const Login = () => {
 
   return(
     <div className='pt-12'>
-      <main className='sm:h-full sm:w-full bg-black p-24 min-h-screen pb-40'>
+      <main className='sm:h-full sm:w-full bg-black p-20 min-h-screen pb-40'>
         <div className='flex flex-row justify-center'>
           <div className='h-24 w-24 p-8 border rounded bg-lime flex justify-center my-12 text-xl text-white font-bold'>{text}</div>
           <img src={Image2} alt="" className='h-24 w-24 border rounded'/>

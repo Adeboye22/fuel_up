@@ -4,7 +4,7 @@ import Validate from './ValidateSignup';
 import Navbar from './navbar';
 import Footer from './Footbar';
 import UserValidate from './ValidateSignup';
-import Axios from'axios';
+// import Axios from'axios';
 import Image from '../assets/EcoFuel.gif';
 import Image2 from '../assets/EcoFuel1.gif';
 
@@ -53,16 +53,16 @@ useEffect(() => {
   }
 
   // This function validates users data then redirect to UserLogin page if successful
-  const handleSubmit= (e) => {
-    e.preventDefault();
-    setErrors(UserValidate(value));
-    axios.post('', value)
-    .then(response => {
-      console.log(response);
-      navigate('/login')
-    })
-    .catch(err => console.log(err))
-  }  
+  // const handleSubmit= (e) => {
+  //   e.preventDefault();
+  //   setErrors(UserValidate(value));
+  //   axios.post('', value)
+  //   .then(response => {
+  //     console.log(response);
+  //     navigate('/login')
+  //   })
+  //   .catch(err => console.log(err))
+  // }  
 
   return (
     <div className='pt-12'>
@@ -71,7 +71,7 @@ useEffect(() => {
           <div className='h-24 w-24 p-8 border rounded bg-lime flex justify-center my-12 text-xl text-white font-bold'>{text}</div>
           <img src={Image2} alt="" className='h-24 w-24 border rounded'/>
         </div>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+        <form className='flex flex-col gap-4'>
           <h3 className='text-white'>First Name:</h3>
           <input type="text" name='firstname' onChange={handleInput} placeholder='first name' 
           className='sm:p-2 border border-gray p-4'/>
