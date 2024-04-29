@@ -4,7 +4,7 @@ import Validate from './ValidateSignup';
 import Navbar from './navbar';
 import Footer from './Footbar';
 import UserValidate from './ValidateSignup';
-// import Axios from'axios';
+import Axios from'axios';
 import Image from '../assets/EcoFuel.gif';
 import Image2 from '../assets/EcoFuel1.gif';
 
