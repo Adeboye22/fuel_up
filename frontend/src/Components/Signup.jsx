@@ -52,17 +52,17 @@ useEffect(() => {
     })
   }
 
-  // // This function validates users data then redirect to UserLogin page if successful
-  // const handleSubmit= (e) => {
-  //   e.preventDefault();
-  //   setErrors(UserValidate(value));
-  //   axios.post('', value)
-  //   .then(response => {
-  //     console.log(response);
-  //     navigate('/login')
-  //   })
-  //   .catch(err => console.log(err))
-  // }  
+  // This function validates users data then redirect to UserLogin page if successful
+  const handleSubmit= (e) => {
+    e.preventDefault();
+    setErrors(UserValidate(value));
+    axios.post('', value)
+    .then(response => {
+      console.log(response);
+      navigate('/login')
+    })
+    .catch(err => console.log(err))
+  }  
 
   return (
     <div className='pt-12'>
