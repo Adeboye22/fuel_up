@@ -35,8 +35,8 @@ const NavBar = () => {
               <a href="#services" className='sm:hidden'><li>Services</li></a>
               <a href="#locations" className='sm:hidden'><li>Locations</li></a>
               <button onClick={login} className='sm:hidden bg-black px-4 py-2 -mt-2 text-white border rounded'>Login</button>
-              <li className='sm:block hidden'><NavLink to="login" onClick={closeNavBar} style={activeNav}>Login</NavLink></li>
-              <li><NavLink to="signup" onClick={closeNavBar} style={activeNav}>Sign up</NavLink></li>
+              <li className='sm:block hidden'><NavLink to="/login" onClick={closeNavBar} style={activeNav}>Login</NavLink></li>
+              <li><NavLink to="/signup" onClick={closeNavBar} style={activeNav}>Sign up</NavLink></li>
             </ul>
         </div>
     </div>
