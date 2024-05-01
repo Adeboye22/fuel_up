@@ -55,7 +55,7 @@ useEffect(() => {
   const handleSubmit= (e) => {
     e.preventDefault();
     setErrors(UserValidate(value));
-    axios.post('https://fuelup-server.onrender.com/', value)
+    Axios.post('https://fuelup-server.onrender.com/', value)
     .then(response => {
       console.log(response);
       navigate('/login')
