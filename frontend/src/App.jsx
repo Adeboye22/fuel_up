@@ -1,10 +1,10 @@
-import React from 'react'
+
+import { Routes, Route } from "react-router-dom";
 import Webpage from "./Components/Webpage"
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Header from './Components/header'
 import Footbar from './Components/Footbar'
-import { Routes, Route } from "react-router-dom";
 
 function App() {
 

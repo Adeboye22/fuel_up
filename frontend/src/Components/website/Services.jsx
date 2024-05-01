@@ -22,7 +22,7 @@ const Services = () => {
         </section>
 
         {/* --24/7 Availability-- */}
-        <section id='availability' className='sm:flex-col flex flex-row w-full gap-4'>
+        <section id='availability' className='sm:flex-col sm:gap-0 flex flex-row w-full gap-4'>
           <div className='sm:w-full w-3/4 flex flex-row place-content-center'>
             <img src={Availability} alt="" className='border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </div>
@@ -33,7 +33,7 @@ const Services = () => {
         </section>
 
         {/* --convenience and accessibility-- */}
-        <section id='accessibility' className='sm:flex-col flex flex-row w-full gap-4'>
+        <section id='accessibility' className='sm:flex-col sm:gap-0 flex flex-row w-full gap-4'>
           <div className='sm:p-4 self-center bg-altBlack text-white p-16 my-12'>
               <h2 className='text-2xl pb-1'>Convenience and Accessibilty:</h2>
               <span className='text-xl'>With strategically located fuel stations and mobile dispensing options, we provide convenient access to fuel whenever and wherever you need it.</span>
@@ -44,7 +44,7 @@ const Services = () => {
         </section>
 
         {/* --bulk fuel delivery */}
-        <section id='bulk_delivery' className='sm:flex-col flex flex-row w-full gap-4'>
+        <section id='bulk_delivery' className='sm:flex-col sm:gap-0 flex flex-row w-full gap-4'>
           <div className='sm:w-full w-3/4 flex flex-row place-content-center'>
             <img src="https://www.fuel.crs/wcm/connect/www.fuel.crs1162/33b88f2f-8c7d-414b-a765-3a446b23613e/Bulk+Delivery+Hero.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_2IKA1G82MOM2F0QOF0CTUF1270-33b88f2f-8c7d-414b-a765-3a446b23613e-oVtzKDz5" alt="" className='border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </div>
@@ -55,7 +55,7 @@ const Services = () => {
         </section>
 
         {/* --quality assurance-- */}
-        <section id='quality_assurance' className='sm:flex-col flex flex-row w-full gap-4'>
+        <section id='quality_assurance' className='sm:flex-col sm:gap-0 flex flex-row w-full gap-4'>
           <div className='sm:p-4 self-center bg-altBlack text-white p-16 my-8'>
             <h2 className='text-2xl pb-1'>Quality Assurance:</h2>
             <span className='text-xl'>Our fuels are sourced from reputable suppliers and undergo rigorous quality control measures to ensure they meet the highest industry standards. You can trust that the fuel you receive from us is clean, safe, and reliable.</span>
@@ -66,7 +66,7 @@ const Services = () => {
         </section>
 
         {/* --customercare-- */}
-        <section id='customer_care' className='sm:flex-col flex flex-row w-full gap-4'>
+        <section id='customer_care' className='sm:flex-col sm:gap-0 flex flex-row w-full gap-4'>
           <div className='sm:w-full w-3/4 flex flex-row place-content-center'>
             <img src="https://media.istockphoto.com/id/1437821111/photo/customer-service-happy-and-communication-of-woman-at-call-center-pc-talking-with-joyful-smile.webp?b=1&s=170667a&w=0&k=20&c=VaNC1beA8yRqc22HZdOnyyl8KrHNNXNmOoZ5T_xr6HY=" alt="" className='border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </div>

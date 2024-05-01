@@ -37,7 +37,7 @@ const Webpage = () => {
       <div className='bg-white flex flex-col'>
 
         {/* --location-- */}
-        <section id='locations' className='sm:px-8 p-16'>
+        <section id='locations' className='bg-black sm:px-8 p-16'>
           <Location/>
         </section>
 
