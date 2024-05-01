@@ -70,7 +70,7 @@ useEffect(() => {
           <div className='h-24 w-24 p-8 border rounded bg-lime flex justify-center my-12 text-xl text-white font-bold'>{text}</div>
           <img src={Image2} alt="" className='h-24 w-24 border rounded'/>
         </div>
-        <form className='flex flex-col gap-4'>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
           <h3 className='text-white'>First Name:</h3>
           <input type="text" name='firstname' onChange={handleInput} placeholder='first name' 
           className='sm:p-2 border border-gray p-4'/>
