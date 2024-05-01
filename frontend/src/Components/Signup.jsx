@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Validate from './ValidateSignup';
 import Navbar from './navbar';
-import Footer from './Footbar';
 import UserValidate from './ValidateSignup';
-// import Axios from'axios';
+import Axios from'axios';
 import Image from '../assets/EcoFuel.gif';
 import Image2 from '../assets/EcoFuel1.gif';
 
@@ -53,16 +52,16 @@ useEffect(() => {
   }
 
   // This function validates users data then redirect to UserLogin page if successful
-  // const handleSubmit= (e) => {
-  //   e.preventDefault();
-  //   setErrors(UserValidate(value));
-  //   axios.post('', value)
-  //   .then(response => {
-  //     console.log(response);
-  //     navigate('/login')
-  //   })
-  //   .catch(err => console.log(err))
-  // }  
+  const handleSubmit= (e) => {
+    e.preventDefault();
+    setErrors(UserValidate(value));
+    axios.post('https://fuelup-server.onrender.com/', value)
+    .then(response => {
+      console.log(response);
+      navigate('/login')
+    })
+    .catch(err => console.log(err))
+  }  
 
   return (
     <div className='pt-12'>
