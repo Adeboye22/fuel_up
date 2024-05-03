@@ -5,6 +5,7 @@ import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Header from './Components/header'
 import Footbar from './Components/Footbar'
+import MailVerification from "./Components/mailVerification";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path='/' element={<Webpage/>} />
       <Route path='/login' element={<Login/>} />
       <Route path='/signup' element={<Signup/>} />
+      <Route path='/redirect_mail' element={<MailVerification/>} />
     </Routes>
     <Footbar/>
     </>

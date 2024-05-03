@@ -55,7 +55,7 @@ useEffect(() => {
   const handleSubmit= (e) => {
     e.preventDefault();
     setErrors(UserValidate(value));
-    Axios.post('https://fuelup-server.onrender.com/v1/auth/signUp', value)
+    Axios.post('https://fuelup-server.onrender.com/v1/auth/signup', value)
     .then(response => {
       console.log(response);
       navigate('/login')
