@@ -4,9 +4,8 @@ import About from './website/AboutUs'
 import Services from './website/Services'
 import Location from './website/Location'
 import Contact from './website/ContactUs'
-import Navbar from './navbar'
 import OurService from './website/OurService'
-import Footbar from './Footbar'
+import Packages from './website/Packages'
 
 const Webpage = () => {
   return (
@@ -28,6 +27,12 @@ const Webpage = () => {
         <section id='about' className='py-16'>
           <About/>
         </section>
+
+        {/* --packages-- */}
+        <section className='py-16'>
+          <Packages/>
+        </section>
+
         {/* --services-- */}
         <section id='services' className='p-2'>
           <Services/>

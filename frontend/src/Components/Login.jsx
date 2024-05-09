@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import Axios from 'axios';
+import axios from 'axios';
 import Validate from './ValidateLogin';
 import Image from '../assets/EcoFuel.gif';
 import Image2 from '../assets/EcoFuel1.gif';
 
 const Login = () => {
+  // const [quote, setQuote] = useState('')
   const [text, setText] = useState('Initial Text');
   const texts = ['Welcome', 'back', 'to', 'FuelUp']
   const [ index, setIndex ] = useState(0);
@@ -36,21 +37,32 @@ const Login = () => {
       return {...prev, [e.target.name]: [e.target.value]}
     })
   }
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setError(Validate(value))
-  //   axios.post('http://localhost:8080/login', value)
-  //   .then(response => console.log(response))
-  //   .catch(err => console.log(err))
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(Validate(value))
+    axios.post('http://localhost:8080/login', value)
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
+  }
+
+  // const getQuote = () => {
+  //   axios.get('https://api.quotable.io/random')
+  //   .then(res => {
+  //     console.log(res.data.content)
+  //     setQuote(res.data.content)
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
   // }
 
-  return(
-    <div className='pt-12'>
+  return (
+    <div className='pt-12 h-screen'>
       <main className='sm:h-full sm:w-full bg-black p-20 min-h-screen pb-40'>
         <div className='flex flex-row justify-center'>
           <div className='h-24 w-24 p-8 border rounded bg-lime flex justify-center my-12 text-xl text-white font-bold'>{text}</div>
           <img src={Image2} alt="" className='h-24 w-24 border rounded'/>
         </div>
+
         <form  className='flex flex-col gap-4 pt-8'>
           <label htmlFor="email" className='text-white text-xl'>user email: </label>
           <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='sm:p-2 border border-gray rounded p-4'/>
@@ -63,6 +75,12 @@ const Login = () => {
           </div>
         </form>
       </main>
+
+      {/* <main className='h-screen p-32 bg-black'>
+        <button onClick={getQuote} className='border p-4 rounded border-gray text-gray bg-white'>get data</button>
+        <div className='text-white'>{ quote && <p>{quote}</p>}</div>
+      </main> */}
+
     </div>
   )
 }

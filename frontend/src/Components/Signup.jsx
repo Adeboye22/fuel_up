@@ -3,32 +3,13 @@ import {useNavigate} from 'react-router-dom';
 import Validate from './ValidateSignup';
 import Navbar from './navbar';
 import UserValidate from './ValidateSignup';
-import Axios from'axios';
+import axios from'axios';
 import Image from '../assets/EcoFuel.gif';
 import Image2 from '../assets/EcoFuel1.gif';
 
 const Signup = () => {
 
-const [text, setText] = useState('Initial Text');
-const texts = ['Welcome', 'to', 'FuelUp.', 'Kindly', 'signup', 'to', 'continue']
-const [ index, setIndex ] = useState(0);
-
-useEffect(() => {
-    const interval = setInterval(() => {
-    // Increment the index and loop back to 0 if it extends the array length
-    setIndex(prevIndex => (prevIndex + 1) % texts.length);
-    }, 1000);  //Change text every 10 seconds
-
-    // clean up the interval when the components unmounts
-    return () => clearInterval(interval);
-}, []); //Run effect only once on a computer mount
-
-useEffect(() => {
-    // Update the text when the index charges
-    setText(texts[index]);
-}, [index, texts]);
-
- // this objects stores the user data
+  // this objects stores the user data
   const [value, setValue] = useState({
     firstname: '',
     lastname: '',
@@ -36,11 +17,14 @@ useEffect(() => {
     password: ''
   });
 
-  // use this hook to route to the UserLogin page
+  // use this hook to route to the redirect mail page
   const navigate = useNavigate();
 
   // This object collects the error data
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
+
+  // This hook handles the text display on successful user creation
+  const [popupVisible, setPopupVisible] = useState(false);
 
   // This function collects the user data
   const handleInput = e => {
@@ -51,20 +35,45 @@ useEffect(() => {
     })
   }
 
+  const [text, setText] = useState('Initial Text');
+  const texts = ['Welcome', 'to', 'FuelUp.', 'Kindly', 'signup', 'to', 'continue']
+  const [ index, setIndex ] = useState(0);
+
+  useEffect(() => {
+      const interval = setInterval(() => {
+      // Increment the index and loop back to 0 if it extends the array length
+      setIndex(prevIndex => (prevIndex + 1) % texts.length);
+      }, 1000);  //Change text every 10 seconds
+
+      // clean up the interval when the components unmounts
+      return () => clearInterval(interval);
+  }, []); //Run effect only once on a computer mount
+
+  useEffect(() => {
+      // Update the text when the index charges
+      setText(texts[index]);
+  }, [index, texts]);
+
   // This function validates users data then redirect to UserLogin page if successful
-  const handleSubmit= (e) => {
+  const handleSubmit= async(e) => {
     e.preventDefault();
     setErrors(UserValidate(value));
-    Axios.post('https://fuelup-server.onrender.com/v1/auth/signup', value)
-    .then(response => {
-      console.log(response);
-      navigate('/login')
-    })
-    .catch(err => console.log(err))
-  }  
+    try {
+      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', value)
+      setPopupVisible(true);
+    } catch (err) {
+      console.log('this is an error', err);
+    }
+  } 
 
   return (
     <div className='pt-12'>
+      {popupVisible && (
+        <div className='text-white bg-black p-12'>
+          <p>Account created successfully!</p>
+        </div>
+      )}
+
       <main className='bg-black p-16 min-h-screen'>
         <div className='flex flex-row justify-center'>
           <div className='h-24 w-24 p-8 border rounded bg-lime flex justify-center my-12 text-xl text-white font-bold'>{text}</div>
@@ -93,5 +102,4 @@ useEffect(() => {
     </div>
   )
 }
-
 export default Signup
