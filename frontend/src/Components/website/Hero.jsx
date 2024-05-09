@@ -24,7 +24,7 @@ const Hero = () => {
 
   return (
       <div className='sm:my-2 sm:h-full sm:px-8 flex self-center w-full h-3/4 px-44 my-12'>
-        <div className='sm:text-sm sm:h-1/2 sm:w-1/2 sm:bg-lime sm:p-4 sm:justify-center justify-center bg-lime text-gray text-lg font-black h-3/4 w-3/4 px-10 py-20 justify-center self-center'>
+        <div className='sm:text-sm sm:h-1/2 sm:w-1/2 sm:bg-lime sm:p-4 sm:justify-center  bg-lime text-gray text-lg font-black h-3/4 w-1/2 px-8 py-24 text-center m-4'>
           <h1 className=''>{text}</h1>
         </div>
         <img src={Img} alt="" className='sm:h-1/2 sm:w-1/2 sm:my-8 h-3/4 w-1/2 -my-4' />

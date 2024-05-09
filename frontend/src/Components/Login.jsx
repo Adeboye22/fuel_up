@@ -56,30 +56,25 @@ const Login = () => {
   // }
 
   return (
-    <div className='pt-12 h-screen'>
+    <div className='pt-12 h-full'>
       <main className='sm:h-full sm:w-full bg-black p-20 min-h-screen pb-40'>
         <div className='flex flex-row justify-center'>
-          <div className='h-24 w-24 p-8 border rounded bg-lime flex justify-center my-12 text-xl text-white font-bold'>{text}</div>
-          <img src={Image2} alt="" className='h-24 w-24 border rounded'/>
+          <div className='sm:h-12 sm:w-12 h-20 w-20 p-4 border rounded bg-lime flex justify-center my-12 text-base text-white font-bold'>{text}</div>
+          <img src={Image2} alt="" className='sm:h-12 sm:w-12 h-20 w-20 border rounded'/>
         </div>
 
         <form  className='flex flex-col gap-4 pt-8'>
           <label htmlFor="email" className='text-white text-xl'>user email: </label>
-          <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='sm:p-2 border border-gray rounded p-4'/>
+          <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='sm:p-1 border border-gray rounded p-2'/>
           {error.email && <span className = 'text-lime'>{error.email}</span>}
           <label htmlFor="" className='text-white text-xl'>password: </label>
-          <input type="password" name="password" onChange={handleInput} placeholder="*********" className='sm:p-2 border border-gray-100 rounded p-4'/>
+          <input type="password" name="password" onChange={handleInput} placeholder="*********" className='sm:p-1 border border-gray-100 rounded p-2'/>
           {error.password && <span className = 'text-red'>{error.password}</span>}
           <div className='grid'>
-            <button className='sm:w-24 sm:text-base text-white bg-lime p-2 text-xl border-white border-2 w-40 place-self-center rounded mt-4 font-bold justify-center' type='submit'>Login </button>
+            <button className='sm:w-20 sm:text-base text-white bg-lime p-2 text-xl border-white border-2 w-32 place-self-center rounded mt-4 font-bold justify-center' type='submit'>Login </button>
           </div>
         </form>
       </main>
-
-      {/* <main className='h-screen p-32 bg-black'>
-        <button onClick={getQuote} className='border p-4 rounded border-gray text-gray bg-white'>get data</button>
-        <div className='text-white'>{ quote && <p>{quote}</p>}</div>
-      </main> */}
 
     </div>
   )
