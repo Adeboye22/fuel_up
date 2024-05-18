@@ -5,7 +5,6 @@ import Navbar from './navbar';
 import UserValidate from './ValidateSignup';
 import axios from'axios';
 import Image from '../assets/EcoFuel.gif';
-import Image2 from '../assets/EcoFuel1.gif';
 
 const Signup = () => {
 
@@ -50,7 +49,7 @@ const Signup = () => {
   }, []); //Run effect only once on a computer mount
 
   useEffect(() => {
-      // Update the text when the index charges
+      // Update the text when the index changes
       setText(texts[index]);
   }, [index, texts]);
 
@@ -70,8 +69,7 @@ const Signup = () => {
     <div className='pt-12'>
       <main className='bg-black p-12 min-h-screen'>
         <div className='flex flex-row justify-center'>
-          <div className='sm:h-16 sm:w-16 sm:text-sm sm:p-4 h-20 w-20 p-4 border rounded bg-lime flex justify-center my-12 text-base text-white font-bold'>{text}</div>
-          <img src={Image2} alt="" className='sm:h-16 sm:w-16 h-20 w-20 border rounded'/>
+          <img src={Image} alt="" className='sm:my-12 sm:h-16 sm:w-16 h-20 w-20 border rounded'/>
         </div>
 
         {popupVisible && (
@@ -80,20 +78,20 @@ const Signup = () => {
         </div>
       )}
 
-        <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+        <form onSubmit={handleSubmit} className='sm:my-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>
           <input type="text" name='firstname' onChange={handleInput} placeholder='first name' 
-          className='sm:p-1 border rounded border-gray p-2'/>
+          className='sm:p-2 border rounded border-gray p-2'/>
           {errors.firstname && <span className="text-red">{errors.firstname}</span>}
           <h3 className='text-white'>Last Name:</h3>
-          <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='sm:p-1 border rounded border-gray p-2'/>
+          <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='sm:p-2 border rounded border-gray p-2'/>
           {errors.lastname && <span className="text-red">{errors.lastname}</span>}
           <h3 className='text-white'>Email:</h3>
-          <input type="email" name='email' onChange={handleInput} placeholder='email' className='sm:p-1 border rounded border-gray p-2'/>
+          <input type="email" name='email' onChange={handleInput} placeholder='email' className='sm:p-2 border rounded border-gray p-2'/>
           
           {errors.email && <span className = 'text-red'>{errors.email}</span>}
           <h3 className='text-white'>Password:</h3>
-          <input type="password" name='password' onChange={handleInput} placeholder='**********' className='sm:p-1 border rounded border-gray p-2'/>
+          <input type="password" name='password' onChange={handleInput} placeholder='**********' className='sm:p-2 border rounded border-gray p-2'/>
           {errors.password && <span className = 'text-red'>{errors.password}</span>}
           <div className='grid'>
             <button className='text-white bg-lime p-2 text-xl border-white border-2 w-32 place-self-center rounded mt-4 flex gap-2 font-bold justify-center' type='submit'>Signup </button>

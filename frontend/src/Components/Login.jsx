@@ -2,29 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Validate from './ValidateLogin';
 import Image from '../assets/EcoFuel.gif';
-import Image2 from '../assets/EcoFuel1.gif';
 
 const Login = () => {
-  // const [quote, setQuote] = useState('')
-  const [text, setText] = useState('Initial Text');
-  const texts = ['Welcome', 'back', 'to', 'FuelUp']
-  const [ index, setIndex ] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Increment the index and loop back to 0 if it extends the array length
-      setIndex(prevIndex => (prevIndex + 1) % texts.length);
-    }, 1000);  //Change text every 10 seconds
-
-    // clean up the interval when the components unmounts
-    return () => clearInterval(interval);
-  }, []); //Run effect only once on a computer mount
-
-  useEffect(() => {
-    // Update the text when the index charges
-    setText(texts[index]);
-  }, [index, texts]);
-
   const [value, setValue] = useState({
     email: '',
     password: ''
@@ -58,17 +37,16 @@ const Login = () => {
   return (
     <div className='pt-12 h-full'>
       <main className='sm:h-full sm:w-full bg-black p-20 min-h-screen pb-40'>
-        <div className='flex flex-row justify-center'>
-          <div className='sm:h-12 sm:w-12 h-20 w-20 p-4 border rounded bg-lime flex justify-center my-12 text-base text-white font-bold'>{text}</div>
-          <img src={Image2} alt="" className='sm:h-12 sm:w-12 h-20 w-20 border rounded'/>
+        <div className='sm:mt-24 flex flex-row justify-center'>
+          <img src={Image} alt="" className='sm:h-12 sm:w-12 h-20 w-20 border rounded'/>
         </div>
 
-        <form  className='flex flex-col gap-4 pt-8'>
+        <form  className='sm:mt-8 flex flex-col gap-4 pt-8'>
           <label htmlFor="email" className='text-white text-xl'>user email: </label>
-          <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='sm:p-1 border border-gray rounded p-2'/>
+          <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='sm:p-2 border border-gray rounded p-2'/>
           {error.email && <span className = 'text-lime'>{error.email}</span>}
           <label htmlFor="" className='text-white text-xl'>password: </label>
-          <input type="password" name="password" onChange={handleInput} placeholder="*********" className='sm:p-1 border border-gray-100 rounded p-2'/>
+          <input type="password" name="password" onChange={handleInput} placeholder="*********" className='sm:p-2 border border-gray-100 rounded p-2'/>
           {error.password && <span className = 'text-red'>{error.password}</span>}
           <div className='grid'>
             <button className='sm:w-20 sm:text-base text-white bg-lime p-2 text-xl border-white border-2 w-32 place-self-center rounded mt-4 font-bold justify-center' type='submit'>Login </button>
