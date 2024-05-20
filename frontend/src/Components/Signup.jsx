@@ -23,7 +23,7 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
 
   // This hook handles the text display on successful user creation
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupVisible, setPopupVisible] = useState('');
 
   // This function collects the user data
   const handleInput = e => {
@@ -34,36 +34,43 @@ const Signup = () => {
     })
   }
 
-  const [text, setText] = useState('Initial Text');
-  const texts = ['Welcome', 'to', 'FuelUp.', 'Kindly', 'signup', 'to', 'continue']
-  const [ index, setIndex ] = useState(0);
-
-  useEffect(() => {
-      const interval = setInterval(() => {
-      // Increment the index and loop back to 0 if it extends the array length
-      setIndex(prevIndex => (prevIndex + 1) % texts.length);
-      }, 1000);  //Change text every 10 seconds
-
-      // clean up the interval when the components unmounts
-      return () => clearInterval(interval);
-  }, []); //Run effect only once on a computer mount
-
-  useEffect(() => {
-      // Update the text when the index changes
-      setText(texts[index]);
-  }, [index, texts]);
-
   // This function validates users data then redirect to UserLogin page if successful
   const handleSubmit= async(e) => {
     e.preventDefault();
     setErrors(UserValidate(value));
+    setPopupVisible('Submitting...')
     try {
       const response = await axios.post('https://jsonplaceholder.typicode.com/posts', value)
-      setPopupVisible(true);
+      setPopupVisible('Account created successfully!');
+      setValue({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: ''
+      });
+
+      window.scrollTo(0, 0); //scroll to the top
     } catch (err) {
       console.log('this is an error', err);
     }
   } 
+
+  // using a setTimeout 
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setErrors(UserValidate(value));
+  //   setPopupVisible('loading...')
+
+  //   setTimeout(async () => {
+  //     try {
+  //       const response = await axios.post('https://fuelup-server.onrender.com/auth/signup', value)
+  //       setPopupVisible('Account created successfully!');
+  //     } catch (error) {
+  //       console.log('Error posting data:', error);
+  //     }
+  //   }, 60000); 
+  // }
 
   return (
     <div className='pt-12'>
@@ -72,11 +79,7 @@ const Signup = () => {
           <img src={Image} alt="" className='sm:my-12 sm:h-16 sm:w-16 h-20 w-20 border rounded'/>
         </div>
 
-        {popupVisible && (
-        <div className='text-white text-center'>
-          <p>Account created successfully!</p>
-        </div>
-      )}
+        {popupVisible && <p className='text-white text-center'>{popupVisible}</p>}
 
         <form onSubmit={handleSubmit} className='sm:my-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>

@@ -6,6 +6,7 @@ const Packages = () => {
 
   const toLogin = () => {
     navigate('/login')
+    window.scrollTo(0, 0);
   }
   return (
     <div className='sm:gap-8 flex flex-col gap-4 text-white'>
