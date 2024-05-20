@@ -17,7 +17,7 @@ const NavBar = () => {
     navigate('/')
     window.scrollTo(0, 0);
   }
-  
+
   const closeNavBar = () => {
     setIsOpen(false)
   }
@@ -31,7 +31,7 @@ const NavBar = () => {
   return (
     <div className='flex flex-row justify-between bg-white mt-4'>
         <div>
-            <img src={Logo} className='sm:hidden md:hidden h-12 w-16 -my-8' />
+            <img src={Logo} onClick={homeBtn} className='sm:hidden md:hidden h-12 w-16 -my-8' />
         </div>
         <div className={`sm:fixed sm:top-4 sm:left-0 sm:bg-white sm:h-full sm:w-3/4 sm:text-base  sm:text-center sm:p-16 text-lg -my-4`}>
             <ul className='sm:flex sm:flex-col sm:gap-4 sm:my-36 text-gray flex flex-row gap-8 font-medium'>
