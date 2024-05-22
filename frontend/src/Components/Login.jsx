@@ -44,16 +44,17 @@ const Login = () => {
 
         <form  className='sm:mt-8 flex flex-col gap-4 pt-8'>
           <label htmlFor="email" className='text-white text-xl'>user email: </label>
-          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
+
+          <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-4'>
             <FaEnvelope className='text-lime'/>
-            <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='outline-none'/>
+            <input type="email" name='email' onChange={handleInput} placeholder="youremail@gmail.com" className='outline-none w-4/5'/>
           </div>
           {error.email && <span className = 'text-lime'>{error.email}</span>}
 
           <label htmlFor="" className='text-white text-xl'>password: </label>
-          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
+          <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-4'>
             <FaKey className='text-lime'/>            
-            <input type="password" name="password" onChange={handleInput} placeholder="*********" className='outline-none'/>
+            <input type="password" name="password" onChange={handleInput} placeholder="*********" className='outline-none w-4/5'/>
           </div>
           {error.password && <span className = 'text-red'>{error.password}</span>}
 
