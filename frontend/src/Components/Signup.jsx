@@ -86,29 +86,29 @@ const Signup = () => {
           <h3 className='text-white'>First Name:</h3>
 
           <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-          <FaUser className='text-lime'/>
-          <input type="text" name='firstname' onChange={handleInput} placeholder='first name' className='w-80 outline-none p-2' />
+            <FaUser className='text-lime'/>
+            <input type="text" name='firstname' onChange={handleInput} placeholder='first name' className='w-80 outline-none p-2' />
           </div>
           {errors.firstname && <span className="text-red">{errors.firstname}</span>}
 
           <h3 className='text-white'>Last Name:</h3>
           <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-          <FaUser className='text-lime'/>
-          <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='w-80 outline-none p-2'/>
+            <FaUser className='text-lime'/>
+            <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='w-80 outline-none p-2'/>
           </div>
           {errors.lastname && <span className="text-red">{errors.lastname}</span>}
 
           <h3 className='text-white'>Email:</h3>
           <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-          <FaEnvelope className='text-lime'/>
-          <input type="email" name='email' onChange={handleInput} placeholder='email' className='w-80 outline-none p-2'/>
+            <FaEnvelope className='text-lime'/>
+            <input type="email" name='email' onChange={handleInput} placeholder='email' className='w-80 outline-none p-2'/>
           </div>
           {errors.email && <span className = 'text-red'>{errors.email}</span>}
 
           <h3 className='text-white'>Password:</h3>
           <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
             <FaKey className='text-lime'/>
-          <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-80 outline-none p-2'/>
+            <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-80 outline-none p-2'/>
           </div>
           {errors.password && <span className = 'text-red'>{errors.password}</span>}
 
