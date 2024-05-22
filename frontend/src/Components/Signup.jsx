@@ -74,7 +74,7 @@ const Signup = () => {
   // }
 
   return (
-    <div className='pt-8'>
+    <div>
       <main className='bg-black p-12 min-h-screen'>
         <div className='flex flex-row justify-center'>
           <img src={Image} alt="" className='sm:my-12 sm:h-16 sm:w-16 h-20 w-20 border rounded'/>
