@@ -5,6 +5,7 @@ import Navbar from './navbar';
 import UserValidate from './ValidateSignup';
 import axios from'axios';
 import Image from '../assets/EcoFuel.gif';
+import { FaUser, FaEnvelope, FaKey } from 'react-icons/fa';
 
 const Signup = () => {
 
@@ -83,18 +84,32 @@ const Signup = () => {
 
         <form onSubmit={handleSubmit} className='sm:my-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>
-          <input type="text" name='firstname' onChange={handleInput} placeholder='first name' 
-          className='sm:p-2 border rounded border-gray p-2'/>
+
+          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
+          <FaUser className='text-lime'/>
+          <input type="text" name='firstname' onChange={handleInput} placeholder='first name' className='w-80 outline-none p-2' />
+          </div>
           {errors.firstname && <span className="text-red">{errors.firstname}</span>}
+
           <h3 className='text-white'>Last Name:</h3>
-          <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='sm:p-2 border rounded border-gray p-2'/>
+          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
+          <FaUser className='text-lime'/>
+          <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='w-80 outline-none p-2'/>
+          </div>
           {errors.lastname && <span className="text-red">{errors.lastname}</span>}
+
           <h3 className='text-white'>Email:</h3>
-          <input type="email" name='email' onChange={handleInput} placeholder='email' className='sm:p-2 border rounded border-gray p-2'/>
-          
+          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
+          <FaEnvelope className='text-lime'/>
+          <input type="email" name='email' onChange={handleInput} placeholder='email' className='w-80 outline-none p-2'/>
+          </div>
           {errors.email && <span className = 'text-red'>{errors.email}</span>}
+
           <h3 className='text-white'>Password:</h3>
-          <input type="password" name='password' onChange={handleInput} placeholder='**********' className='sm:p-2 border rounded border-gray p-2'/>
+          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
+            <FaKey className='text-lime'/>
+          <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-80 outline-none p-2'/>
+          </div>
           {errors.password && <span className = 'text-red'>{errors.password}</span>}
           <div className='grid'>
             <button className='text-white bg-lime p-2 text-xl border-white border-2 w-32 place-self-center rounded mt-4 flex gap-2 font-bold justify-center' type='submit'>Signup </button>
