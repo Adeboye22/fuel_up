@@ -74,7 +74,7 @@ const Signup = () => {
   // }
 
   return (
-    <div className='pt-12'>
+    <div className='pt-8'>
       <main className='bg-black p-12 min-h-screen'>
         <div className='flex flex-row justify-center'>
           <img src={Image} alt="" className='sm:my-12 sm:h-16 sm:w-16 h-20 w-20 border rounded'/>
@@ -111,6 +111,7 @@ const Signup = () => {
           <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-80 outline-none p-2'/>
           </div>
           {errors.password && <span className = 'text-red'>{errors.password}</span>}
+
           <div className='grid'>
             <button className='text-white bg-lime p-2 text-xl border-white border-2 w-32 place-self-center rounded mt-4 flex gap-2 font-bold justify-center' type='submit'>Signup </button>
           </div>
