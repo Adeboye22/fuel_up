@@ -52,7 +52,7 @@ const Login = () => {
 
           <label htmlFor="" className='text-white text-xl'>password: </label>
           <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-            <FaEnvelope className='text-lime'/>            
+            <FaKey className='text-lime'/>            
             <input type="password" name="password" onChange={handleInput} placeholder="*********" className='outline-none'/>
           </div>
           {error.password && <span className = 'text-red'>{error.password}</span>}
