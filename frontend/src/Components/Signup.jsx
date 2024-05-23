@@ -75,9 +75,9 @@ const Signup = () => {
 
   return (
     <div>
-      <main className='bg-black p-12 min-h-screen'>
+      <main className='sm:pt-12 bg-black pt-28 p-12 min-h-screen'>
         <div className='flex flex-row justify-center'>
-          <img src={Image} alt="" className='sm:my-12 sm:h-16 sm:w-16 h-20 w-20 border rounded'/>
+          <img src={Image} alt="" className='sm:my-12 sm:h-12 sm:w-12 h-20 w-20 border rounded'/>
         </div>
 
         {popupVisible && <p className='text-white text-center'>{popupVisible}</p>}
@@ -85,30 +85,30 @@ const Signup = () => {
         <form onSubmit={handleSubmit} className='sm:my-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>
 
-          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-            <FaUser className='text-lime'/>
-            <input type="text" name='firstname' onChange={handleInput} placeholder='first name' className='w-80 outline-none p-2' />
+          <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
+            <FaUser className='text-lime ml-4'/>
+            <input type="text" name='firstname' onChange={handleInput} placeholder='first name' className='w-4/5 outline-none p-2' />
           </div>
           {errors.firstname && <span className="text-red">{errors.firstname}</span>}
 
           <h3 className='text-white'>Last Name:</h3>
-          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-            <FaUser className='text-lime'/>
-            <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='w-80 outline-none p-2'/>
+          <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
+            <FaUser className='text-lime ml-4'/>
+            <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='w-4/5 outline-none p-2'/>
           </div>
           {errors.lastname && <span className="text-red">{errors.lastname}</span>}
 
           <h3 className='text-white'>Email:</h3>
-          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-            <FaEnvelope className='text-lime'/>
-            <input type="email" name='email' onChange={handleInput} placeholder='email' className='w-80 outline-none p-2'/>
+          <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
+            <FaEnvelope className='text-lime ml-4'/>
+            <input type="email" name='email' onChange={handleInput} placeholder='email' className='w-4/5 outline-none p-2'/>
           </div>
           {errors.email && <span className = 'text-red'>{errors.email}</span>}
 
           <h3 className='text-white'>Password:</h3>
-          <div className='sm:p-2 bg-white border rounded flex place-items-center gap-2'>
-            <FaKey className='text-lime'/>
-            <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-80 outline-none p-2'/>
+          <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
+            <FaKey className='text-lime ml-4'/>
+            <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-4/5 outline-none p-2'/>
           </div>
           {errors.password && <span className = 'text-red'>{errors.password}</span>}
 
