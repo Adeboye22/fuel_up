@@ -5,7 +5,7 @@ import Navbar from './navbar';
 import UserValidate from './ValidateSignup';
 import axios from'axios';
 import Image from '../assets/EcoFuel.gif';
-import { FaUser, FaEnvelope, FaKey } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 
 const Signup = () => {
 
@@ -107,7 +107,7 @@ const Signup = () => {
 
           <h3 className='text-white'>Password:</h3>
           <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
-            <FaKey className='text-lime ml-4'/>
+            <FaLock className='text-lime ml-4'/>
             <input type="password" name='password' onChange={handleInput} placeholder='**********' className='w-4/5 outline-none p-2'/>
           </div>
           {errors.password && <span className = 'text-red'>{errors.password}</span>}

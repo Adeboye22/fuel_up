@@ -5,7 +5,7 @@ import Img from '../../assets/EcoFuel.gif';
 const Hero = () => {
 
   return (
-      <div className='sm:my-4 sm:h-full sm:px-8 justify-center w-full h-3/4 px-44 my-40 sm:background-altBlack'>
+      <div className='sm:my-4 sm:h-full sm:px-8 justify-center w-full h-3/4 px-44 my-40 text-gray'>
         <h1 className='sm:text-2xl font-bold text-4xl text-center'>Efficient fuel dispatching made simple:</h1>
         <p className='sm:text-lg my-4 text-2xl text-center'>Streamlining your operations with ease. You order, <span className='text-lime'>we deliver.</span></p>
         <img src={Img} alt=""className='sm:hidden h-32 w-32 my-24 mx-64' />

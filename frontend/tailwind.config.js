@@ -5,6 +5,17 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    extend: {
+      animation: {
+        "loop-scroll": 'loop-scroll 50s linear infinite',
+      },
+      keyframes: {
+        "loop-scroll": {
+          from: { transform: 'translateX(0%)'},
+          to : { transform: 'translateX(-100%)' },
+        },
+      },
+    },
     screens:{
       'sm': { max: '640px' },
       // => @media (max-width: 640px) { ... }

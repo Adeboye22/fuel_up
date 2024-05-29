@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Validate from './ValidateLogin';
 import Image from '../assets/EcoFuel.gif';
-import { FaEnvelope, FaKey } from 'react-icons/fa';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
 
 const Login = () => {
   const [value, setValue] = useState({
@@ -53,7 +53,7 @@ const Login = () => {
 
           <label htmlFor="" className='text-white text-xl'>password: </label>
           <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
-            <FaKey className='text-lime'/>            
+            <FaLock className='text-lime'/>            
             <input type="password" name="password" onChange={handleInput} placeholder="*********" className='outline-none w-4/5 p-2'/>
           </div>
           {error.password && <span className = 'text-red'>{error.password}</span>}
