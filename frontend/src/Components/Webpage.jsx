@@ -6,10 +6,16 @@ import Location from './website/Location'
 import Contact from './website/ContactUs'
 import OurService from './website/OurService'
 import Packages from './website/Packages'
+import Marquee from 'react-fast-marquee'
 
 const Webpage = () => {
   return (
-    <div className='h-full bg-black pt-12'>
+    <div className='sm:pt-0 h-full bg-black pt-12'>
+      <div className=''>
+        <Marquee className='bg-lime'>
+            <p className='text-lg text-gray'>You don't have to compromise your comfort just to get fuel. You order, we deliver!</p>
+        </Marquee>
+      </div>
       {/* hero section */}
       <section className='sm:px-4 sm:h-80 px-16 py-14 bg-my-image bg-cover flex flex-col gap-20 space-between h-screen'>
           <Hero/>
