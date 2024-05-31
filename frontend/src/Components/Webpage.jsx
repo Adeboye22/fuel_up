@@ -13,7 +13,7 @@ const Webpage = () => {
     <div className='sm:pt-0 h-full bg-black pt-12'>
       <div className=''>
         <Marquee className='bg-lime'>
-            <p className='text-lg text-gray'>You don't have to compromise your comfort just to get fuel. You order, we deliver!</p>
+            <p className='text-lg text-gray'> &nbsp; You don't have to compromise your comfort just to get fuel. You order, we deliver!</p>
         </Marquee>
       </div>
       {/* hero section */}
