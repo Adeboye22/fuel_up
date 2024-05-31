@@ -8,7 +8,7 @@ const Services = () => {
     <div className='text-altBlack'>
 
       <h1 className='sm:text-xl text-3xl text-white pb-8'><strong>Services</strong></h1>
-      <div className='sm:p-4 flex flex-col gap-40 bg-white border rounded p-4'>
+      <div className='sm:p-4 flex flex-col gap-40 bg-lime border rounded p-4'>
 
         {/* --fuel dispensing-- */}
         <section id='fuel_dispensing' className='sm:flex-col sm:gap-0 flex flex-row w-full gap-4'>

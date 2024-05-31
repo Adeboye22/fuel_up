@@ -75,7 +75,7 @@ const Signup = () => {
 
   return (
     <div>
-      <main className='sm:pt-12 bg-black pt-28 p-12 min-h-screen'>
+      <main className='sm:pt-12 bg-black pt-12 p-12 min-h-screen'>
         <div className='flex flex-row justify-center gap-4'>
           <h1 className='text-white text-5xl'>Sign Up</h1>
           <img src={Image} alt="" className='sm:h-8 sm:w-8 self-center h-20 w-20 border rounded'/>
@@ -83,7 +83,7 @@ const Signup = () => {
 
         {popupVisible && <p className='text-white text-center'>{popupVisible}</p>}
 
-        <form onSubmit={handleSubmit} className='sm:my-8 flex flex-col gap-2'>
+        <form onSubmit={handleSubmit} className='sm:my-8 sm:px-0 px-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>
 
           <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
