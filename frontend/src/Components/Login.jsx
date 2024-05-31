@@ -38,8 +38,9 @@ const Login = () => {
   return (
     <div className='pt-8 h-full'>
       <main className='sm:h-full sm:w-full bg-black p-20 min-h-screen'>
-        <div className='sm:mt-0 flex flex-row justify-center'>
-          <img src={Image} alt="" className='sm:h-12 sm:w-12 h-20 w-20 border rounded'/>
+        <div className='sm:mt-0 flex flex-row gap-4 justify-center'>
+          <h1 className='text-white text-4xl'>Sign In</h1>
+          <img src={Image} alt="" className='sm:h-8 sm:w-8 h-20 w-20 border rounded self-center'/>
         </div>
 
         <form  className='sm:mt-8 flex flex-col gap-4 pt-8'>

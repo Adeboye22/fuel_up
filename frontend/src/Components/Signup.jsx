@@ -76,8 +76,9 @@ const Signup = () => {
   return (
     <div>
       <main className='sm:pt-12 bg-black pt-28 p-12 min-h-screen'>
-        <div className='flex flex-row justify-center'>
-          <img src={Image} alt="" className='sm:my-12 sm:h-12 sm:w-12 h-20 w-20 border rounded'/>
+        <div className='flex flex-row justify-center gap-4'>
+          <h1 className='text-white text-5xl'>Sign Up</h1>
+          <img src={Image} alt="" className='sm:h-8 sm:w-8 self-center h-20 w-20 border rounded'/>
         </div>
 
         {popupVisible && <p className='text-white text-center'>{popupVisible}</p>}
