@@ -3,12 +3,15 @@ import axios from 'axios';
 import Validate from './ValidateLogin';
 import Image from '../assets/EcoFuel.gif';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [value, setValue] = useState({
     email: '',
     password: ''
   })
+
+  const navigate = useNavigate()
 
   const [error, setError] = useState({});
 
@@ -23,6 +26,10 @@ const Login = () => {
     axios.post('http://localhost:8080/login', value)
     .then(response => console.log(response))
     .catch(err => console.log(err))
+  }
+
+  const SignUp = () => {
+    navigate('/signup')
   }
 
   // const getQuote = () => {
@@ -63,6 +70,9 @@ const Login = () => {
             <button className='sm:w-20 sm:text-base text-white bg-lime p-2 text-xl border-white border-2 w-32 place-self-center rounded mt-4 font-bold justify-center' type='submit'>Login </button>
           </div>
         </form>
+        <div className='pt-8 flex flex-row gap-2 justify-center'>
+          <span className='text-white'>Don't have an account?</span><span onClick={SignUp} className='text-lime'>Sign up</span>
+        </div>
       </main>
 
     </div>
