@@ -3,7 +3,7 @@ import React from 'react'
 
 const ContactUs = () => {
   return (
-    <div className='text-white flex flex-col gap-24'>
+    <div className='sm:gap-8 text-white flex flex-col gap-24'>
       <h1 className='sm:text-xl text-3xl font-black'>Pricing</h1>
       <div className='sm:gap-12 sm:flex-col flex flex-row gap-24 text-lime justify-center text-lg'>
         <div className='flex flex-col'>
