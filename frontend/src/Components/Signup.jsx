@@ -81,7 +81,7 @@ const Signup = () => {
           <img src={Image} alt="" className='sm:h-8 sm:w-8 self-center h-20 w-20 border rounded'/>
         </div>
 
-        {popupVisible && <p className='text-white text-center'>{popupVisible}</p>}
+        {popupVisible && <p className='text-lime text-center'>{popupVisible}</p>}
 
         <form onSubmit={handleSubmit} className='sm:my-8 sm:px-0 px-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>
