@@ -14,15 +14,13 @@ const Webpage = () => {
       <div className=''>
         <Marquee className='bg-lime'>
             <p className='text-lg text-gray'> &nbsp; You don't have to compromise your comfort just to get fuel. You order, we deliver!</p>
+            <p className='text-lg text-red'>&nbsp; Petrol (PMS) at N665.00, Diesel (DPK) at N1750.00, Kerosene (AGO) at N1450.00.</p>
         </Marquee>
       </div>
       {/* hero section */}
       <section className='sm:px-4 sm:h-80 px-16 py-14 bg-my-image bg-cover flex flex-col gap-20 space-between h-screen'>
           <Hero/>   
       </section>
-      <Marquee className='bg-lime'>
-        <p className='text-lg text-gray'>We sell: Petrol (PMS) at N665.00, Diesel (DPK) at N1750.00, Kerosene (AGO) at N1450.00</p>
-      </Marquee>
       {/* body of the website */}
       <div className='sm:px-6 flex flex-col px-12 pb-16 gap-28'>
         {/* --our services-- */}
