@@ -4,8 +4,17 @@ import Validate from './ValidateLogin';
 import Image from '../assets/EcoFuel.gif';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Login = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: true, // Whether animation should happen only once - while scrolling down
+    });
+  }, []);
+  
   const [value, setValue] = useState({
     email: '',
     password: ''
@@ -44,7 +53,7 @@ const Login = () => {
 
   return (
     <div className='sm:pt-0 pt-0 h-full'>
-      <main className='sm:h-full sm:w-full bg-black py-20 px-10 min-h-screen'>
+      <main data-aos="fade-up" className='sm:h-full sm:w-full bg-black py-20 px-10 min-h-screen'>
         <div className='sm:mt-0 flex flex-row gap-4 justify-center'>
           <h1 className='text-white text-4xl'>Sign In</h1>
           <img src={Image} alt="" className='sm:h-8 sm:w-8 h-8 w-8 border rounded self-center'/>

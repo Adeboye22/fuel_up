@@ -6,8 +6,16 @@ import UserValidate from './ValidateSignup';
 import axios from'axios';
 import Image from '../assets/EcoFuel.gif';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Signup = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: true, // Whether animation should happen only once - while scrolling down
+    });
+  }, []);
 
   // this objects stores the user data
   const [value, setValue] = useState({
@@ -75,7 +83,7 @@ const Signup = () => {
 
   return (
     <div>
-      <main className='sm:pt-12 bg-black pt-12 p-12 min-h-screen'>
+      <main  data-aos="fade-up" className='sm:pt-12 bg-black pt-12 p-12 min-h-screen'>
         <div className='flex flex-row justify-center gap-4'>
           <h1 className='text-white text-5xl'>Sign Up</h1>
           <img src={Image} alt="" className='sm:h-8 sm:w-8 self-center h-20 w-20 border rounded'/>

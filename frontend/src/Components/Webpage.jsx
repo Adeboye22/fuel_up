@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Hero from './website/Hero'
 import About from './website/AboutUs'
 import Services from './website/Services'
@@ -7,10 +7,19 @@ import Pricing from './website/Pricing'
 import OurService from './website/OurService'
 import Packages from './website/Packages'
 import Marquee from 'react-fast-marquee'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Webpage = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: true, // Whether animation should happen only once - while scrolling down
+    });
+  }, []);
+
   return (
-    <div className='sm:pt-0 h-full bg-black pt-0'>
+    <div data-aos="fade-up" className='sm:pt-0 h-full bg-black pt-0'>
       <div className=''>
         <Marquee className='bg-lime'>
             <p className='text-lg text-gray'> &nbsp; You don't have to compromise your comfort just to get fuel. You order, we deliver!</p>
@@ -18,25 +27,25 @@ const Webpage = () => {
         </Marquee>
       </div>
       {/* hero section */}
-      <section className='sm:px-4 sm:h-80 px-16 py-14 bg-my-image bg-cover flex flex-col gap-20 space-between h-screen'>
+      <section data-aos="fade-up" className='sm:px-4 sm:h-80 px-16 py-14 bg-my-image bg-cover flex flex-col gap-20 space-between h-screen'>
           <Hero/>   
       </section>
       {/* body of the website */}
-      <div className='sm:px-6 flex flex-col px-12 pb-16 gap-28'>
+      <div data-aos="fade-up" className='sm:px-6 flex flex-col px-12 pb-16 gap-12'>
         {/* --our services-- */}
-        <section className='pt-16 flex flex-col'>
+        <section data-aos="fade-up" className='pt-16 flex flex-col'>
           <strong><h1 className='sm:text-xl text-white text-3xl'>Our Services</h1></strong>
           <div className='my-14 bg-gray w-full py-12'>
             <OurService/>
           </div>
         </section>
         {/* --about-- */}
-        <section id='about' className='py-16'>
+        <section data-aos="fade-up" id='about' className='py-16'>
           <About/>
         </section>
 
         {/* pricing */}
-        <section>
+        <section data-aos="zoom-in">
           <Pricing />
         </section>
 
@@ -51,7 +60,7 @@ const Webpage = () => {
         </section>
       </div>
       {/* --footer div-- */}
-      <div className='bg-white flex flex-col'>
+      <div data-aos="fade-up" className='bg-white flex flex-col'>
 
         {/* --location-- */}
         <section id='locations' className='bg-black sm:px-8 p-16'>

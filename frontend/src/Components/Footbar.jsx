@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Footbar = () => {
+    useEffect(() => {
+        AOS.init({
+          duration: 1000, // Animation duration
+          once: true, // Whether animation should happen only once - while scrolling down
+        });
+      }, []);
   return (
-    <div className='sm:flex sm:flex-col sm:gap-4 sm:p-8 sm:text-lg p-8 flex flex-row text-xl justify-between px-14  text-altBlack'>
+    <div data-aos="fade-up" className='sm:flex sm:flex-col sm:gap-4 sm:p-8 sm:text-lg p-8 flex flex-row text-xl justify-between px-14  text-altBlack'>
         <div>
             <h3 className='font-black'>About</h3>
             <ul>
