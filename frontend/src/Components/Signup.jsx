@@ -84,7 +84,7 @@ const Signup = () => {
   return (
     <div>
       <main  data-aos="fade-up" className='sm:pt-12 bg-black pt-12 p-12 min-h-screen'>
-        <div className='flex flex-row justify-center gap-4'>
+        <div className='flex flex-row justify-center gap-4 pb-8'>
           <h1 className='text-white text-5xl'>Sign Up</h1>
           <img src={Image} alt="" className='sm:h-8 sm:w-8 self-center h-20 w-20 border rounded'/>
         </div>
