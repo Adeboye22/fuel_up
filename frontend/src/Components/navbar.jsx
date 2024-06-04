@@ -28,7 +28,7 @@ const NavBar = () => {
         <div>
             <NavLink to="/"><img src={Logo} className='sm:hidden md:hidden h-12 w-16 -my-8' /></NavLink>
         </div>
-        <div className={'sm:fixed sm:left-0 sm:top-4 sm:border-0 sm:rounded-xl sm:bg-lime sm:h-full sm:w-3/4 sm:text-center sm:p-16 text-lg -my-4'}>
+        <div className={'sm:fixed sm:left-0 sm:top-4 sm:border-0 sm:rounded-r-xl sm:bg-lime sm:h-full sm:w-3/4 sm:text-center sm:p-16 text-lg -my-4'}>
             <ul className='sm:flex sm:flex-col sm:gap-4 sm:my-36 sm:text-white sm:text-lg text-gray flex flex-row gap-8 font-medium'>
               <li><NavLink to="/" onClick={closeNavBar} style={activeNav}>Home</NavLink></li>
               <a href="#about" className='sm:hidden'><li>About Us</li></a>
