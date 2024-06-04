@@ -28,8 +28,8 @@ const NavBar = () => {
         <div>
             <NavLink to="/"><img src={Logo} className='sm:hidden md:hidden h-12 w-16 -my-8' /></NavLink>
         </div>
-        <div className={`sm:fixed sm:top-4 sm:left-0 sm:bg-white sm:h-full sm:w-3/4 sm:text-base  sm:text-center sm:p-16 text-lg -my-4`}>
-            <ul className='sm:flex sm:flex-col sm:gap-4 sm:my-36 text-gray flex flex-row gap-8 font-medium'>
+        <div className={'sm:fixed sm:left-0 sm:top-4 sm:border-0 sm:rounded-xl sm:bg-lime sm:h-full sm:w-3/4 sm:text-center sm:p-16 text-lg -my-4'}>
+            <ul className='sm:flex sm:flex-col sm:gap-4 sm:my-36 sm:text-white sm:text-lg text-gray flex flex-row gap-8 font-medium'>
               <li><NavLink to="/" onClick={closeNavBar} style={activeNav}>Home</NavLink></li>
               <a href="#about" className='sm:hidden'><li>About Us</li></a>
               <a href="#services" className='sm:hidden'><li>Services</li></a>
@@ -55,9 +55,9 @@ const Navbar = () => {
       <section className='sm:hidden md:hidden'>
         <NavBar/>
       </section>
-      <section className='sm:bg-white sm:p-4 sm:flex sm:flex-row sm:justify-between hidden '>
+      <section className='sm:bg-white sm:p-4 sm:flex sm:flex-row sm:justify-between hidden'>
         <img src={Logo} alt="" className='sm:h-8 sm:w-12' />
-        <button className='right-6 top-6 text-lg' onClick={toggleBar}>{isOpen ? <FaTimesCircle className='text-bold'/>:<FaBars className="text-bold"/>}</button>
+        <button className='right-6 top-6 outline-0 text-lg' onClick={toggleBar}>{isOpen ? <FaTimesCircle className='text-bold'/>:<FaBars className="text-bold"/>}</button>
       </section>
       {isOpen && <NavBar/>}
     </div>
