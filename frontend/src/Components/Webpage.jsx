@@ -31,7 +31,7 @@ const Webpage = () => {
           <Hero/>   
       </section>
       {/* body of the website */}
-      <div data-aos="fade-up" className='sm:px-6 flex flex-col px-12 pb-16 gap-12'>
+      <div data-aos="fade-up" className='sm:px-6 flex flex-col px-12 pb-16 gap-8'>
         {/* --our services-- */}
         <section data-aos="fade-up" className='pt-16 flex flex-col'>
           <strong><h1 className='sm:text-xl text-white text-3xl'>Our Services</h1></strong>
