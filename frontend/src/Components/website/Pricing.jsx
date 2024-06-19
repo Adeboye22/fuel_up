@@ -13,11 +13,11 @@ const ContactUs = () => {
           <p className='text-red'>N665.00</p>
         </div>
         <div className='flex flex-col'>
-          <p>Diesel (DPK)</p>
+          <p>Diesel (AGO)</p>
           <p className='text-red'>N1750.00</p>
         </div>
         <div className='flex flex-col'>
-          <p>Kerosene (AGO)</p>
+          <p>Kerosene (DPK)</p>
           <p className='text-red'>N1450.00</p>
         </div>
       </div>
