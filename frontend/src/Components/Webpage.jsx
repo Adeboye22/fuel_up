@@ -31,7 +31,7 @@ const Webpage = () => {
           <Hero/>   
       </section>
       {/* body of the website */}
-      <div data-aos="fade-up" className='sm:px-6 flex flex-col px-12 pb-16 gap-8'>
+      <div data-aos="fade-up" className='sm:px-6 flex flex-col px-12 pb-16 gap-12'>
         {/* --our services-- */}
         <section data-aos="fade-up" className='pt-16 flex flex-col'>
           <strong><h1 className='sm:text-xl text-white text-3xl'>Our Services</h1></strong>
@@ -40,17 +40,12 @@ const Webpage = () => {
           </div>
         </section>
         {/* --about-- */}
-        <section data-aos="fade-up" id='about' className='py-16'>
+        <section data-aos="fade-up" id='about'>
           <About/>
         </section>
 
-        {/* pricing */}
-        <section data-aos="zoom-in">
-          <Pricing />
-        </section>
-
         {/* --packages-- */}
-        <section className='py-16'>
+        <section>
           <Packages/>
         </section>
       </div>
@@ -58,7 +53,7 @@ const Webpage = () => {
       <div data-aos="fade-up" className='bg-white flex flex-col'>
 
         {/* --location-- */}
-        <section id='locations' className='bg-black sm:px-8 p-16'>
+        <section id='locations' className='bg-black sm:px-8'>
           <Location/>
         </section>
 

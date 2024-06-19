@@ -32,7 +32,7 @@ const OurService = () => {
                 scale:1.2,
               }} onClick={Services}>
                   <img src={FD} alt="" className='sm:h-8 sm:w-8 h-16 w-16 self-center'/>
-                  <span className='text-altBlack text-xs self-center font-medium'>Fuel Dispensing</span>
+                  <span className='sm:text-center text-altBlack text-xs self-center font-medium'>Fuel Dispensing</span>
               </motion.div>
 
             {/* --24/7 Availability-- */}
@@ -47,7 +47,7 @@ const OurService = () => {
                 scale:1.2,
               }} onClick={Services}>
                 <img src={Clock} alt="" className='sm:h-8 sm:w-8 h-16 w-16 self-center'/>
-                <span className='text-altBlack text-xs self-center font-medium'>24/7 Availability</span>           
+                <span className='sm:text-center text-altBlack text-xs self-center font-medium'>24/7 Availability</span>           
               </motion.div>
 
             {/* --convenience and accessibility-- */}
