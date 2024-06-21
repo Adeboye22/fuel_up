@@ -11,7 +11,7 @@ const Packages = () => {
   return (
     <div className='sm:gap-8 flex flex-col gap-4 text-white'>
       <section className='sm:pb-8'>
-        <h1 className='sm:text-xl font-black text-3xl pb-4'>Packages:</h1>
+        <h1 className='sm:text-xl text-lime font-black text-3xl pb-4'>Packages:</h1>
         <p className='sm:text-base text-lg'>The packages below have been tailored for our daily needs in terms of budget, and emergencies.</p>
       </section>
       <section className='sm:flex-col sm:place-items-center sm:gap-12 flex flex-row gap-2'>
