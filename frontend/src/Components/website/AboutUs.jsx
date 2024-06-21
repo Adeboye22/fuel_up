@@ -17,7 +17,7 @@ const AboutUs = () => {
         </p>
       </div>
       <div className='flex flex-col gap-4'>
-        <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Benefits:</strong></h1>
+        <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Benefits</strong></h1>
         <div className='sm:text-base text-lg text-white flex flex-col gap-4'>
         <p>
           Fuel Up offer a range of benefits to both businesses and individual consumers. Here's a breakdown of the key advantages:
