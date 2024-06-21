@@ -34,7 +34,7 @@ const Webpage = () => {
       <div data-aos="fade-up" className='sm:px-6 flex flex-col px-12 pb-16 gap-12'>
         {/* --our services-- */}
         <section data-aos="fade-up" className='pt-16 flex flex-col'>
-          <strong><h1 className='sm:text-xl text-white text-3xl'>Our Services</h1></strong>
+          <strong><h1 className='sm:text-xl text-lime text-3xl'>Our Services</h1></strong>
           <div className='my-14 bg-gray w-full py-12'>
             <OurService/>
           </div>
