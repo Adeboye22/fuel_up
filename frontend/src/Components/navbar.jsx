@@ -57,7 +57,7 @@ const Navbar = () => {
       </section>
       <section className='sm:bg-white sm:p-4 sm:flex sm:flex-row sm:justify-between hidden'>
         <img src={Logo} alt="" className='sm:h-8 sm:w-12' />
-        <button className='right-6 top-6 outline-0 text-lg' onClick={toggleBar}>{isOpen ? <FaTimesCircle className='text-bold'/>:<FaBars className="text-bold"/>}</button>
+        <button className='right-6 top-6 outline-0 text-lg' onClick={toggleBar}>{isOpen ? <FaTimesCircle className='text-bold text-xl'/>:<FaBars className="text-xl text-bold"/>}</button>
       </section>
       {isOpen && <NavBar/>}
     </div>

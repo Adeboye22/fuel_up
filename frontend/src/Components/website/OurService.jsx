@@ -21,7 +21,7 @@ const OurService = () => {
         <div className='flex flex-row gap-2 self-center'>
 
             {/* --fuel dispensing-- */}
-              <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28  p-2 flex flex-col overflow-hidden hover:border hover:rounded'
+              <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28  p-2 flex flex-col rounded overflow-hidden hover:border hover:rounded'
               initial={{opacity:0}}
               animate={{opacity:100}}
               transition={{
@@ -36,7 +36,7 @@ const OurService = () => {
               </motion.div>
 
             {/* --24/7 Availability-- */}
-              <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28  p-2 flex flex-col overflow-hidden hover:border hover:rounded'
+              <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28  p-2 flex flex-col rounded overflow-hidden hover:border hover:rounded'
               initial={{opacity:0}}
               animate={{opacity:100}}
               transition={{
@@ -51,7 +51,7 @@ const OurService = () => {
               </motion.div>
 
             {/* --convenience and accessibility-- */}
-              <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28  p-2 flex flex-col overflow-hidden hover:border hover:rounded'
+              <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28 rounded p-2 flex flex-col overflow-hidden hover:border hover:rounded'
               initial={{opacity:0}}
               animate={{opacity:100}}
               transition={{
@@ -69,7 +69,7 @@ const OurService = () => {
         <div className='flex flex-row gap-2 self-center'>
 
           {/* --bulk fuel delivery-- */}
-            <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28 p-2 flex flex-col overflow-hidden hover:border hover:rounded'
+            <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28 p-2 flex flex-col rounded overflow-hidden hover:border hover:rounded'
             initial={{opacity:0}}
             animate={{opacity:100}}
             transition={{
@@ -84,7 +84,7 @@ const OurService = () => {
             </motion.div>
 
           {/* --quality assurance-- */}
-            <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28 p-2 flex flex-col overflow-hidden hover:border hover:rounded text-center'
+            <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28 p-2 flex flex-col rounded overflow-hidden hover:border hover:rounded text-center'
             initial={{opacity:0}}
             animate={{opacity:100}}
             transition={{
@@ -99,7 +99,7 @@ const OurService = () => {
             </motion.div>
 
           {/* --customer support-- */}
-            <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28  p-2 flex flex-col overflow-hidden hover:border hover:rounded text-center'
+            <motion.div className='sm:h-20 sm:w-20 bg-white h-28 w-28 rounded p-2 flex flex-col overflow-hidden hover:border hover:rounded text-center'
             initial={{opacity:0}}
             animate={{opacity:100}}
             transition={{
