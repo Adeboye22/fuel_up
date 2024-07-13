@@ -108,7 +108,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src="https://www.fuel.crs/wcm/connect/www.fuel.crs1162/33b88f2f-8c7d-414b-a765-3a446b23613e/Bulk+Delivery+Hero.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_2IKA1G82MOM2F0QOF0CTUF1270-33b88f2f-8c7d-414b-a765-3a446b23613e-oVtzKDz5" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src="https://images.app.goo.gl/rZeEPxKttj43KaGF7" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
           <motion.div className='sm:p-4 self-center bg-altBlack text-white p-16 my-12'
           initial={{opacity:0}}
