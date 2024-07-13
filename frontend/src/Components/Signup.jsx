@@ -62,7 +62,7 @@ const Signup = () => {
     } catch (err) {
       console.log('this is an error', err);
     }
-  } 
+  }
 
   // using a setTimeout 
 

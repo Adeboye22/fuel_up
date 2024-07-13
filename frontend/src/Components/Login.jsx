@@ -23,8 +23,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   const [error, setError] = useState({});
-
-  const handleInput = e => {
+const handleInput = e => {
     setValue(prev => {
       return {...prev, [e.target.name]: [e.target.value]}
     })
@@ -36,9 +35,13 @@ const Login = () => {
     .then(response => console.log(response))
     .catch(err => console.log(err))
   }
-
+  
   const SignUp = () => {
     navigate('/signup')
+  }
+
+  const NavMenu = () => {
+    navigate('/login')
   }
 
   // const getQuote = () => {
@@ -80,7 +83,7 @@ const Login = () => {
           </div>
         </form>
         <div className='pt-8 flex flex-row gap-2 justify-center'>
-          <span className='text-white'>Don't have an account?</span><span onClick={SignUp} className='text-lime'>Sign up</span>
+          <span className='text-white'>Don't have an account?</span><span onClick={SignUp} className='cursor-pointer text-lime'>Sign up</span>
         </div>
       </main>
 
