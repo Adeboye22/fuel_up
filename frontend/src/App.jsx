@@ -7,7 +7,8 @@ import Header from './Components/header';
 import Footbar from './Components/Footbar';
 import Services from './Components/website/Services';
 import MailVerification from "./Components/mailVerification";
-import Pricing from "./Components/website/Pricing"
+import Pricing from "./Components/website/Pricing";
+import User from "./Components/app/user";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Route path='/pricing' element={<Pricing/>} />
       <Route path='/services' element={<Services/>} />
       <Route path='/redirect_mail' element={<MailVerification/>} />
+      <Route path='/user' element={<User/>} />
     </Routes>
     <Footbar/>
     </>

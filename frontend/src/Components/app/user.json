@@ -1,0 +1,10 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "name": "Ademepon",
+            "sex": "male",
+            "mobile_no": "08169056310"
+        }
+    ]
+}
