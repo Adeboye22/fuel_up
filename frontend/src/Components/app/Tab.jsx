@@ -9,14 +9,14 @@ const Tab = ({ tabs }) => {
     };
     return(
         <div className="flex flex-col">
-            <div className='flex justify-evenly border-b-2 border-gray'>
+            <div className='flex justify-evenly'>
 
                 {tabs.map((tab, index) => (
                     <button key={index}
-                    className={`px-4 py-2 w-full border-x-2 border-gray ${activeTab === index? 'bg-gray border-b-4 border-white':'bg-lime border-0'}`} onClick={() => handleTabClick(index)}>{tab.label}</button>
+                    className={`px-4 py-2 w-full border-x-2 ${activeTab === index? 'bg-gray border-t-4 border-white':'bg-lime border-0 border-none'}`} onClick={() => handleTabClick(index)}>{tab.label}</button>
                 ))}
             </div>
-            <div className='p-4 text-center text-white mt-8'>
+            <div className='p-4 text-center text-gray mt-8'>
                 {tabs[activeTab].content}
             </div>
         </div>

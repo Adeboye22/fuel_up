@@ -39,6 +39,7 @@ export default {
       backgroundImage:{
         'my-image':"url(/src/assets/Nozzle.jpg)",
         'my-gif': "url(/src/assets/EcoFuel1.gif)",
+        'nozzle': "url(/src/assets/CarNozzle.jpg)"
       }
     },
   },

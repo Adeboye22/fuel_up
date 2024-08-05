@@ -20,23 +20,33 @@ const User = () => {
     ];
 
   return (
-    <div data-aos="fade-up"className='h-screen px-4 text-gray'>
-      <div>
-        {users.map((item,index) => (
-            <h1 className='text-gray font-bold py-2' key={item.id}>Hi {item.name}!</h1>
-        ))}
+    <div data-aos="fade-up"className='h-screen text-gray bg-my-image bg-cover'>
+      <div className='bg-nozzle'>
+        <div className="backdrop-filter backdrop-blur-sm px-4 py-4">
+          <div>
+            {users.map((item,index) => (
+                <h1 className='text-gray font-bold py-2' key={item.id}>Hi {item.name}!</h1>
+            ))}
+          </div>
+          {/* tab section */}
+          <div className="bg-nozzle">
+            <div className='bg-lime backdrop-filter backdrop-filter-sm bg-opacity-30 sm:h-48 container my-4 mx-auto text-white rounded-lg border border-gray'>
+            <Tab tabs={tabs} />
+            </div>
+          </div>
+        </div>
       </div>
-      {/* tab section */}
-      <div className='bg-lime sm:h-48 container my-12 mx-auto text-white rounded-lg border border-gray'>
-       <Tab tabs={tabs} />
-      </div>
-      {/* order section */}
-      <div className='my-12'>
-        <h1 className='text-xl font-bold'>Place Order</h1>
-        <div></div>
-      </div>
-      <div>
-        <p>After placing an order, our dispatch agents will contact you for confirmation before delivery.</p>
+      <div className="px-4">
+        {/* order section */}
+        <div className='my-8'>
+          <h1 className='text-xl font-bold'>Place Order</h1>
+          <div>
+
+          </div>
+        </div>
+        <div>
+          <p>After placing an order, our dispatch agents will contact you for confirmation before delivery.</p>
+        </div>
       </div>
     </div>
   )
