@@ -14,9 +14,9 @@ const User = () => {
 
     const {users} = Data;
     const tabs = [
-      { label: 'Petrol', content: 'The current price for PMS is N680' },
-      { label:'Diesel', content: 'The current price for AGO is N1700' },
-      { label: 'Kerosene', content: 'The current price for DPK is N1200' }
+      { label: 'Petrol', content: 'The current price for PMS is N680', note:'We only dispatch maximum of 20 litres'},
+      { label:'Diesel', content: 'The current price for AGO is N1700', note:'We only dispatch maximum of 20 litres'},
+      { label: 'Kerosene', content: 'The current price for DPK is N1200', note:'We only dispatch maximum of 20 litres' }
     ];
 
   return (
