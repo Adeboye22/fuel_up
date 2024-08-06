@@ -1,5 +1,5 @@
 import React from 'react'
-import {} from 'react-icons/fa'
+// import {} from 'react-icons/fa'
 import FD from '../../assets/Refuel.gif'
 import Clock from '../../assets/Clock.gif'
 import Access from '../../assets/Smartphone.gif'

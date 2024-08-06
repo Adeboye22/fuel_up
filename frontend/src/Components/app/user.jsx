@@ -1,5 +1,9 @@
 import React, {useEffect} from 'react';
 import Data from '../../Components/app/user.json';
+import Diesel from '../../assets/Refuel.gif'
+import Kerosene from'../../assets/EcoFuel.gif'
+import Petrol from'../../assets/EcoFuel1.gif'
+import Bulk from '../../assets/Pallete.gif'
 import Tab from './Tab';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -39,8 +43,22 @@ const User = () => {
       <div className="px-4">
         {/* order section */}
         <div className='my-8'>
-          <h1 className='text-xl font-bold'>Place Order</h1>
-          <div>
+          <h1 className='text-xl font-bold pb-8'>Place Order</h1>
+          <div className='flex flex-row justify-evenly pb-8'>
+            <div className='flex flex-col gap-4'>
+              <h1 className="text-center">Petrol</h1>
+              <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Petrol} alt="" className='h-8 w-8'/></div>
+            </div>
+            
+            <div className='flex flex-col gap-4'>
+              <h1 className="text-center">Diesel</h1>
+              <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Diesel} alt="" className='h-8 w-8'/></div>
+            </div>
+
+            <div className='flex flex-col gap-4'>
+              <h1 className="text-center">Kero</h1>
+              <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Kerosene} alt="" className='h-8 w-8'/></div>
+            </div>
 
           </div>
         </div>
