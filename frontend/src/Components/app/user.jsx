@@ -29,7 +29,7 @@ const User = () => {
         <div className="backdrop-filter backdrop-blur-sm px-4 py-4">
           <div>
             {users.map((item,index) => (
-                <h1 className='text-gray font-bold py-2' key={item.id}>Hi {item.name}!</h1>
+                <h1 className='text-gray font-bold text-xl py-2' key={item.id}>Hi {item.name}!</h1>
             ))}
           </div>
           {/* tab section */}
@@ -40,7 +40,7 @@ const User = () => {
           </div>
         </div>
       </div>
-      <div className="px-4">
+      <div className="px-2">
         {/* order section */}
         <div className='my-8'>
           <h1 className='text-xl font-bold pb-8'>Place Order</h1>
@@ -63,6 +63,7 @@ const User = () => {
           </div>
         </div>
         <div>
+          <h1 className='text-xl font-bold pb-2'>Note</h1>
           <p>After placing an order, our dispatch agents will contact you for confirmation before delivery.</p>
         </div>
       </div>
