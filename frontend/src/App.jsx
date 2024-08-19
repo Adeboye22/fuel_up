@@ -9,6 +9,9 @@ import Services from './Components/website/Services';
 import MailVerification from "./Components/mailVerification";
 import Pricing from "./Components/website/Pricing";
 import User from "./Components/app/user";
+import Petrol from "./Components/app/Petrol"
+import Kero from "./Components/app/Kero"
+import Diesel from "./Components/app/Diesel"
 
 function App() {
 
@@ -22,7 +25,10 @@ function App() {
       <Route path='/pricing' element={<Pricing/>} />
       <Route path='/services' element={<Services/>} />
       <Route path='/redirect_mail' element={<MailVerification/>} />
-      <Route path='/user' element={<User/>} />
+      <Route path='/user' element={<User/>}>
+        <Route path="orderPetrol" element={<Petrol/>} />
+        <Route path="orderDiesel" element={<Diesel/>} />
+      </Route>
     </Routes>
     <Footbar/>
     </>

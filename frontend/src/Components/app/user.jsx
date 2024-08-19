@@ -7,6 +7,7 @@ import Bulk from '../../assets/Pallete.gif'
 import Tab from './Tab';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Link, Outlet } from 'react-router-dom'
 
 const User = () => {
   useEffect(() => {
@@ -47,13 +48,20 @@ const User = () => {
           <div className='flex flex-row justify-evenly pb-8'>
             <div className='flex flex-col gap-4'>
               <h1 className="text-center">Petrol</h1>
-              <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Petrol} alt="" className='h-8 w-8'/></div>
+
+              <Link to='/user/orderPetrol'>
+              <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full' ><img src={Petrol} alt="" className='h-8 w-8'/></div>
+              </Link>
+              
+
             </div>
             
-            <div className='flex flex-col gap-4'>
-              <h1 className="text-center">Diesel</h1>
-              <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Diesel} alt="" className='h-8 w-8'/></div>
-            </div>
+            <Link to='/user/orderDiesel'>
+              <div className='flex flex-col gap-4'>
+                <h1 className="text-center">Diesel</h1>
+                <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Diesel} alt="" className='h-8 w-8'/></div>
+              </div>
+            </Link>
 
             <div className='flex flex-col gap-4'>
               <h1 className="text-center">Kero</h1>
@@ -61,6 +69,8 @@ const User = () => {
             </div>
 
           </div>
+
+          <Outlet/>
         </div>
         <div>
           <h1 className='text-xl font-bold pb-2'>Note</h1>
