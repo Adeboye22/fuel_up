@@ -3,7 +3,6 @@ import Data from '../../Components/app/user.json';
 import Diesel from '../../assets/Refuel.gif'
 import Kerosene from'../../assets/EcoFuel.gif'
 import Petrol from'../../assets/EcoFuel1.gif'
-import Bulk from '../../assets/Pallete.gif'
 import Tab from './Tab';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -49,6 +48,7 @@ const User = () => {
             <div className='flex flex-col gap-4'>
               <h1 className="text-center">Petrol</h1>
 
+              {/* Petrol routing order */}
               <Link to='/user/orderPetrol'>
               <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full' ><img src={Petrol} alt="" className='h-8 w-8'/></div>
               </Link>
@@ -56,6 +56,7 @@ const User = () => {
 
             </div>
             
+            {/* Diesel routing order */}
             <Link to='/user/orderDiesel'>
               <div className='flex flex-col gap-4'>
                 <h1 className="text-center">Diesel</h1>
@@ -63,16 +64,19 @@ const User = () => {
               </div>
             </Link>
 
+            {/* Kerosene routing order*/}
+            <Link to='/user/orderKero'>
             <div className='flex flex-col gap-4'>
               <h1 className="text-center">Kero</h1>
               <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Kerosene} alt="" className='h-8 w-8'/></div>
             </div>
+            </Link>
 
           </div>
 
           <Outlet/>
         </div>
-        <div>
+        <div className='pb-12'>
           <h1 className='text-xl font-bold pb-2'>Note</h1>
           <p>After placing an order, our dispatch agents will contact you for confirmation before delivery.</p>
         </div>

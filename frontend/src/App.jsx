@@ -28,9 +28,10 @@ function App() {
       <Route path='/user' element={<User/>}>
         <Route path="orderPetrol" element={<Petrol/>} />
         <Route path="orderDiesel" element={<Diesel/>} />
+        <Route path="orderKero" element={<Kero/>} />
       </Route>
     </Routes>
-    <Footbar/>
+    {/* <Footbar/> */}
     </>
   )
 }
