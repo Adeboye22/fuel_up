@@ -20,7 +20,7 @@ const Petrol = () => {
    }
 
   return (
-    <div>
+    <div className='pt-8'>
       <form action="" onSubmit={handleSubmit} className='flex flex-col place-items-center gap-8'>
         <select value={select} onChange={handleSelectedOption} className='text-gray w-64 border border-lime outline-0 p-1'>
           {Options.map((option) => (
