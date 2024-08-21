@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Data from '../../Components/app/user.json';
 import Diesel from '../../assets/Refuel.gif'
 import Kerosene from'../../assets/EcoFuel.gif'
@@ -23,17 +23,6 @@ const User = () => {
       { label:'Diesel', content: 'The current price for AGO is N1700', note:'Will soon be available'},
       { label: 'Kerosene', content: 'The current price for DPK is N1200', note:'Not available at the moment' }
     ];
-
-    // styling for active product option
-    const [isActive, setIsActive] = useState(false);
-
-    const activeStyle = {
-      outlineColor: isActive? '#FF0000' : '#32CD32' 
-    }
-
-    const activeOrder = () => {
-      setIsActive(!isActive)
-    }
 
   return (
     <div data-aos="fade-up"className='h-screen text-gray bg-my-image bg-cover'>
@@ -68,7 +57,7 @@ const User = () => {
 
               {/* Petrol routing order */}
               <Link to='/user/orderPetrol'>
-              <div style={activeStyle} onClick={activeOrder} className='bg-white p-2 overflow-hidden outline outline-lime outline-offset-2 border border-lime rounded-full' ><img src={Petrol} alt="" className='h-8 w-8'/></div>
+              <div className='bg-white p-2 overflow-hidden outline outline-lime outline-offset-2 border border-lime rounded-full' ><img src={Petrol} alt="" className='h-8 w-8'/></div>
               </Link>
               
 
@@ -79,7 +68,7 @@ const User = () => {
               <div className='flex flex-col gap-4'>
                 <h1 className="text-center">Diesel</h1>
                 <Link to='/user/orderDiesel'>
-                  <div style={activeStyle} onClick={activeOrder}className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Diesel} alt="" className='h-8 w-8'/></div>
+                  <div className='bg-white p-2 overflow-hidden outline outline-offset-2 outline-lime border border-lime rounded-full'><img src={Diesel} alt="" className='h-8 w-8'/></div>
                 </Link>
               </div>
 
