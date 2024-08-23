@@ -41,7 +41,7 @@ const User = () => {
           </div>
         </div>
       </div>
-      <div className="px-2">
+      <div className="px-4">
         {/* order section */}
         <div className='my-8'>
           <div className='flex flex-row pb-12 justify-between'>

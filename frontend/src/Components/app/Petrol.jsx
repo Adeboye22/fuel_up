@@ -30,6 +30,7 @@ const Petrol = () => {
           </option>
           ))}
         </select>
+        <p className='text-gray text-base'>Delivery fee is <span className='text-red text-base'>N150</span></p>
         <button type="submit" className='border border-lime rounded outline-dotted outline-2 outline-lime outline-offset-2 w-24'>Order</button>
       </form>
     </div>
