@@ -70,7 +70,7 @@ const Petrol = () => {
         </p>
         {/* Display the total amount */}
         <p className='text-gray pt-4'>Total: ₦<input type="text" value={total} readOnly className='text-lime outline-none w-12'/></p>
-        <button type="submit" className='border border-lime rounded outline-dotted outline-2 outline-lime outline-offset-2 w-24'>Order</button>
+        <button type="submit" className='border border-lime rounded outline-dotted outline-2 outline-lime outline-offset-2 w-24 mb-4'>Order</button>
       </form>
     </div>
   )
