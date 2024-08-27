@@ -51,7 +51,7 @@ const Petrol = () => {
       <form action="" onSubmit={handleSubmit} className='flex flex-col place-items-center gap-2'>
         <select value={select} onChange={handleSelectedOption} className='text-gray w-64 border border-lime outline-0 p-1'>
           {Options.map((option) => (
-          <option value={option.value} key={option.value} className='text-gray w-48'>
+          <option value={option.value} key={option.value} className='text-gray text-center w-48'>
             {option.label}
           </option>
           ))}
@@ -69,7 +69,7 @@ const Petrol = () => {
            Delevery fee: ₦ <input type="text" value="0" readOnly className='text-lime outline-none w-12'/>
         </p>
         {/* Display the total amount */}
-        <p className='text-gray pt-4'>Total: ₦<input type="text" value={total} readOnly className='text-lime outline-none w-12'/></p>
+        <p className='text-gray pt-4'>Total: ₦ <input type="text" value={total} readOnly className='text-lime outline-none w-12'/></p>
         <button type="submit" className='border border-lime rounded outline-dotted outline-2 outline-lime outline-offset-2 w-24 mb-4'>Order</button>
       </form>
     </div>
