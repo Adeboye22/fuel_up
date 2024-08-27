@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Data from '../../Components/app/user.json';
-import Diesel from '../../assets/Refuel.gif'
-import Kerosene from'../../assets/EcoFuel.gif'
-import Petrol from'../../assets/EcoFuel1.gif'
+import Data from './user.json';
+import Diesel from './../../../assets/Refuel.gif'
+import Kerosene from'./../../../assets/EcoFuel.gif'
+import Petrol from'./../../../assets/EcoFuel1.gif'
 import Tab from './Tab';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -46,10 +46,12 @@ const User = () => {
         <div className='my-8'>
           <div className='flex flex-row pb-12 justify-between'>
             <h1 className='text-xl font-bold'>Place Order</h1>
+            <Link to='/user/transactions'>
             <div className='flex flex-row gap-2'>
               <span className='mt-1 text-base text-red'>transaction history</span>
               <FaClock className='text-lime mt-2'/>
             </div>
+            </Link>
           </div>
           <div className='flex flex-row justify-evenly pb-8'>
             <div className='flex flex-col gap-4'>

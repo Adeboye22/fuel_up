@@ -8,10 +8,11 @@ import Footbar from './Components/Footbar';
 import Services from './Components/website/Services';
 import MailVerification from "./Components/mailVerification";
 import Pricing from "./Components/website/Pricing";
-import User from "./Components/app/user";
-import Petrol from "./Components/app/Petrol"
-import Kero from "./Components/app/Kero"
-import Diesel from "./Components/app/Diesel"
+import User from "./Components/app/user/user";
+import Petrol from "./Components/app/user/Petrol"
+import Kero from "./Components/app/user/Kero"
+import Diesel from "./Components/app/user/Diesel"
+import History from "./Components/app/user/History"
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="orderPetrol" element={<Petrol/>} />
         <Route path="orderDiesel" element={<Diesel/>} />
         <Route path="orderKero" element={<Kero/>} />
+        <Route path="transactions" element={<History/>} />
       </Route>
     </Routes>
     {/* <Footbar/> */}
