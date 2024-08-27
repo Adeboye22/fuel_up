@@ -19,7 +19,7 @@ const User = () => {
 
     const {users} = Data;
     const tabs = [
-      { label: 'Petrol', content: 'The current price for PMS is N680', note:'We only dispatch a maximum of 20 litres'},
+      { label: 'Petrol', content: 'The current price for PMS is N800', note:'We only dispatch a maximum of 20 litres'},
       { label:'Diesel', content: 'The current price for AGO is N1700', note:'Will soon be available'},
       { label: 'Kerosene', content: 'The current price for DPK is N1200', note:'Not available at the moment' }
     ];
@@ -33,6 +33,7 @@ const User = () => {
                 <h1 className='text-gray font-bold text-xl py-2' key={item.id}>Hi {item.name}!</h1>
             ))}
           </div>
+
           {/* tab section */}
           <div className="bg-nozzle">
             <div className='bg-lime backdrop-filter backdrop-filter-sm bg-opacity-30 sm:h-48 container my-4 mx-auto text-white rounded-lg border border-gray'>
@@ -41,19 +42,21 @@ const User = () => {
           </div>
         </div>
       </div>
+
       <div className="px-4">
+
         {/* order section */}
         <div className='my-8'>
           <div className='flex flex-row pb-12 justify-between'>
-            <Link to='/user'>
-              <h1 className='text-xl font-bold'>Place Order</h1>
-            </Link>
+            <h1 className='text-xl font-bold'>Place Order</h1>
+
             <Link to='/user/transactions'>
             <div className='flex flex-row gap-2'>
               <span className='mt-1 text-base text-red'>transaction history</span>
               <FaClock className='text-lime mt-2'/>
             </div>
             </Link>
+            
           </div>
           <div className='flex flex-row justify-evenly pb-8'>
             <div className='flex flex-col gap-4'>
