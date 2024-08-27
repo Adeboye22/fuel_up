@@ -41,7 +41,7 @@ const Petrol = () => {
    }
 
   return (
-    <div className='mt-2'>
+    <div className='mt-2 border rounded-lg border-gray'>
       <div className='bg-lime mb-8 flex flex-row justify-center gap-4 relative'>
         <h1 className='text-white text-lg font-bold text-center'>Petrol</h1>
         <button onClick={closeTab}>
