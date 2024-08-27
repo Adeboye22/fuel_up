@@ -42,11 +42,11 @@ const Petrol = () => {
           ))}
         </select>
         {/* Display the selected amount */}
-        <p className='text-gray'> Amount: ₦ <input type="text" value={selectedAmount} readOnly className='text-lime bg-transparent outline-none'/></p>
+        <p className='text-gray'> Amount: ₦ <input type="text" value={selectedAmount} readOnly className='text-lime bg-transparent outline-none w-12'/></p>
         {/* Display the service charge by 8% */}
-        <p className='text-gray'>Service Charge <span className='text-lime'>(8%)</span>: ₦ <input type="text" value={charge} readOnly className='text-lime outline-none'/></p>
+        <p className='text-gray'>Service Charge <span className='text-lime'>(8%)</span>: ₦ <input type="text" value={charge} readOnly className='text-lime outline-none w-12'/></p>
         {/* Display the total amount */}
-        <p className='text-gray pt-4'>Total: ₦<input type="text" value={total} readOnly className='text-lime outline-none'/></p>
+        <p className='text-gray pt-4'>Total: ₦<input type="text" value={total} readOnly className='text-lime outline-none w-12'/></p>
         <p className='text-gray text-base bg-transparent'>Get a <span className='text-red text-base'>free</span> delivery</p>
         <button type="submit" className='border border-lime rounded outline-dotted outline-2 outline-lime outline-offset-2 w-24'>Order</button>
       </form>
