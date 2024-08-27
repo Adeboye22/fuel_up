@@ -45,7 +45,9 @@ const User = () => {
         {/* order section */}
         <div className='my-8'>
           <div className='flex flex-row pb-12 justify-between'>
-            <h1 className='text-xl font-bold'>Place Order</h1>
+            <Link to='/user'>
+              <h1 className='text-xl font-bold'>Place Order</h1>
+            </Link>
             <Link to='/user/transactions'>
             <div className='flex flex-row gap-2'>
               <span className='mt-1 text-base text-red'>transaction history</span>
