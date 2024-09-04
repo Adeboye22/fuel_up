@@ -13,6 +13,7 @@ import Petrol from "./Components/app/user/Petrol"
 import Kero from "./Components/app/user/Kero"
 import Diesel from "./Components/app/user/Diesel"
 import History from "./Components/app/user/History"
+import Admin from "./Components/app/admin/admin"
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
       <Route path='/pricing' element={<Pricing/>} />
       <Route path='/services' element={<Services/>} />
       <Route path='/redirect_mail' element={<MailVerification/>} />
+      <Route path='/admin' element={<Admin/>} />
       <Route path='/user' element={<User/>}>
         <Route path="orderPetrol" element={<Petrol/>} />
         <Route path="orderDiesel" element={<Diesel/>} />

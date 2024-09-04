@@ -1,6 +1,6 @@
 import React from 'react'
 
-const salesAdmin = () => {
+const customerSupport = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const salesAdmin = () => {
   )
 }
 
-export default salesAdmin
+export default customerSupport

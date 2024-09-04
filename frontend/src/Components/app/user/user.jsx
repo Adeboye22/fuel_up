@@ -25,7 +25,7 @@ const User = () => {
     ];
 
   return (
-    <div data-aos="fade-up"className='h-screen text-gray bg-my-image bg-cover'>
+    <div data-aos="fade-up" className='h-screen text-gray bg-my-image bg-cover'>
       <div className='bg-nozzle'>
         <div className="backdrop-filter backdrop-blur-sm px-4 py-4">
           <div>
