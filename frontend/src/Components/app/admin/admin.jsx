@@ -17,25 +17,25 @@ const Admin = () => {
       </div>
 
       {/* Customers orders */}
-      <div className='text-gray'>
+      <div className='text-gray mx-16'>
         <h1 className='text-lg font-semibold'>Customers Orders</h1>
         <div className='p-8 flex flex-col gap-12 place-items-left'>
-          <select name="" id="" className='w-1/2 border rounded border-lime outline-none'></select>
+          <select name="" id="" className='w-56 border rounded border-lime outline-none'></select>
           <div><span>No users transaction found</span></div>
         </div>
       </div>
 
       {/* Customer disputes */}
-      <div className='text-gray'>
+      <div className='text-gray mx-16'>
         <h1 className='text-lg font-semibold'>Disputes</h1>
         <div className='p-8 flex flex-col gap-12 place-items-left'>
-          <select name="" id="" className='w-1/2 border rounded border-lime outline-none'></select>
+          <select name="" id="" className='w-56 border rounded border-lime outline-none'></select>
           <div><span>No users transaction found</span></div>
         </div>
       </div>
       
       {/* This is where the prices of fuel is adjusted*/}
-      <div className='text-gray'>
+      <div className='text-gray mx-16'>
         <h1 className='text-lg font-semibold'>Price Control</h1>
         <div className='p-8 flex flex-col gap-8 place-items-left'>
           <div className='flex flex-row gap-2'>
@@ -57,7 +57,7 @@ const Admin = () => {
       </div>
 
       {/* Employee data */}
-      <div className='text-gray'>
+      <div className='text-gray mx-16'>
         <h1 className='text-gray text-lg font-semibold'>Employee</h1>
         <div className='p-8 flex flex-col gap-4 place-items-left'>
           <span>No registered Employee</span>

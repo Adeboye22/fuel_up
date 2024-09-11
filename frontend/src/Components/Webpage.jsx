@@ -22,7 +22,7 @@ const Webpage = () => {
     <div data-aos="fade-up" className='sm:pt-0 h-full bg-black pt-0'>
       <div className=''>
         <Marquee className='bg-lime'>
-            <p className='text-lg text-gray'> &nbsp; You don't have to compromise your comfort just to get fuel. You order, we deliver!</p>
+            <p className='text-lg text-gray'> &nbsp; You don't have to compromise your comfort just to get fuel. You order from the nearest filling station, we deliver!</p>
             <p className='text-lg text-red'>&nbsp; Petrol (PMS) at N665.00, Diesel (AGO) at N1750.00, Kerosene (DPK) at N1450.00.</p>
         </Marquee>
       </div>
