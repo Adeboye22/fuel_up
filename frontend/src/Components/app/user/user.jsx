@@ -25,7 +25,7 @@ const User = () => {
     ];
 
   return (
-    <div data-aos="fade-up" className='h-screen text-gray bg-my-image bg-cover'>
+    <div data-aos="fade-up" className='h-screen text-gray bg-my-image bg-cover text-lg'>
       <div className='bg-nozzle'>
         <div className="backdrop-filter backdrop-blur-sm px-4 py-4">
           <div>
@@ -43,7 +43,7 @@ const User = () => {
         </div>
       </div>
 
-      <div className="px-4">
+      <div className="sm:px-4 px-12">
 
         {/* order section */}
         <div className='my-8'>
@@ -58,7 +58,7 @@ const User = () => {
             </Link>
             
           </div>
-          <div className='flex flex-row justify-evenly pb-8'>
+          <div className='flex flex-row sm:justify-evenly justify-center gap-24 pb-8'>
             <div className='flex flex-col gap-4'>
               <h1 className="text-center">Petrol</h1>
 
@@ -92,8 +92,8 @@ const User = () => {
           <Outlet/>
         </div>
         <div className='pb-12'>
-          <h1 className='text-xl font-bold pb-2'>Note</h1>
-          <p>After placing an order, our dispatch agents will contact you for confirmation before delivery.</p>
+          <h1 className='text-xl font-bold pb-2'>Disclaimer Notice</h1>
+          <p>After placing an order, our dispatch agents will contact you for confirmation before delivery. We do not sell fuel products, we only help our customers purchase fuel from the nearest available filling station and deliver it at their doorstep.</p>
         </div>
       </div>
     </div>
