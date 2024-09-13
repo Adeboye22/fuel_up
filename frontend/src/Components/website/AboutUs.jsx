@@ -1,7 +1,16 @@
 // This is the codebase for About Us
-import React from 'react'
+import React, { useEffect } from 'react'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const AboutUs = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: false, // Whether animation should happen only once - while scrolling down
+    });
+  }, []);
+
   return (
     <div className='flex flex-col gap-12'>
       <div className='flex flex-col gap-4'>
@@ -37,9 +46,9 @@ const AboutUs = () => {
         <p>
           Overall, Fuel Up offer a win-win situation for both businesses and consumers. We provide convenience, cost-effectiveness, efficiency safety, and even potential environmental benefits.
         </p>
-        <div>
+        <div data-aos="slide-right" className='bg-lime opacity-6 p-8 border rounded'>
         <h1 className='text-red font-bold'>Disclaimer Notice:</h1>
-        <p>We do not sell fuel (We are not fuel marketers). We only dispatch fuel based on our clients orders from the nearest filling station.</p>
+        <p className='text-gray'>We do not sell fuel (We are not fuel marketers). We only dispatch fuel based on our clients orders from the nearest filling station.</p>
         </div>
         </div>
       </div>
