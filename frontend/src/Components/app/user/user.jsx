@@ -58,7 +58,7 @@ const User = () => {
             </Link>
             
           </div>
-          <div className='flex flex-row sm:justify-evenly justify-center gap-24 pb-8'>
+          <div className='flex flex-row sm:justify-evenly sm:gap-0 justify-center gap-24 pb-8'>
             <div className='flex flex-col gap-4'>
               <h1 className="text-center">Petrol</h1>
 
