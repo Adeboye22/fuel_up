@@ -11,29 +11,50 @@ const Petrol = () => {
     )
   }
 
-  const Options = [
-    { value: 'Option 1', label: "10 Litres", amount:8000  },
-    { value: 'Option 2', label: '15 Litres', amount: 12000},
-    { value: 'Option 3', label: '20 Litres', amount: 16000}
-  ]
-
-  const [select, setSelect] = useState(Options[0].value);
-  const [selectedAmount, setSelectedAmount] = useState(Options[0].amount);
+  const Options = [{
+      "NNPC": [
+        { value: 'Option 1', label: "10 Litres", amount:8000  },
+        { value: 'Option 2', label: '15 Litres', amount: 12000},
+        { value: 'Option 3', label: '20 Litres', amount: 16000}
+      ],
+      "MOBIL": [
+        { value: 'Option 1', label: "10 Litres", amount:8000  },
+        { value: 'Option 2', label: '15 Litres', amount: 12000},
+        { value: 'Option 3', label: '20 Litres', amount: 16000}
+    ],
+      "TOTAL": [
+        { value: 'Option 1', label: "10 Litres", amount:8000  },
+        { value: 'Option 2', label: '15 Litres', amount: 12000},
+        { value: 'Option 3', label: '20 Litres', amount: 16000}
+      ]
+    }];
+    
+  const [selectedStation, setSelectedStation] = useState('NNPC'); //Default station
+  const [selectedOption, setSelectedOption] = useState(Options[0].NNPC[0].value);
+  const [selectedAmount, setSelectedAmount] = useState(Options[0].NNPC[0].amount)
 
   // this function controls the options dropdown
-  const handleSelectedOption = (event) => {
-    const selectedValue = event.target.value;
-    setSelect(selectedValue);
+  const handleStationChange = (event) => {
+    setSelectedStation(event.target.value);
+    setSelectedOption(Options[0][event.target.value][0].value); //Reset selected option when station changes
     
-    const selectedOption = Options.find(option => option.value === selectedValue);
-    setSelectedAmount(selectedOption.amount); //update a selected amount
+    // const selectedOption = Options.find(option => option.value === selectedValue);
+    // setSelectedAmount(selectedOption.amount); //update a selected amount
   }
 
-  // calculates the service charge by 8%
-  const charge = selectedAmount * 0.08; 
+  const handleOptionChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
 
-  // calculates the total bill including the percentage charge
-  const total = selectedAmount + charge;
+    const select = Options.find(option => option.value === selectedValue);
+    setSelectedAmount(select.amount); //update a selected amount
+  }
+
+  // // calculates the service charge by 8%
+  // const charge = selectedAmount * 0.08; 
+
+  // // calculates the total bill including the percentage charge
+  // const total = selectedAmount + charge;
 
   // this function submits the options chosen
    const handleSubmit = (e) => {
@@ -49,27 +70,26 @@ const Petrol = () => {
         </button>
       </div>
       <form action="" onSubmit={handleSubmit} className='flex flex-col place-items-center gap-2'>
-        <select value={select} onChange={handleSelectedOption} className='text-gray w-64 border border-lime outline-0 p-1'>
-          {Options.map((option) => (
-          <option value={option.value} key={option.value} className='text-gray text-center w-48'>
-            {option.label}
-          </option>
+        {/* Station change */}
+        <select value={selectedStation} onChange={handleStationChange} className='text-gray w-64 border border-lime outline-0 p-1'> 
+          {Object.keys(Options[0]).map((station) => (
+            <option value={station} key={station} className='text-gray text-center w-48'>
+              {station}
+            </option>
           ))}
         </select>
-        {/* Display the selected amount */}
-        <p className='text-gray'> Amount: ₦ <input type="text" value={selectedAmount} readOnly className='text-lime bg-transparent outline-none w-12'/></p>
+        {/* change litres */}
+        <select value={selectedOption} onChange={handleOptionChange} className='text-gray w-64 border border-lime outline-0 p-1 text-center'>
+          {Options[0][selectedStation].map((option) => (
+          <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+        </select>
+        {/* display price amount of selected litres */}
+        <div>
+          <span>Amount: </span>
+          <span className='text-lime'>N<input type="text" value={selectedAmount} readOnly className='text-lime bg-transparent outline-none w-12'/></span>
+        </div>
 
-        {/* Display the service charge by 8% */}
-        <p className='text-gray'>Service Charge <span className='text-lime'>
-          (8%)</span>: ₦ <input type="text" value={charge} readOnly className='text-lime outline-none w-12'/>
-        </p>
-
-        {/* Display delivery fee */}
-        <p className='text-gray text-base bg-transparent'>
-           Delevery fee: ₦ <input type="text" value="0" readOnly className='text-lime outline-none w-12'/>
-        </p>
-        {/* Display the total amount */}
-        <p className='text-gray pt-4'>Total: ₦ <input type="text" value={total} readOnly className='text-lime outline-none w-12'/></p>
         <button type="submit" className='border border-lime rounded outline-dotted outline-2 outline-lime outline-offset-2 w-24 mb-4'>Order</button>
       </form>
     </div>

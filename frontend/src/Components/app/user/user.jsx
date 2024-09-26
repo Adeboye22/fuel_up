@@ -25,12 +25,12 @@ const User = () => {
     ];
 
   return (
-    <div data-aos="fade-up" className='h-screen text-gray bg-my-image bg-cover text-lg'>
+    <div data-aos="fade-up" className='h-screen text-gray bg-my-image bg-cover text-lg sm:text-base'>
       <div className='bg-nozzle'>
         <div className="backdrop-filter backdrop-blur-sm px-4 py-4">
           <div>
             {users.map((item,index) => (
-                <h1 className='text-gray font-bold text-xl py-2' key={item.id}>Hi {item.name}!</h1>
+                <h1 className='text-gray font-bold text-xl sm:text-lg py-2' key={item.id}>Hi {item.name}!</h1>
             ))}
           </div>
 
@@ -93,7 +93,7 @@ const User = () => {
         </div>
         <div className='pb-12'>
           <h1 className='text-xl font-bold pb-2'>Disclaimer Notice</h1>
-          <p>After placing an order, our dispatch agents will contact you for confirmation before delivery. We do not sell fuel products, we only help our customers purchase fuel from the nearest available filling station and deliver it at their doorstep.</p>
+          <p>After placing an order, our dispatch agents will contact you for confirmation before delivery. Please note, we do not sell fuel products, we only help our customers purchase fuel from the nearest available filling station and deliver it at their doorstep.</p>
         </div>
       </div>
     </div>
