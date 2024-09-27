@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import App from '../../assets/App.jpeg';
 
 const AboutUs = () => {
   useEffect(() => {
@@ -19,12 +20,19 @@ const AboutUs = () => {
           No more fuel stress! FuelUp delivers fuel to your doorstep, anytime. We offer ease and comfort. Fuel is purchased at the closest filling station to our customers resident. Businesses? We offer bulk fuel deliveries to keep you running.
         </span>
       </div>
-      <div className='flex flex-col gap-4'>
-        <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Why Fuel Up?</strong></h1>
-        <p className='sm:text-base text-lg text-white'>
-          FuelUp delivers fuel to your doorstep, anytime, anywhere. No more stress about power outages or unreliable stations. Order online, schedule delivery, and power your home or business.
-        </p>
+
+      <div className='sm:flex-col sm:place-items-center sm:gap-12 sm:text-center sm:h-full flex flex-row gap-4 bg-white h-64 p-12 border rounded justify-evenly'>
+        <div className='sm:w-full flex flex-col gap-4 w-1/2'>
+          <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Why Fuel Up?</strong></h1>
+          <p className='sm:text-base text-lg text-gray'>
+            FuelUp delivers fuel to your doorstep, anytime, anywhere. No more stress about power outages or unreliable stations. Order online, schedule delivery, and power your home or business.
+          </p>
+        </div>
+        <div data-aos="zoom-in" className='w-48 border'>
+          <img src={App} alt="" className='sm:my-0 sm:self-center h-60 w-36 -my-10 border solid outline outline-4 rounded-lg border-lime'/>
+        </div>
       </div>
+
       <div className='flex flex-col gap-4'>
         <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Benefits</strong></h1>
         <div className='sm:text-base text-lg text-white flex flex-col gap-4'>

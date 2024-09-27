@@ -33,7 +33,7 @@ const NavBar = () => {
             <ul className='sm:flex sm:flex-col sm:gap-4 sm:my-36 sm:text-white sm:text-lg text-gray flex flex-row gap-8 px-8 font-medium'>
               <li><NavLink to="/" onClick={closeNavBar} style={activeNav} className='pb-1'>Home</NavLink></li>
               <li><NavLink to="services" onClick={closeNavBar} style={activeNav} className='pb-1'>Services</NavLink></li>
-              <li><NavLink to="pricing" onClick={closeNavBar} style={activeNav} className='pb-1'>Pricing</NavLink></li>
+              {/* <li><NavLink to="pricing" onClick={closeNavBar} style={activeNav} className='pb-1'>Pricing</NavLink></li> */}
               <button onClick={login} className='sm:hidden bg-black px-4 py-2 -mt-2 text-white border rounded'>Login</button>
               <li className='sm:block hidden'><NavLink to="login" onClick={closeNavBar} style={activeNav} className='pb-1'>Login</NavLink></li>
               <li><NavLink to="signup" onClick={closeNavBar} style={activeNav} className='pb-1'>Sign up</NavLink></li>

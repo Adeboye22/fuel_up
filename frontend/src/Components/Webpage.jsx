@@ -23,7 +23,7 @@ const Webpage = () => {
       <div className=''>
         <Marquee className='bg-lime'>
             <p className='text-lg text-gray'> &nbsp; You don't have to compromise your comfort just to get fuel. You order from the nearest filling station, we deliver!</p>
-            <p className='text-lg text-red'>&nbsp; Petrol (PMS) at N665.00, Diesel (AGO) at N1750.00, Kerosene (DPK) at N1450.00.</p>
+            <p className='text-lg text-red'>&nbsp; Petrol (PMS) at N00.00, Diesel (AGO) at N00.00, Kerosene (DPK) at N00.00.</p>
         </Marquee>
       </div>
       {/* hero section */}

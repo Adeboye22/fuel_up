@@ -50,7 +50,7 @@ const Signup = () => {
     setPopupVisible('Submitting...')
     try {
       const response = await axios.post('https://jsonplaceholder.typicode.com/posts', value)
-      setPopupVisible('Account created successfully!');
+      setPopupVisible('App still in progress');
       setValue({
         firstname: '',
         lastname: '',
