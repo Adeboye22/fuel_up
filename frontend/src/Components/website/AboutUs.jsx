@@ -17,7 +17,7 @@ const AboutUs = () => {
       <div className='flex flex-col gap-4'>
         <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>About Us</strong></h1>
         <span className='sm:text-base text-lg text-white'>
-          No more fuel stress! FuelUp delivers fuel to your doorstep, anytime. We offer ease and comfort. Fuel is purchased at the closest filling station to our customers resident. Businesses? We offer bulk fuel deliveries to keep you running.
+          We are Nigeria's first fuel dispatch service. FuelUp is a reliable door-step fuel delivery service. We offer ease, comfort, and emergency fuel delivery for unexpected situations.
         </span>
       </div>
 
@@ -25,7 +25,7 @@ const AboutUs = () => {
         <div className='sm:w-full flex flex-col gap-4 w-1/2'>
           <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Why Fuel Up?</strong></h1>
           <p className='sm:text-base text-lg text-gray'>
-            FuelUp delivers fuel to your doorstep, anytime, anywhere. No more stress about power outages or unreliable stations. Order online, schedule delivery, and power your home or business.
+            FuelUp delivers fuel to your doorstep, anytime, anywhere. We provide comfort and keep power from going out. You can order online, schedule delivery, and power your home or business. We help keep big businesses (like schools, hotels, fancy restaurants, supermarkets, retail stores, etc) running through our bulk fuel delivery service.
           </p>
         </div>
         <div data-aos="zoom-in" className='w-48 border'>
@@ -49,7 +49,7 @@ const AboutUs = () => {
           <strong className='text-lime'>Improved Efficiency:</strong> Businesses can streamline their operations by outsourcing fuel management. This frees up employee time and optimize their fuel consumption.
           </p>
           <p>
-          <strong className='text-lime'>Safety and Reliability:</strong> Trained professionals handle the transportation and delivery of fuel, ensuring safety and compliance with regulations. Fuel Up will provide a guranteed fuel supply, mitigating concerns about shortages or disruptions at gas stations. We often source fuel from reputable filling stations, ensuring consistent quality and performance for your equipment.
+          <strong className='text-lime'>Safety and Reliability:</strong> Our trained professionals handle the transportation and delivery of fuel, ensuring safety and compliance with regulations. Fuel Up provides a guranteed fuel supply, mitigating concerns about shortages or disruptions at gas stations. We often source fuel from reputable filling stations, ensuring consistent quality and performance for your equipment.
         </p>
         <p>
           Overall, Fuel Up offer a win-win situation for both businesses and consumers. We provide convenience, cost-effectiveness, efficiency safety, and even potential environmental benefits.
