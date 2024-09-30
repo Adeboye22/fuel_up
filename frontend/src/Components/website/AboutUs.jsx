@@ -21,7 +21,7 @@ const AboutUs = () => {
         </span>
       </div>
 
-      <div className='sm:flex-col sm:py-0 py-12 sm:place-items-center sm:gap-12 sm:text-center sm:h-full flex flex-row gap-4 bg-white h-64 p-12 border rounded justify-evenly'>
+      <div className='sm:flex-col sm:place-items-center sm:gap-12 sm:text-center sm:h-full flex flex-row gap-4 bg-white h-64 p-12 border rounded justify-evenly'>
         <div className='sm:w-full flex flex-col gap-4 w-1/2'>
           <h1 className='sm:text-lg text-2xl text-lime font-black'><strong>Why Fuel Up?</strong></h1>
           <p className='sm:text-base text-lg text-gray'>
