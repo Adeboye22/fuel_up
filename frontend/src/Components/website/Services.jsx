@@ -34,7 +34,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src={Nozzles} alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src={Nozzles} alt="fuel dispensing" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
         </section>
 
@@ -50,7 +50,7 @@ const Services = () => {
             whileHover={{
               scale:1.1,
             }}>
-            <img src={Availability} alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src={Availability} alt="24/7 availability" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
           <motion.div className='sm:p-8 self-center bg-altBlack text-white p-16 my-12'
           initial={{opacity:0}}
@@ -92,7 +92,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src="https://media.istockphoto.com/id/1368573426/photo/mature-african-man-talking-on-cellphone-using-laptop-in-office.jpg?s=612x612&w=0&k=20&c=uh4TcBEIPxm6NyY4gYD9X-MA89iJsVOIov5KReJzExo=" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src="https://media.istockphoto.com/id/1368573426/photo/mature-african-man-talking-on-cellphone-using-laptop-in-office.jpg?s=612x612&w=0&k=20&c=uh4TcBEIPxm6NyY4gYD9X-MA89iJsVOIov5KReJzExo=" alt="accessibility" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
         </section>
 
@@ -108,7 +108,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src="https://images.app.goo.gl/5okH9ib5aGMV8DhZ8" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src="https://images.app.goo.gl/5okH9ib5aGMV8DhZ8" alt="bulk fuel delivery" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
           <motion.div className='sm:p-4 self-center bg-altBlack text-white p-16 my-12'
           initial={{opacity:0}}
@@ -150,7 +150,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src="https://st2.depositphotos.com/4012355/8044/i/450/depositphotos_80447722-stock-photo-best-quality-concept.jpg" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src="https://st2.depositphotos.com/4012355/8044/i/450/depositphotos_80447722-stock-photo-best-quality-concept.jpg" alt="quality assurance" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
         </section>
 
@@ -166,7 +166,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src="https://media.istockphoto.com/id/1437821111/photo/customer-service-happy-and-communication-of-woman-at-call-center-pc-talking-with-joyful-smile.webp?b=1&s=170667a&w=0&k=20&c=VaNC1beA8yRqc22HZdOnyyl8KrHNNXNmOoZ5T_xr6HY=" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src="https://media.istockphoto.com/id/1437821111/photo/customer-service-happy-and-communication-of-woman-at-call-center-pc-talking-with-joyful-smile.webp?b=1&s=170667a&w=0&k=20&c=VaNC1beA8yRqc22HZdOnyyl8KrHNNXNmOoZ5T_xr6HY=" alt="24/7 customer support" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
           <motion.div className='sm:p-4 self-center bg-altBlack text-white p-16 my-12'
           initial={{opacity:0}}
