@@ -108,7 +108,7 @@ const Services = () => {
           whileHover={{
             scale:1.1,
           }}>
-            <img src="https://images.app.goo.gl/rZeEPxKttj43KaGF7" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
+            <img src="https://images.app.goo.gl/5okH9ib5aGMV8DhZ8" alt="" className='sm:hidden border rounded border-0 shadow-lg shadow-altBlack w-72 h-60 mt-12'/>
           </motion.div>
           <motion.div className='sm:p-4 self-center bg-altBlack text-white p-16 my-12'
           initial={{opacity:0}}
