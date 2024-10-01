@@ -8,8 +8,8 @@ const Location = () => {
   return (
     <div className='sm:p-2 flex flex-col justify-center p-12 text-white'>
       
-      <h1 className='sm:text-base text-lg font-bold pb-2'>We deliver to the following areas:</h1>
-        <div className='flex flex-col py-6 gap-2'>
+      <p className='sm:text-base text-lg font-bold pb-2'>We deliver to the following areas:</p>
+        <div className='flex flex-col py-6 gap-2 justify-center'>
           <div className='flex flex-row gap-2'>
             <span className='text-lg'>Lekki Phase 1</span>
             <FaMapPin className='text-red text-xl my-1'/>
