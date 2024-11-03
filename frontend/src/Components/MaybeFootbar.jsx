@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const MaybeNavBar = ({ children }) => {
-
+const MaybeFootbar = ({ children }) => {
     const location = useLocation();
-    const[showNavBar, setShowNavBar] = useState(false);
+    const[showFooter, setShowFooter] = useState(false);
 
     useEffect(() => {
         console.log('this is location: ', location)
         if(location.pathname === '/user') {
-            setShowNavBar(false)
-        } else if(location.pathname === '/admin') {
-          setShowNavBar(false)
+            setShowFooter(false)
+        } else if(location.pathname === '/admin'){
+            setShowFooter(false)
         } else {
-          setShowNavBar(true)
-      }
-
+            setShowFooter(true)
+        }
     }, [location])
+
   return (
     <div>
-      {showNavBar && children}
+      {showFooter && children}
     </div>
   )
 }
 
-export default MaybeNavBar
+export default MaybeFootbar

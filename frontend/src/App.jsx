@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import Header from './Components/header';
 import Footbar from './Components/Footbar';
 import MaybeNavBar from "./Components/maybeNavBar";
+import AdminMenu from "./Components/AdminMenu";
+import AdminNav from "./Components/AdminNav";
+import MaybeFootbar from "./Components/MaybeFootbar";
 
 // pages
 import Webpage from "./Components/Webpage";
@@ -25,6 +28,9 @@ function App() {
     <MaybeNavBar>
       <Header/>
     </MaybeNavBar>
+    <AdminMenu>
+      
+    </AdminMenu>
     <Routes>
       <Route path='/' element={<Webpage/>} />
       <Route path='/login' element={<Login/>} />
@@ -40,9 +46,9 @@ function App() {
         <Route path="transactions" element={<History/>} />
       </Route> 
     </Routes>
-    <MaybeNavBar>
+    <MaybeFootbar>
       <Footbar/>
-    </MaybeNavBar>
+    </MaybeFootbar>
     </>
   )
 }
