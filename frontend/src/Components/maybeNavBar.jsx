@@ -12,6 +12,14 @@ const MaybeNavBar = ({ children }) => {
             setShowNavBar(false)
         } else if(location.pathname === '/admin') {
           setShowNavBar(false)
+        } else if(location.pathname === '/user/orderPetrol'){
+          setShowNavBar(false)
+        } else if(location.pathname === '/user/orderDiesel'){
+          setShowNavBar(false)
+        } else if(location.pathname === '/user/orderKero'){
+          setShowNavBar(false)
+        } else if(location.pathname === '/user/transactions'){
+          setShowNavBar(false)
         } else {
           setShowNavBar(true)
       }

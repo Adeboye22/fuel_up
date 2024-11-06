@@ -29,7 +29,7 @@ function App() {
       <Header/>
     </MaybeNavBar>
     <AdminMenu>
-      
+      <AdminNav/>
     </AdminMenu>
     <Routes>
       <Route path='/' element={<Webpage/>} />
