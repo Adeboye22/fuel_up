@@ -15,7 +15,7 @@ const Tab = ({ tabs }) => {
                     className={`px-4 py-2 w-full border-x ${activeTab === index? 'bg-gray border-t-4 border-white':'bg-lime border-0 border-none'}`} onClick={() => handleTabClick(index)}>{tab.label}</button>
                 ))}
             </div>
-            <div className='p-4 text-center text-gray mt-8 flex flex-col'>
+            <div className='text-center text-gray mt-8 flex flex-col py-12 text-3xl font-bold sm:text-base sm:font-normal sm:text-center sm:mt-0'>
                 {tabs[activeTab].content}
                 <p className='text-red'>
                     {tabs[activeTab].note}

@@ -27,11 +27,12 @@ const User = () => {
   return (
     <div data-aos="fade-up" className='h-screen text-gray bg-my-image bg-cover text-lg sm:text-base'>
       <div className='bg-nozzle'>
-        <div className="backdrop-filter backdrop-blur-sm px-4 py-4">
-          <div>
+        <div className="backdrop-filter backdrop-blur-sm px-24 py-24 sm:px-4 sm:px-4">
+          <div className='flex flex-row justify-between'>
             {users.map((item,index) => (
                 <h1 className='text-gray font-bold text-xl sm:text-lg py-2' key={item.id}>Hi {item.name}!</h1>
             ))}
+            <button className='bg-red text-white p-2 border rounded text-base'>Log out</button>
           </div>
 
           {/* tab section */}
@@ -48,12 +49,12 @@ const User = () => {
         {/* order section */}
         <div className='my-8'>
           <div className='flex flex-row pb-12 justify-between'>
-            <h1 className='text-xl font-bold'>Place Order</h1>
+            <h1 className='text-2xl sm:text-xl font-bold'>Place Order</h1>
 
             <Link to='/user/transactions'>
             <div className='flex flex-row gap-2'>
-              <span className='mt-1 text-base text-red'>transaction history</span>
-              <FaClock className='text-lime mt-2'/>
+              <span className='mt-1 text-2xl sm:text-base text-red'>transaction history</span>
+              <FaClock className='text-lime mt-3 sm:mt-2'/>
             </div>
             </Link>
             
@@ -92,8 +93,8 @@ const User = () => {
           <Outlet/>
         </div>
         <div className='pb-12'>
-          <h1 className='text-xl font-bold pb-2'>Disclaimer Notice</h1>
-          <p>After placing an order, our dispatch agents will contact you for confirmation before delivery. Please note, we do not sell fuel products, we only help our customers purchase fuel from the nearest available filling station and deliver it at their doorstep.</p>
+          <h1 className='text-2xl sm:text-xl font-bold pb-2'>Disclaimer Notice</h1>
+          <p className='text-lg sm:text-base'>After placing an order, our dispatch agents will contact you for confirmation before delivery. Please note, we do not sell fuel products, we only help our customers purchase fuel from the nearest available filling station and deliver it at their doorstep.</p>
         </div>
       </div>
     </div>

@@ -12,9 +12,9 @@ const History = () => {
   }
   
   return (
-    <div className='text-center'>
+    <div className='text-center bg-lime p-8'>
       <div className='flex flex-row justify-center gap-4 relative'>
-        <h1 className='text-lime text-lg font-bold p-8'>Transaction History</h1>
+        <h1 className='text-white text-lg font-bold p-8'>Transaction History</h1>
         <button onClick={closeTab}>
           <FaTimes className='absolute text-red text-xs h-4 text-center top-1.5 right-3'/>
         </button>

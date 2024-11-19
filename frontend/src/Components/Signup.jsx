@@ -49,7 +49,7 @@ const Signup = () => {
     setErrors(UserValidate(value));
     setPopupVisible('Submitting...')
     try {
-      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', value)
+      const response = await axios.post('https://103.45.245.19/v1', value)
       setPopupVisible('App still in progress');
       setValue({
         firstname: '',
