@@ -49,8 +49,8 @@ const Signup = () => {
     setErrors(UserValidate(value));
     setPopupVisible('Submitting...')
     try {
-      const response = await axios.post('https://103.45.245.19/v1', value)
-      setPopupVisible('App still in progress');
+      const response = await axios.post('https://103.45.245.19/v1/auth/signup', value)
+      setPopupVisible('Account created!');
       setValue({
         firstname: '',
         lastname: '',
