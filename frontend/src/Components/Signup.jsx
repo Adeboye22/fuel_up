@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Validate from './ValidateSignup';
-import Navbar from './navbar';
 import UserValidate from './ValidateSignup';
 import axios from'axios';
 import Image from '../assets/EcoFuel.gif';
@@ -19,8 +18,8 @@ const Signup = () => {
 
   // this objects stores the user data
   const [value, setValue] = useState({
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: ''
   });
@@ -34,6 +33,8 @@ const Signup = () => {
   // This hook handles the text display on successful user creation
   const [popupVisible, setPopupVisible] = useState('');
 
+  // This hook handles the text display on successful user creation
+  const [popupError, setPopupError] = useState('');
   // This function collects the user data
   const handleInput = e => {
     const name = e.target.name;
@@ -47,20 +48,21 @@ const Signup = () => {
   const handleSubmit= async(e) => {
     e.preventDefault();
     setErrors(UserValidate(value));
-    setPopupVisible('Submitting...')
     try {
-      const response = await axios.post('https://103.45.245.19/v1/auth/signup', value)
+      const response = await axios.post('http://103.45.245.19/v1/auth/signup', value)
       setPopupVisible('Account created!');
       setValue({
-        firstname: '',
-        lastname: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: ''
       });
+      navigate('/login')
 
       window.scrollTo(0, 0); //scroll to the top
     } catch (err) {
       console.log('this is an error', err);
+      setPopupError('Account not created!')
     }
   }
 
@@ -90,20 +92,21 @@ const Signup = () => {
         </div>
 
         {popupVisible && <p className='text-lime text-center'>{popupVisible}</p>}
+        {popupError && <p className='text-red text-center'>{popupError}</p>}
 
         <form onSubmit={handleSubmit} className='sm:my-8 sm:px-0 px-8 flex flex-col gap-2'>
           <h3 className='text-white'>First Name:</h3>
 
           <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
             <FaUser className='text-lime ml-4'/>
-            <input type="text" name='firstname' onChange={handleInput} placeholder='first name' className='w-4/5 outline-none p-2' />
+            <input type="text" name='firstName' onChange={handleInput} placeholder='first name' className='w-4/5 outline-none p-2' />
           </div>
           {errors.firstname && <span className="text-red">{errors.firstname}</span>}
 
           <h3 className='text-white'>Last Name:</h3>
           <div className='sm:p-2 sm:gap-2 bg-white border rounded flex place-items-center gap-4 p-3'>
             <FaUser className='text-lime ml-4'/>
-            <input type="text" name='lastname' onChange={handleInput} placeholder='last name' className='w-4/5 outline-none p-2'/>
+            <input type="text" name='lastName' onChange={handleInput} placeholder='last name' className='w-4/5 outline-none p-2'/>
           </div>
           {errors.lastname && <span className="text-red">{errors.lastname}</span>}
 

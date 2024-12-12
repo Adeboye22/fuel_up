@@ -62,6 +62,10 @@ const handleInput = e => {
           <img src={Image} alt="" className='sm:h-8 sm:w-8 h-8 w-8 border rounded self-center'/>
         </div>
 
+        <div>
+          <p className='text-lime flex justify-center text-lg mt-4'>Enter your password</p>
+        </div>
+        
         <form  className='sm:mt-8 flex flex-col gap-4 pt-8'>
           <label htmlFor="email" className='text-white text-xl'>user email: </label>
 

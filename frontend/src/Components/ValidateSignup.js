@@ -5,21 +5,21 @@ const UserValidate = (value) => {
     const firstName_pattern = /^[a-zA-Z]{2,}$/
     const lastName_pattern = /^[a-zA-Z]{2,}$/
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const password_pattern = /^[a-zA-Z0-9]{3,}$/
+    const password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d#@!$%*?&]{8,}$/;
 
-    if(value.firstname === ""){
-        errors.firstname = "This field cannot be empty!"
-    } else if(!firstName_pattern.test(value.firstname)){
-        errors.firstname = "Input more than 2 characters with a capital letter";
+    if(value.firstName === ""){
+        errors.firstName = "This field cannot be empty!"
+    } else if(!firstName_pattern.test(value.firstName)){
+        errors.firstName = "Input more than 2 characters with a capital letter";
     } else{
-        errors.firstname = ""
+        errors.firstName = ""
     }
-    if(value.lastname === ""){
-        errors.lastname = "This field cannot be empty!"
-    } else if(!lastName_pattern.test(value.lastname)){
-        errors.lastname = "Input more than 2 characters with a capital letter"
+    if(value.lastName === ""){
+        errors.lastName = "This field cannot be empty!"
+    } else if(!lastName_pattern.test(value.lastName)){
+        errors.lastName = "Input more than 2 characters with a capital letter"
     } else{
-        errors.lastname = ""
+        errors.lastName = ""
     }
     if(value.email === ""){
         errors.email = "This field cannot be empty!"
@@ -31,7 +31,7 @@ const UserValidate = (value) => {
     if(value.password === ""){
         errors.password = "This field cannot be empty!"
     } else if(!password_pattern.test(value.password)){
-        errors.password = "Password must be more than three characters!"
+        errors.password = "Password must be more than eight characters, has an uppercase, lowercase and a special character."
     } else{
         errors.password = ""
     }

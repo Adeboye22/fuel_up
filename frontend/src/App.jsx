@@ -4,7 +4,6 @@ import Header from './Components/header';
 import Footbar from './Components/Footbar';
 import MaybeNavBar from "./Components/maybeNavBar";
 import AdminMenu from "./Components/AdminMenu";
-import AdminNav from "./Components/AdminNav";
 import MaybeFootbar from "./Components/MaybeFootbar";
 
 // pages
@@ -28,9 +27,7 @@ function App() {
     <MaybeNavBar>
       <Header/>
     </MaybeNavBar>
-    <AdminMenu>
-      <AdminNav/>
-    </AdminMenu>
+    <AdminMenu/>
     <Routes>
       <Route path='/' element={<Webpage/>} />
       <Route path='/login' element={<Login/>} />
@@ -38,7 +35,9 @@ function App() {
       {/* <Route path='/pricing' element={<Pricing/>} /> */}
       <Route path='/services' element={<Services/>} />
       <Route path='/redirect_mail' element={<MailVerification/>} />
-      <Route path='/admin' element={<Admin/>} />
+      <Route path='/admin' element={<Admin/>}>
+        <Route/>
+      </Route>
       <Route path='/user' element={<User/>}>
         <Route path="orderPetrol" element={<Petrol/>} />
         <Route path="orderDiesel" element={<Diesel/>} />
