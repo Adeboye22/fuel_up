@@ -19,6 +19,11 @@ import Kero from "./Components/app/user/Kero"
 import Diesel from "./Components/app/user/Diesel"
 import History from "./Components/app/user/History"
 import Admin from "./Components/app/admin/admin"
+import Dashboard from "./Components/app/admin/dashBoard"
+import Price from "./Components/app/admin/price"
+import UserList from "./Components/app/admin/userList"
+import Employee from "./Components/app/admin/employee"
+
 
 function App() {
 
@@ -35,9 +40,14 @@ function App() {
       {/* <Route path='/pricing' element={<Pricing/>} /> */}
       <Route path='/services' element={<Services/>} />
       <Route path='/redirect_mail' element={<MailVerification/>} />
+      {/* Route for Admin */}
       <Route path='/admin' element={<Admin/>}>
-        <Route/>
+        <Route path="dashboard" element={<Dashboard/>} />
+        <Route path="priceCtrl" element={<Price/>} />
+        <Route path="userList" element={<UserList/>} />
+        <Route path="employee" element={<Employee/>} />
       </Route>
+      {/* Route for App Users */}
       <Route path='/user' element={<User/>}>
         <Route path="orderPetrol" element={<Petrol/>} />
         <Route path="orderDiesel" element={<Diesel/>} />

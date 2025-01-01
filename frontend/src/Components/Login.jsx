@@ -23,7 +23,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   const [error, setError] = useState({});
-const handleInput = e => {
+  const handleInput = e => {
     setValue(prev => {
       return {...prev, [e.target.name]: [e.target.value]}
     })

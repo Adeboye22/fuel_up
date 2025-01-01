@@ -11,6 +11,14 @@ const MaybeFootbar = ({ children }) => {
             setShowFooter(false)
         } else if(location.pathname === '/admin'){
             setShowFooter(false)
+        }else if (location.pathname === '/admin/dashboard'){
+          setShowFooter(false)
+        } else if (location.pathname ==='/admin/priceCtrl'){
+          setShowFooter(false)
+        } else if (location.pathname === '/admin/userList') {
+          setShowFooter(false)
+        } else if(location.pathname === '/admin/employee'){
+          setShowFooter(false)
         } else if(location.pathname === '/user/orderPetrol'){
           setShowFooter(false)
         } else if(location.pathname === '/user/orderDiesel'){

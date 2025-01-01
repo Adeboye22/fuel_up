@@ -12,7 +12,16 @@ const MaybeNavBar = ({ children }) => {
             setShowNavBar(false)
         } else if(location.pathname === '/admin') {
           setShowNavBar(false)
-        } else if(location.pathname === '/user/orderPetrol'){
+        } else if (location.pathname === '/admin/dashboard') {
+          setShowNavBar(false)
+        } else if (location.pathname === '/admin/priceCtrl') {
+          setShowNavBar(false)
+        } else if (location.pathname === '/admin/userList'){
+          setShowNavBar(false)
+        } else if (location.pathname === '/admin/employee'){
+          setShowNavBar(false)
+        }
+         else if(location.pathname === '/user/orderPetrol'){
           setShowNavBar(false)
         } else if(location.pathname === '/user/orderDiesel'){
           setShowNavBar(false)
