@@ -27,7 +27,9 @@ const MaybeFootbar = ({ children }) => {
           setShowFooter(false)
         } else if(location.pathname === '/user/transactions'){
           setShowFooter(false)
-        } else {
+        } else if(location.pathname === '/verify_mail'){
+          setShowFooter(false)
+        }else {
             setShowFooter(true)
         }
     }, [location])

@@ -11,7 +11,6 @@ import Webpage from "./Components/Webpage";
 import Services from './Components/website/Services';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
-import MailVerification from "./Components/mailVerification";
 // import Pricing from "./Components/website/Pricing";
 import User from "./Components/app/user/user";
 import Petrol from "./Components/app/user/Petrol"
@@ -23,6 +22,7 @@ import Dashboard from "./Components/app/admin/dashBoard"
 import Price from "./Components/app/admin/price"
 import UserList from "./Components/app/admin/userList"
 import Employee from "./Components/app/admin/employee"
+import VerifyMail from "./Components/verifyMail"
 
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
       <Route path='/signup' element={<Signup/>} />
       {/* <Route path='/pricing' element={<Pricing/>} /> */}
       <Route path='/services' element={<Services/>} />
-      <Route path='/redirect_mail' element={<MailVerification/>} />
+      <Route path='/verify_mail' element={<VerifyMail/>} />
       {/* Route for Admin */}
       <Route path='/admin' element={<Admin/>}>
         <Route path="dashboard" element={<Dashboard/>} />
