@@ -1,23 +1,88 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaLock, FaGoogle, FaApple, FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaEnvelope, FaLock, FaGoogle, FaApple } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import useAuthStore from '@/stores/useAuthStore';
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+  const setTempEmail = useAuthStore((state) => state.setTempEmail);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    remember: false
+  });
   
-  const handleSubmit = (e) => {
+  const [errors, setErrors] = useState({});
+  
+  const validate = () => {
+    const newErrors = {};
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email address';
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+    
+    // Clear error for this field when user types
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: ''
+      });
+    }
+  };
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add authentication logic here
-    console.log('Sign in with:', { email, password, rememberMe });
+    
+    if (!validate()) return;
+    
+    setIsLoading(true);
+    
+    try {
+      const result = await login(formData.email, formData.password);
+      
+      if (result.success) {
+        toast.success('Login successful!');
+        navigate('/dashboard');
+      } else if (result.error === "EMAIL_NOT_VERIFIED") {
+        toast.error('Please verify your email before signing in');
+        setTempEmail(formData.email);
+        navigate('/verify-email');
+      } else {
+        toast.error(result.error || 'Login failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error(error.response?.data?.message || 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-md">
-        {/* Logo and Header */}
+        {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -28,7 +93,7 @@ const SignIn = () => {
             <img src="/Logo.png" alt="FuelUp" className="h-12" />
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-gray-400">Sign in to continue to your account</p>
+          <p className="text-gray-400">Sign in to your FuelUp account</p>
         </motion.div>
 
         {/* Form */}
@@ -50,19 +115,21 @@ const SignIn = () => {
               </div>
               <input
                 id="email"
+                name="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 required
-                className="w-full bg-gray-900/60 border border-gray-700 pl-10 pr-4 py-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white placeholder-gray-500 transition-all duration-300"
+                className={`w-full bg-gray-900/60 border ${errors.email ? 'border-red-500' : 'border-gray-700'} pl-10 pr-4 py-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white placeholder-gray-500 transition-all duration-300`}
                 placeholder="mail@example.com"
               />
             </div>
+            {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
           </div>
 
           {/* Password Field */}
           <div className="mb-6">
-            <div className="flex justify-between mb-2">
+            <div className="flex justify-between items-center mb-2">
               <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                 Password
               </label>
@@ -76,27 +143,30 @@ const SignIn = () => {
               </div>
               <input
                 id="password"
+                name="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
                 required
-                className="w-full bg-gray-900/60 border border-gray-700 pl-10 pr-4 py-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white placeholder-gray-500 transition-all duration-300"
+                className={`w-full bg-gray-900/60 border ${errors.password ? 'border-red-500' : 'border-gray-700'} pl-10 pr-4 py-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white placeholder-gray-500 transition-all duration-300`}
                 placeholder="••••••••"
               />
             </div>
+            {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
           </div>
 
           {/* Remember Me */}
           <div className="flex items-center mb-6">
             <input
-              id="remember-me"
+              id="remember"
+              name="remember"
               type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
+              checked={formData.remember}
+              onChange={handleChange}
               className="h-4 w-4 text-emerald-500 focus:ring-emerald-500 border-gray-700 rounded bg-gray-900"
             />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
-              Remember me for 30 days
+            <label htmlFor="remember" className="ml-2 block text-sm text-gray-300">
+              Remember me
             </label>
           </div>
 
@@ -106,15 +176,25 @@ const SignIn = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
             className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center"
+            disabled={isLoading}
           >
-            Sign In
-            <FaArrowRight className="ml-2" />
+            {isLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Signing In...
+              </>
+            ) : (
+              'Sign In'
+            )}
           </motion.button>
 
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-grow border-t border-gray-700"></div>
-            <span className="flex-shrink mx-4 text-gray-400 text-sm">or continue with</span>
+            <span className="flex-shrink mx-4 text-gray-400 text-sm">or sign in with</span>
             <div className="flex-grow border-t border-gray-700"></div>
           </div>
 
@@ -151,7 +231,7 @@ const SignIn = () => {
           <p className="text-gray-400">
             Don't have an account?{' '}
             <Link to="/signup" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
-              Sign up
+              Create Account
             </Link>
           </p>
         </motion.div>

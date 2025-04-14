@@ -1,21 +1,27 @@
+// src/stores/useAuthStore.js
+import apiService from '@/lib/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 const useAuthStore = create(
   persist(
     (set, get) => ({
+      user: null,
+      authenticated: false,
+      loading: false,
+      error: null,
       tempEmail: null,
-      tempOtp: null, // Add OTP storage
+      tempOtp: null,
       
       setTempEmail: (email) => {
         set({ tempEmail: email });
       },
 
-      setTempOtp: (otp) => {  // Add setter for OTP
+      setTempOtp: (otp) => {
         set({ tempOtp: otp });
       },
 
-      clearTempData: () => {  // Clear both email and OTP
+      clearTempData: () => {
         set({ 
           tempEmail: null,
           tempOtp: null 
@@ -23,37 +29,91 @@ const useAuthStore = create(
       },
 
       // Login Action
-      login: async (email, password, recaptchaToken) => {
+      login: async (email, password) => {
         set({ loading: true, error: null });
         try {
-          const response = await apiService.post('/auth/login', { email, password, recaptcha_token: recaptchaToken });
-
-          if (response.responseBody === "EMAIL_NOT_VERIFIED") {
+          const response = await apiService.post('/auth/login', { email, password });
+          
+          // Handle successful login with the correct response structure
+          if (response.data?.accessToken) {
+            apiService.setToken(response.data.accessToken);
+            
+            // Get user data
+            const userData = await apiService.get('/users/me');
+            set({ 
+              user: userData.data,
+              authenticated: true,
+              loading: false,
+            });
+            return { success: true, user: userData.data };
+          } else if (response.message === "EMAIL_NOT_VERIFIED") {
             set({ 
               loading: false, 
               error: "EMAIL_NOT_VERIFIED",
             });
-            return { success: false, error: "EMAIL_NOT_VERIFIED", email };
+            return { success: false, error: "EMAIL_NOT_VERIFIED" };
           }
-
-          const { responseBody: userData } = await apiService.get('/user');
-          set({ 
-            user: userData,
-            authenticated: true,
-            loading: false,
-          });
-          return { success: true, user: userData };
         } catch (error) {
           set({
-            error: error.response?.data?.responseBody,
+            error: error.response?.data?.message || 'Login failed',
             loading: false,
             authenticated: false,
             user: null
           });
-          return { success: false, error: error.response?.data?.responseBody };
+          return { success: false, error: error.response?.data?.message || 'Login failed' };
         }
       },
 
+      // Register Action
+      register: async (userData) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await apiService.post('/auth/signup', userData);
+          set({ 
+            tempEmail: userData.email,
+            loading: false,
+            error: null
+          });
+          return { success: true, email: userData.email };
+        } catch (error) {
+          set({ 
+            error: error.response?.data?.message || 'Registration failed', 
+            loading: false 
+          });
+          throw error;
+        }
+      },
+
+      // Verify Email
+      verifyEmail: async (email, otp) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await apiService.post('/auth/signup-verification', { email, otp });
+          set({ loading: false });
+          return { success: true, data: response.responseBody };
+        } catch (error) {
+          set({
+            error: error.response?.data?.message || 'Email verification failed',
+            loading: false
+          });
+          throw error;
+        }
+      },
+
+      // Resend OTP
+      resendOtp: async (email) => {
+        set({ error: null });
+        try {
+          const response = await apiService.post('/auth/resend-otp', { email });
+          return response.responseBody;
+        } catch (error) {
+          set({
+            error: error.response?.data?.message || 'Failed to resend OTP',
+          });
+          throw error;
+        }
+      },
+      
       // Forgot Password
       forgotPassword: async (email) => {
         set({
@@ -74,148 +134,22 @@ const useAuthStore = create(
         }
       },
 
-      // Rest of the store methods remain the same...
-      register: async (userData) => {
-        set({ loading: true, error: null });
-        try {
-          await apiService.post('/auth/register', userData);
-          set({ 
-            tempEmail: userData.email,
-            loading: false,
-            error: null
-          });
-          return { success: true, email: userData.email };
-        } catch (error) {
-          set({ 
-            error: error.response?.data?.message || 'Registration failed', 
-            loading: false 
-          });
-          throw error;
-        }
-      },
+      // Verify OTP for password reset
+      // verifyOtp: async (email, otp) => {
+      //   set({ error: null });
+      //   try {
+      //     const response = await apiService.post('/auth/verify-reset-otp', { email, otp });
+      //     set({ tempOtp: otp }); // Save OTP for password reset
+      //     return { success: true, data: response.responseBody };
+      //   } catch (error) {
+      //     set({
+      //       error: error.response?.data?.message || 'OTP verification failed',
+      //     });
+      //     throw error;
+      //   }
+      // },
 
-      checkAuth: async () => {
-        set({ loading: true });
-        try {
-          const { responseBody: { isLoggedIn } } = await apiService.get('/auth/check-login-status');
-          if (isLoggedIn) {
-            const { responseBody: userData } = await apiService.get('/user');
-            set({ 
-              user: userData,
-              authenticated: true,
-              loading: false
-            });
-          } else {
-            set({ 
-              user: null,
-              authenticated: false,
-              loading: false
-            });
-          }
-          return isLoggedIn;
-        } catch (error) {
-          set({ 
-            error: error.response?.data?.message || 'Check Auth failed',
-            user: null,
-            authenticated: false,
-            loading: false
-          });  
-          return false;
-        }
-      },
-
-      logout: async () => {
-        set({ loading: true });
-        try {
-          await apiService.post('/logout');
-        }
-        catch (error) {
-          set({ 
-            error: error.response?.data?.message || 'Logout failed',
-            loading: false
-          });
-        }
-        finally {
-          set({ 
-            user: null, 
-            authenticated: false,
-            loading: false
-          });
-        }
-      },
-
-      updateProfile: async (formData) => {
-        set({ 
-          // loading: true,
-          error: null });
-        try {
-          const response = await apiService.post('/user/profile/update', formData, {'Content-Type': 'multipart/form-data'});
-          
-          if (response.responseBody) {
-            set({ 
-              user: {
-                ...response.responseBody,
-                profile_image_url: response.responseBody.profile_image_url || response.responseBody.media?.[0]?.original_url
-              }, 
-            });
-            return response.responseBody;
-          }
-        } catch (error) {
-          console.error('Profile update error:', error);
-          set({ 
-            error: error.response?.responseBody?.message || 'Failed to update profile', 
-          });
-          throw error;
-        }
-      },
-
-      verifyEmail: async (email, otp) => {
-        set({ loading: true, error: null });
-        try {
-          const response = await apiService.post('/auth/verify-email', { email, otp });
-          set({ loading: false });
-          return { success: true, data: response.responseBody };
-        } catch (error) {
-          set({
-            error: error.response?.data?.message || 'Email verification failed',
-            loading: false
-          });
-          throw error;
-        }
-      },
-
-      verifyOtp: async (email, otp) => {
-        set({ 
-          error: null
-        });
-        try {
-          const response = await apiService.post('/auth/verify-reset-otp', { email, otp });
-          return { success: true, data: response.responseBody };
-        } catch (error) {
-          set({
-            error: error.response?.data?.message || 'Otp verification failed',
-          });
-          throw error;
-        }
-      },
-
-      resendOtp: async (email) => {
-        set({ 
-          // loading: true, 
-          error: null });
-        try {
-          const response = await apiService.post('/auth/resend-otp', { email });
-          // set({ loading: false });
-          return response.responseBody;
-        } catch (error) {
-          set({
-            error: error.response?.data?.message || 'Failed to resend OTP',
-            // loading: false
-          });
-          throw error;
-        }
-      },
-
+      // Reset Password
       resetPassword: async (password, passwordConfirmation) => {
         const state = get();
         set({ loading: true, error: null });
@@ -229,7 +163,7 @@ const useAuthStore = create(
           set({ 
             loading: false,
             tempEmail: null,
-            tempOtp: null  // Clear OTP after successful reset
+            tempOtp: null
           });
           return response.responseBody;
         } catch (error) {
@@ -241,6 +175,87 @@ const useAuthStore = create(
         }
       },
 
+      // Check Authentication Status
+      checkAuth: async () => {
+        set({ loading: true });
+        try {
+          // Skip check if no token exists
+          if (!apiService.getToken()) {
+            set({ user: null, authenticated: false, loading: false });
+            return false;
+          }
+          
+          // Get user profile directly instead of checking login status
+          try {
+            const userData = await apiService.get('/users/me');
+            set({ 
+              user: userData.data,
+              authenticated: true,
+              loading: false
+            });
+            return true;
+          } catch (error) {
+            // If the request fails, the token is invalid
+            apiService.removeToken();
+            set({ 
+              user: null,
+              authenticated: false,
+              loading: false
+            });
+            return false;
+          }
+        } catch (error) {
+          apiService.removeToken();
+          set({ 
+            error: error.response?.data?.message || 'Check Auth failed',
+            user: null,
+            authenticated: false,
+            loading: false
+          });  
+          return false;
+        }
+      },
+
+      // Logout
+      logout: () => {
+        // Remove the token from storage
+        apiService.removeToken();
+        
+        // Reset the auth state
+        set({ 
+          user: null, 
+          authenticated: false,
+          loading: false
+        });
+      },
+
+      // Update User Profile
+      updateProfile: async (formData) => {
+        set({ error: null });
+        try {
+          const response = await apiService.post('/user/profile/update', formData, {
+            'Content-Type': 'multipart/form-data'
+          });
+          
+          if (response.responseBody) {
+            set({ 
+              user: {
+                ...response.responseBody,
+                profile_image_url: response.responseBody.profile_image_url || response.responseBody.media?.[0]?.original_url
+              }
+            });
+            return response.responseBody;
+          }
+        } catch (error) {
+          console.error('Profile update error:', error);
+          set({ 
+            error: error.response?.responseBody?.message || 'Failed to update profile'
+          });
+          throw error;
+        }
+      },
+
+      // Change Password
       changePassword: async (currentPassword, newPassword, passwordConfirmation) => {
         set({ loading: true, error: null });
         try {

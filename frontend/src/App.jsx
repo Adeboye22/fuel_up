@@ -93,9 +93,9 @@ function App() {
           {/* Dashboard routes */}
           <Route path="/dashboard" element={
             <Suspense fallback={<LoadingSpinner />}>
-              <PublicRoute>
+              <ProtectedRoute>  {/* Change this from PublicRoute to ProtectedRoute */}
                 <DashboardLayout /> 
-              </PublicRoute>
+              </ProtectedRoute>
             </Suspense>
           }>
             <Route index element={<DashboardHome />} />
@@ -104,7 +104,6 @@ function App() {
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="settings" element={<Settings />} />
           </Route>
-
           {/* Main routes with MainLayout - wrap with PublicRoute */}
           <Route element={
             <Suspense fallback={<LoadingSpinner />}>
