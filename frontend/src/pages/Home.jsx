@@ -28,7 +28,7 @@ const Home = () => {
       <section className="relative flex items-center justify-center overflow-hidden">
         {/* Background with overlay */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[url('/src/assets/Nozzle.jpg')] bg-cover bg-center bg-fixed"></div>
+          <div className="absolute inset-0 bg-[url('/assets/Nozzle.jpg')] bg-cover bg-center bg-fixed"></div>
           <div className="absolute inset-0 bg-black/75"></div>
         </div>
         
@@ -106,10 +106,6 @@ const Home = () => {
           className="py-24 relative"
         >
           {/* Background pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="h-full w-full bg-[url('/src/assets/pattern.svg')] bg-repeat"></div>
-          </div>
-          
           <div className="relative z-10">
             <Packages />
           </div>
@@ -179,7 +175,7 @@ const Home = () => {
       >
         {/* Background with overlay */}
         <div className='absolute top-0 left-0 w-full h-full bg-green-700/50'>
-          <img src="/src/assets/Nozzle.jpg" className='absolute top-0 left-0 w-full h-full object-cover' alt="cta nozzle" />
+          <img src="/assets/Nozzle.jpg" className='absolute top-0 left-0 w-full h-full object-cover' alt="cta nozzle" />
           <div className='absolute top-0 left-0 w-full h-full bg-green-700/50' />
         </div>
         <div className="relative container mx-auto px-4 text-center">

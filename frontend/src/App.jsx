@@ -10,7 +10,7 @@ import PublicRoute from './routes/PublicRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 // Loading spinner
-const LoadingSpinner = lazy(() => import('./components/LoadingSpinner'));
+import LoadingSpinner from './components/LoadingSpinner';
 
 // Layouts
 const MainLayout = lazy(() => import('./layouts/MainLayout'));
@@ -24,7 +24,6 @@ const SignInPage = lazy(() => import('./pages/auth/SignIn'));
 const SignUpPage = lazy(() => import('./pages/auth/SignUp'));
 const ForgotPasswordPage = lazy(() => import('./pages/auth/ForgotPasswordPage'));
 const VerifyEmailPage = lazy(() => import('./pages/auth/VerifyEmailPage'));
-const VerifyOtpPage = lazy(() => import('./pages/auth/VerifyOtpPage'));
 const ResetPasswordPage = lazy(() => import('./pages/auth/ResetPasswordPage'));
 
 // Dashboard pages
@@ -72,13 +71,6 @@ function App() {
             <Suspense fallback={<LoadingSpinner />}>
               <PublicRoute>
                 <VerifyEmailPage />
-              </PublicRoute>
-            </Suspense>
-          } />
-          <Route path="/verify-otp" element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <PublicRoute>
-                <VerifyOtpPage />
               </PublicRoute>
             </Suspense>
           } />

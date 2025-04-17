@@ -134,35 +134,16 @@ const useAuthStore = create(
         }
       },
 
-      // Verify OTP for password reset
-      // verifyOtp: async (email, otp) => {
-      //   set({ error: null });
-      //   try {
-      //     const response = await apiService.post('/auth/verify-reset-otp', { email, otp });
-      //     set({ tempOtp: otp }); // Save OTP for password reset
-      //     return { success: true, data: response.responseBody };
-      //   } catch (error) {
-      //     set({
-      //       error: error.response?.data?.message || 'OTP verification failed',
-      //     });
-      //     throw error;
-      //   }
-      // },
-
       // Reset Password
-      resetPassword: async (password, passwordConfirmation) => {
-        const state = get();
+      resetPassword: async (password, otp) => {
         set({ loading: true, error: null });
         try {
           const response = await apiService.post('/auth/reset-password', {
-            email: state.tempEmail,
-            otp: state.tempOtp,
-            password,
-            password_confirmation: passwordConfirmation
+            otp: otp,
+            password
           });
           set({ 
             loading: false,
-            tempEmail: null,
             tempOtp: null
           });
           return response.responseBody;

@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import useAuthStore from '@/stores/useAuthStore';
 
-const ForgotPassword = () => {
+const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const forgotPassword = useAuthStore((state) => state.forgotPassword);
   const [isLoading, setIsLoading] = useState(false);
@@ -138,4 +138,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordPage;

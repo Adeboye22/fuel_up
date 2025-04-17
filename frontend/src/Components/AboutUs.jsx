@@ -128,11 +128,11 @@ const AboutUs = () => {
                     {/* Phone screen */}
                     <div className="overflow-hidden rounded-[1.7rem]">
                       {theme === "light" ? <img 
-                        src="/src/assets/fuelup-dashboard.png" 
+                        src="/assets/fuelup-dashboard.png" 
                         alt="FuelUp App" 
                         className="w-full h-full object-contain"
                       /> : <img 
-                      src="/src/assets/fuelup-dashboard-dark.png" 
+                      src="/assets/fuelup-dashboard-dark.png" 
                       alt="FuelUp App" 
                       className="w-full h-full object-contain"
                     />}

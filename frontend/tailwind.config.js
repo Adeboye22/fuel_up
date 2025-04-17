@@ -16,9 +16,9 @@ export default {
         },
       },
       backgroundImage: {
-        'my-image': "url(/src/assets/Nozzle.jpg)",
-        'my-gif': "url(/src/assets/EcoFuel1.gif)",
-        'nozzle': "url(/src/assets/CarNozzle.jpg)",
+        'my-image': "url(/assets/Nozzle.jpg)",
+        'my-gif': "url(/assets/EcoFuel1.gif)",
+        'nozzle': "url(/assets/CarNozzle.jpg)",
       },
       colors: {
         "blue": "#1a1e49",
