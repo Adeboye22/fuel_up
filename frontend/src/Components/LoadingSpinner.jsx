@@ -2,7 +2,7 @@
 
 const LoadingSpinner = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+    <div className="fixed inset-0 flex items-center justify-center bg-background backdrop-blur-sm">
       <div className="three-body">
         <div className="three-body__dot"></div>
         <div className="three-body__dot"></div>
@@ -13,7 +13,7 @@ const LoadingSpinner = () => {
         .three-body {
           --uib-size: 35px;
           --uib-speed: 0.8s;
-          --uib-color: #5D3FD3;
+          --uib-color: oklch(0.596 0.145 163.225);
           position: relative;
           display: inline-block;
           height: var(--uib-size);

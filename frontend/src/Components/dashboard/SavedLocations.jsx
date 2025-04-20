@@ -1,50 +1,55 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaPlus, FaEllipsisH } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
-const SavedLocations = ({ locations }) => {
+const SavedLocations = ({ locations = [] }) => {
+  const navigate = useNavigate();
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.4 }}
-      className="bg-white dark:bg-gray-800/40 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700/50 shadow-sm"
-    >
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white">Saved Locations</h2>
-        <button className="text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors">
-          <FaPlus size={16} />
-        </button>
-      </div>
-      
-      <div className="space-y-4">
-        {locations.map((location, index) => (
-          <LocationItem key={index} location={location} />
-        ))}
-      </div>
-      
-      <button className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/50 dark:hover:bg-gray-700 text-gray-700 dark:text-white font-medium py-3 rounded-lg mt-6 transition-colors">
-        Manage Locations
-      </button>
-    </motion.div>
+    <Card className="col-span-1">
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <CardTitle className="text-lg font-medium">Saved Locations</CardTitle>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-500 dark:hover:text-emerald-400"
+          onClick={() => navigate('/dashboard/settings')}
+        >
+          <FaPlus className="mr-1" />
+          <span>Add</span>
+        </Button>
+      </CardHeader>
+      <CardContent>
+        {locations.length > 0 ? (
+          <ul className="space-y-3">
+            {locations.map((location, index) => (
+              <li 
+                key={index} 
+                className="flex items-start border-b border-gray-100 dark:border-gray-800 pb-3 last:border-0 last:pb-0"
+              >
+                <FaMapMarkerAlt className="text-emerald-500 mt-1 mr-3 flex-shrink-0" />
+                <p className="text-sm text-gray-600 dark:text-gray-300">{location}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-center py-6">
+            <FaMapMarkerAlt className="mx-auto text-gray-400 text-2xl mb-2" />
+            <p className="text-gray-500 dark:text-gray-400">No saved locations</p>
+            <Button 
+              variant="link" 
+              className="mt-2"
+              onClick={() => navigate('/dashboard/settings')}
+            >
+              Add your first location
+            </Button>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
 export default SavedLocations;
-
-// Location Item Component - Light Mode
-const LocationItem = ({ location }) => {
-  return (
-    <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4 flex justify-between items-center border border-gray-100 dark:border-transparent">
-      <div className="flex items-start">
-        <div className="bg-emerald-100 dark:bg-emerald-500/20 p-2 rounded-lg mr-3 mt-1">
-          <FaMapMarkerAlt className="text-emerald-600 dark:text-emerald-500" size={14} />
-        </div>
-        <span className="text-sm text-gray-700 dark:text-white">{location}</span>
-      </div>
-      <button className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white transition-colors">
-        <FaEllipsisH size={14} />
-      </button>
-    </div>
-  );
-};

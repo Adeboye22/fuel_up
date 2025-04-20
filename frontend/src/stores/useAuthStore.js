@@ -28,6 +28,11 @@ const useAuthStore = create(
         });
       },
 
+      // Set user data
+      setUser: (userData) => {
+        set({ user: userData });
+      },
+
       // Login Action
       login: async (email, password) => {
         set({ loading: true, error: null });
@@ -214,39 +219,154 @@ const useAuthStore = create(
       updateProfile: async (formData) => {
         set({ error: null });
         try {
-          const response = await apiService.post('/user/profile/update', formData, {
+          const response = await apiService.put('/users/me', formData, {
             'Content-Type': 'multipart/form-data'
           });
           
-          if (response.responseBody) {
+          if (response.data) {
             set({ 
               user: {
-                ...response.responseBody,
-                profile_image_url: response.responseBody.profile_image_url || response.responseBody.media?.[0]?.original_url
+                ...response.data,
+                profile_image_url: response.data.profile_image_url || response.data.media?.[0]?.original_url
               }
             });
-            return response.responseBody;
+            return response.data;
           }
         } catch (error) {
           console.error('Profile update error:', error);
           set({ 
-            error: error.response?.responseBody?.message || 'Failed to update profile'
+            error: error.response?.data?.message || 'Failed to update profile'
+          });
+          throw error;
+        }
+      },
+
+      // Add Address
+      addAddress: async (addressData) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await apiService.post('/users/address', addressData);
+          
+          // Update user with new address
+          const currentUser = get().user;
+          const updatedAddresses = [...(currentUser.addresses || []), response.data];
+          
+          set({ 
+            user: {
+              ...currentUser,
+              addresses: updatedAddresses
+            },
+            loading: false
+          });
+          
+          return { success: true, address: response.data };
+        } catch (error) {
+          set({
+            error: error.response?.data?.message || 'Failed to add address',
+            loading: false
+          });
+          throw error;
+        }
+      },
+
+      // Update Address
+      updateAddress: async (addressId, addressData) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await apiService.put(`/users/address/${addressId}`, addressData);
+          
+          // Update user with modified address
+          const currentUser = get().user;
+          const updatedAddresses = currentUser.addresses.map(addr => 
+            addr._id === addressId ? response.data : addr
+          );
+          
+          set({ 
+            user: {
+              ...currentUser,
+              addresses: updatedAddresses
+            },
+            loading: false
+          });
+          
+          return { success: true, address: response.data };
+        } catch (error) {
+          set({
+            error: error.response?.data?.message || 'Failed to update address',
+            loading: false
+          });
+          throw error;
+        }
+      },
+
+      // Delete Address
+      deleteAddress: async (addressId) => {
+        set({ loading: true, error: null });
+        try {
+          await apiService.delete(`/users/address/${addressId}`);
+          
+          // Update user by removing address
+          const currentUser = get().user;
+          const updatedAddresses = currentUser.addresses.filter(addr => addr._id !== addressId);
+          
+          set({ 
+            user: {
+              ...currentUser,
+              addresses: updatedAddresses
+            },
+            loading: false
+          });
+          
+          return { success: true };
+        } catch (error) {
+          set({
+            error: error.response?.data?.message || 'Failed to delete address',
+            loading: false
+          });
+          throw error;
+        }
+      },
+
+      // Set Default Address
+      setDefaultAddress: async (addressId) => {
+        set({ loading: true, error: null });
+        try {
+          await apiService.put(`/users/address/${addressId}/default`);
+          
+          // Update user addresses with new default
+          const currentUser = get().user;
+          const updatedAddresses = currentUser.addresses.map(addr => ({
+            ...addr,
+            isDefault: addr._id === addressId
+          }));
+          
+          set({ 
+            user: {
+              ...currentUser,
+              addresses: updatedAddresses
+            },
+            loading: false
+          });
+          
+          return { success: true };
+        } catch (error) {
+          set({
+            error: error.response?.data?.message || 'Failed to set default address',
+            loading: false
           });
           throw error;
         }
       },
 
       // Change Password
-      changePassword: async (currentPassword, newPassword, passwordConfirmation) => {
+      changePassword: async (newPassword) => {
         set({ loading: true, error: null });
         try {
-          const response = await apiService.post('/user/change-password', {
-            current_password: currentPassword,
-            password: newPassword,
-            password_confirmation: passwordConfirmation
+          const response = await apiService.patch('/users/password-change', {
+            newPassword
           });
           set({ loading: false });
-          return response.responseBody;
+          return { success: true, data: response.data };
         } catch (error) {
           set({
             error: error.response?.data?.message || 'Failed to change password',
@@ -254,7 +374,7 @@ const useAuthStore = create(
           });
           throw error;
         }
-      },
+      }, 
     }),
     {
       name: 'auth-store',

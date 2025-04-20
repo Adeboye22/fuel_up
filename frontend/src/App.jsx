@@ -1,7 +1,6 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import ScrollToTop from './components/ScrollToTop';
 import { ThemeProvider } from '@/components/theme-provider';
 import useAuthStore from './stores/useAuthStore';
 
@@ -11,6 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 
 // Loading spinner
 import LoadingSpinner from './components/LoadingSpinner';
+import ScrollToTop from './components/ScrollToTop';
 
 // Layouts
 const MainLayout = lazy(() => import('./layouts/MainLayout'));

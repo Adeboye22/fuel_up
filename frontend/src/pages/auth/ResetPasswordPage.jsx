@@ -122,6 +122,7 @@ const ResetPasswordPage = () => {
       await resetPassword(password, otpString);
       setStep('success');
       toast.success('Password reset successfully. Redirecting to sign in...');
+      navigate('/signin');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to reset password');
     } finally {

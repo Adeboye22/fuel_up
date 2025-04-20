@@ -1,71 +1,180 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { User, Lock, Bell, Camera, Eye, SlashIcon as EyeSlash, Shield, Smartphone, Mail, Save, Fuel } from "lucide-react"
+import { User, Lock, Bell, Shield, Smartphone, Mail, Save, Home, Plus, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { toast } from "sonner"
+import toast from "react-hot-toast"
+import useAuthStore from "@/stores/useAuthStore"
+import apiService from "@/lib/api"
+import { Eye, SlashIcon as EyeSlash } from "lucide-react"
 
 export default function Settings() {
+  const { user, updateProfile, changePassword } = useAuthStore();
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Form states
   const [formData, setFormData] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+234 801 234 5678",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
     notifyOrderUpdates: true,
     notifyPromotions: false,
     notifyPriceChanges: true,
+    addresses: []
   })
+
+  // Initialize form with user data when component mounts
+  useEffect(() => {
+    if (user) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        addresses: user.addresses || []
+      }))
+    }
+  }, [user])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleToggleChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSaveProfile = () => {
-    toast({
-      title: "Success",
-      description: "Profile information updated successfully.",
-    })
-  }
-
-  const handleSavePassword = () => {
-    if (formData.newPassword !== formData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match.",
-        variant: "destructive",
-      })
-      return
-    }
-
-    toast({
-      title: "Success",
-      description: "Password updated successfully.",
-    })
-
-    setFormData((prev) => ({
+  // Add a new empty address
+  const addAddress = () => {
+    setFormData(prev => ({
       ...prev,
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      addresses: [
+        ...prev.addresses,
+        { street: "", city: "", LGA: "", state: "" }
+      ]
     }))
+  }
+
+  // Remove an address at the given index
+  const removeAddress = (index) => {
+    const updatedAddresses = [...formData.addresses]
+    updatedAddresses.splice(index, 1)
+    setFormData(prev => ({
+      ...prev,
+      addresses: updatedAddresses
+    }))
+  }
+
+  // Update an address field
+  const handleAddressChange = (index, field, value) => {
+    const updatedAddresses = [...formData.addresses]
+    updatedAddresses[index][field] = value
+    setFormData(prev => ({
+      ...prev,
+      addresses: updatedAddresses
+    }))
+  }
+
+  const handleSaveProfile = async () => {
+    try {
+      setIsSubmitting(true)
+      
+      // Create data object for API request
+      const profileData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone || "",
+        // Strip _id from each address
+        addresses: formData.addresses.map(address => {
+          const { _id, ...addressWithoutId } = address
+          return addressWithoutId
+        })
+      }
+      
+      // Using the API directly since we're updating the user's own profile
+      const response = await apiService.put("/users/me", profileData)
+      
+      // Update user in auth store
+      if (response.data) {
+        await updateProfile(profileData)
+        toast.success("Profile information updated successfully")
+      }
+    } catch (error) {
+      console.error("Profile update error:", error)
+      toast.error(error.response?.data?.message || "Failed to update profile. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleSavePassword = async () => {
+    // Validation checks
+    if (!formData.currentPassword) {
+      toast.error("Current password is required");
+      return;
+    }
+    
+    if (formData.newPassword !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    
+    if (formData.newPassword.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+  
+    try {
+      setIsSubmitting(true);
+      
+      // Use the auth store function instead of direct API call
+      await changePassword(formData.newPassword);
+      
+      toast.success("Password updated successfully");
+  
+      // Clear the password fields
+      setFormData(prev => ({
+        ...prev,
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      }));
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response?.data?.message || "Failed to update password. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  // Display user's full name
+  const fullName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : ''
+  
+  // Get user's initials for avatar fallback
+  const getInitials = () => {
+    if (!user) return ''
+    
+    const firstName = user.firstName || ''
+    const lastName = user.lastName || ''
+    
+    return firstName && lastName 
+      ? `${firstName.charAt(0)}${lastName.charAt(0)}` 
+      : firstName.charAt(0) || ''
   }
 
   return (
@@ -73,7 +182,7 @@ export default function Settings() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="container max-w-6xl mx-auto px-4 py-10"
+      className="container max-w-6xl mx-auto py-10"
     >
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Account Settings</h1>
@@ -121,23 +230,12 @@ export default function Settings() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <Avatar className="w-20 h-20 border-4 border-background">
-                        <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile" />
-                        <AvatarFallback className="bg-primary/10 text-primary text-xl">JD</AvatarFallback>
-                      </Avatar>
-                      <Button
-                        size="icon"
-                        variant="secondary"
-                        className="absolute -bottom-2 -right-2 rounded-full w-8 h-8 shadow-md"
-                      >
-                        <Camera className="h-4 w-4" />
-                        <span className="sr-only">Change profile photo</span>
-                      </Button>
-                    </div>
+                    <Avatar className="w-16 h-16 border-2 border-background">
+                      <AvatarFallback className="bg-emerald-600 text-white text-xl">{getInitials()}</AvatarFallback>
+                    </Avatar>
                     <div>
-                      <p className="text-sm font-medium">Profile Photo</p>
-                      <p className="text-sm text-muted-foreground">Upload a new photo or avatar</p>
+                      <p className="font-medium">{fullName}</p>
+                      <p className="text-sm text-muted-foreground">{user?.email}</p>
                     </div>
                   </div>
 
@@ -145,15 +243,31 @@ export default function Settings() {
 
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-sm">
-                        Full Name
+                      <Label htmlFor="firstName" className="text-sm">
+                        First Name
                       </Label>
                       <div className="relative">
                         <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
+                          id="firstName"
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          className="pl-10"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="text-sm">
+                        Last Name
+                      </Label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="lastName"
+                          name="lastName"
+                          value={formData.lastName}
                           onChange={handleInputChange}
                           className="pl-10"
                         />
@@ -173,11 +287,13 @@ export default function Settings() {
                           value={formData.email}
                           onChange={handleInputChange}
                           className="pl-10"
+                          disabled
                         />
                       </div>
+                      <p className="text-xs text-muted-foreground">Email cannot be changed</p>
                     </div>
 
-                    <div className="space-y-2 sm:col-span-2">
+                    <div className="space-y-2">
                       <Label htmlFor="phone" className="text-sm">
                         Phone Number
                       </Label>
@@ -194,13 +310,118 @@ export default function Settings() {
                     </div>
                   </div>
 
+                  <Separator />
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium flex items-center">
+                        <Home className="h-5 w-5 mr-2" />
+                        Addresses
+                      </h3>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={addAddress}
+                        className="flex items-center"
+                      >
+                        <Plus className="h-4 w-4 mr-1" />
+                        Add Address
+                      </Button>
+                    </div>
+
+                    {formData.addresses.length === 0 ? (
+                      <div className="text-center py-6 border rounded-lg bg-muted/20">
+                        <p className="text-muted-foreground">No addresses added yet</p>
+                        <Button 
+                          variant="link" 
+                          onClick={addAddress}
+                          className="mt-2"
+                        >
+                          <Plus className="h-4 w-4 mr-1" />
+                          Add your first address
+                        </Button>
+                      </div>
+                    ) : (
+                      formData.addresses.map((address, index) => (
+                        <Card key={index} className="p-4 relative">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 h-8 w-8 text-muted-foreground hover:text-destructive"
+                            onClick={() => removeAddress(index)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            <span className="sr-only">Remove address</span>
+                          </Button>
+                          
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="space-y-2">
+                              <Label htmlFor={`address-street-${index}`} className="text-xs">
+                                Street Address
+                              </Label>
+                              <Input
+                                id={`address-street-${index}`}
+                                value={address.street || ""}
+                                onChange={(e) => handleAddressChange(index, "street", e.target.value)}
+                                placeholder="Street address"
+                              />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor={`address-city-${index}`} className="text-xs">
+                                City
+                              </Label>
+                              <Input
+                                id={`address-city-${index}`}
+                                value={address.city || ""}
+                                onChange={(e) => handleAddressChange(index, "city", e.target.value)}
+                                placeholder="City"
+                              />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor={`address-lga-${index}`} className="text-xs">
+                                LGA
+                              </Label>
+                              <Input
+                                id={`address-lga-${index}`}
+                                value={address.LGA || ""}
+                                onChange={(e) => handleAddressChange(index, "LGA", e.target.value)}
+                                placeholder="Local Government Area"
+                              />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor={`address-state-${index}`} className="text-xs">
+                                State
+                              </Label>
+                              <Input
+                                id={`address-state-${index}`}
+                                value={address.state || ""}
+                                onChange={(e) => handleAddressChange(index, "state", e.target.value)}
+                                placeholder="State"
+                              />
+                            </div>
+                          </div>
+                        </Card>
+                      ))
+                    )}
+                  </div>
+
                   <div className="flex justify-end">
                     <Button
-                        onClick={handleSaveProfile}
-                        className="bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
+                      onClick={handleSaveProfile}
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
+                      disabled={isSubmitting}
                     >
-                      <Save className="h-4 w-4" />
-                      Save Changes
+                      {isSubmitting ? (
+                        <span className="animate-pulse">Saving...</span>
+                      ) : (
+                        <>
+                          <Save className="h-4 w-4 mr-2" />
+                          Save Changes
+                        </>
+                      )}
                     </Button>
                   </div>
                 </CardContent>
@@ -279,13 +500,20 @@ export default function Settings() {
                     </div>
 
                     <div className="flex justify-end">
-                    <Button
+                      <Button
                         onClick={handleSavePassword}
                         className="bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
-                    >
-                        <Save className="h-4 w-4" />
-                        Update Password
-                    </Button>
+                        disabled={isSubmitting || !formData.currentPassword || !formData.newPassword || !formData.confirmPassword}
+                      >
+                        {isSubmitting ? (
+                          <span className="animate-pulse">Updating...</span>
+                        ) : (
+                          <>
+                            <Save className="h-4 w-4 mr-2" />
+                            Update Password
+                          </>
+                        )}
+                      </Button>
                     </div>
                   </div>
 
@@ -370,4 +598,3 @@ export default function Settings() {
     </motion.div>
   )
 }
-

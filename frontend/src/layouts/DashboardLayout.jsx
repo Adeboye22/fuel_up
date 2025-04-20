@@ -14,7 +14,7 @@ const DashboardLayout = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black text-gray-800 dark:text-white">
       <div className="flex">
         <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-        <div className="flex-1 md:ml-64 p-6">
+        <div className="flex-1 md:ml-64 p-4">
           <DashboardHeader isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
           <Outlet />
         </div>

@@ -53,6 +53,10 @@ const apiService = {
     return this._getAxiosInstance().put(url, data);
   },
 
+  async patch(url, data = {}) {
+    return this._getAxiosInstance().patch(url, data);
+  },
+
   async delete(url) {
     return this._getAxiosInstance().delete(url);
   },

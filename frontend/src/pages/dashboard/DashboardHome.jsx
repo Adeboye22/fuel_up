@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import SavedLocations from '../../components/dashboard/SavedLocations'
-import RecentOrders from '../../components/dashboard/RecentOrders'
-import FuelPrices from '../../components/dashboard/FuelPrices'
-import QuickActions from '../../components/dashboard/QuickActions'
+import React, { useState, useEffect } from 'react';
+import SavedLocations from '../../components/dashboard/SavedLocations';
+import RecentOrders from '../../components/dashboard/RecentOrders';
+import FuelPrices from '../../components/dashboard/FuelPrices';
+import QuickActions from '../../components/dashboard/QuickActions';
+import useAuthStore from '@/stores/useAuthStore';
 
 const DashboardHome = () => {
+  const { user } = useAuthStore();
+  
   // Mock data for demonstration
   const [fuelPrices] = useState({
     petrol: 790,
@@ -18,11 +21,22 @@ const DashboardHome = () => {
     { id: 'ORD-7819', date: 'Feb 28, 2025', type: 'Petrol', amount: '30L', status: 'Delivered', price: 23700 }
   ]);
   
-  const [savedLocations] = useState([
+  // Convert user addresses to location strings if available
+  const [savedLocations, setSavedLocations] = useState([
     'Home - 15 Adeola Odeku St, Victoria Island',
     'Office - 24 Broad Street, Lagos Island',
     'Site - Plot 45, Lekki Phase 1'
   ]);
+
+  // Update saved locations when user data changes
+  useEffect(() => {
+    if (user?.addresses && user.addresses.length > 0) {
+      const formattedLocations = user.addresses.map(addr => 
+        `${addr.name} - ${addr.address}`
+      );
+      setSavedLocations(formattedLocations);
+    }
+  }, [user]);
 
   return (
     <>

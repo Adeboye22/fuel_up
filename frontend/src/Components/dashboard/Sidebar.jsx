@@ -44,10 +44,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         className="md:hidden flex w-96 flex-col bg-white/95 dark:bg-gray-800/90 backdrop-blur-md h-screen fixed border-r border-gray-200 dark:border-gray-700/50 py-8 px-4 z-40"
       >
         <div className="flex justify-between items-center mb-6 px-4">
-          <Link to="/" className="inline-block">
-            {/* <img src="/Logo.png" alt="FuelUp" className="h-8" /> */}
+          <Link to="/" className="inline-block" onClick={toggleSidebar}>
             <FuelupLogo2 />
-            {/* <FuelupLogo2 /> */}
           </Link>
           <button 
             onClick={toggleSidebar}
@@ -57,13 +55,14 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             <FaTimes />
           </button>
         </div>
-        <SidebarContent />
+        <SidebarContent toggleSidebar={toggleSidebar} />
       </motion.div>
     </>
   );
 };
+
 // Extract sidebar content to avoid repetition
-const SidebarContent = () => {
+const SidebarContent = ({ toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   
@@ -71,9 +70,7 @@ const SidebarContent = () => {
     <>
       <div className="mb-10 px-4 md:block hidden">
         <Link to="/" className="inline-block">
-          {/* <img src="/Logo.png" alt="FuelUp" className="h-10" /> */}
           <FuelupLogo2 />
-            {/* <FuelupLogo2 /> */}
         </Link>
       </div>
       
@@ -84,62 +81,57 @@ const SidebarContent = () => {
             icon={<FaGasPump />} 
             label="Dashboard" 
             active={currentPath === "/dashboard"}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarItem 
             to="/dashboard/order-fuel" 
             icon={<FaTruck />} 
             label="Order Fuel" 
             active={currentPath === "/dashboard/order-fuel"}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarItem 
             to="/dashboard/order-history" 
             icon={<FaHistory />} 
             label="Order History" 
             active={currentPath === "/dashboard/order-history"}
+            toggleSidebar={toggleSidebar}
           />
-          {/* <SidebarItem 
-            to="/dashboard/locations" 
-            icon={<FaMapMarkerAlt />} 
-            label="Delivery Locations" 
-            active={currentPath === "/dashboard/locations"}
-          /> */}
-          {/* <SidebarItem 
-            to="/dashboard/payment" 
-            icon={<FaCreditCard />} 
-            label="Payment Methods" 
-            active={currentPath === "/dashboard/payment"}
-          /> */}
           <SidebarItem 
             to="/dashboard/notifications" 
             icon={<FaBell />} 
             label="Notifications" 
             active={currentPath === "/dashboard/notifications"}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarItem 
             to="/dashboard/settings" 
             icon={<FaUserCog />} 
             label="Account Settings" 
             active={currentPath === "/dashboard/settings"}
+            toggleSidebar={toggleSidebar}
           />
-          {/* <SidebarItem 
-            to="/dashboard/help" 
-            icon={<FaQuestionCircle />} 
-            label="Help & Support" 
-            active={currentPath === "/dashboard/help"}
-          /> */}
         </ul>
       </nav>
       
-      <SupportBox />
+      <SupportBox toggleSidebar={toggleSidebar} />
     </>
   );
 };
 
-const SidebarItem = ({ to, icon, label, active }) => {
+const SidebarItem = ({ to, icon, label, active, toggleSidebar }) => {
+  // Handle click to close sidebar (only affects mobile view due to media queries)
+  const handleClick = () => {
+    if (toggleSidebar) {
+      toggleSidebar();
+    }
+  };
+
   return (
     <li>
       <Link 
         to={to} 
+        onClick={handleClick}
         className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
           active 
             ? "text-emerald-700 bg-emerald-50 border-l-4 border-emerald-500 dark:text-white dark:bg-emerald-600/20 dark:border-emerald-500" 
@@ -153,13 +145,24 @@ const SidebarItem = ({ to, icon, label, active }) => {
   );
 };
 
-const SupportBox = () => {
+const SupportBox = ({ toggleSidebar }) => {
+  // Handle support button click to close sidebar on mobile
+  const handleSupportClick = () => {
+    if (toggleSidebar) {
+      toggleSidebar();
+    }
+    // Add any additional support functionality here
+  };
+
   return (
     <div className="mt-auto">
       <div className="p-4 bg-gray-100 dark:bg-gray-700/40 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/50">
         <h4 className="font-medium mb-2 text-gray-800 dark:text-white">Need Assistance?</h4>
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">Our support team is here to help you 24/7</p>
-        <button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm transition-colors">
+        <button 
+          onClick={handleSupportClick}
+          className="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm transition-colors"
+        >
           Contact Support
         </button>
       </div>
