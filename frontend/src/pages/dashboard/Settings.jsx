@@ -209,13 +209,13 @@ export default function Settings() {
                     <Lock className="h-4 w-4 mr-2" />
                     <span>Security</span>
                   </TabsTrigger>
-                  <TabsTrigger
+                  {/* <TabsTrigger
                     value="notifications"
                     className="w-full justify-start px-3 py-2.5 h-auto data-[state=active]:bg-primary/5 data-[state=active]:text-primary"
                   >
                     <Bell className="h-4 w-4 mr-2" />
                     <span>Notifications</span>
-                  </TabsTrigger>
+                  </TabsTrigger> */}
                 </TabsList>
               </CardContent>
             </Card>
@@ -541,7 +541,7 @@ export default function Settings() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="notifications" className="m-0">
+            {/* <TabsContent value="notifications" className="m-0">
               <Card>
                 <CardHeader>
                   <CardTitle>Notification Preferences</CardTitle>
@@ -591,7 +591,7 @@ export default function Settings() {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+            </TabsContent> */}
           </div>
         </div>
       </Tabs>

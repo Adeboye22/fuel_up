@@ -41,55 +41,43 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const OrderHistory = () => {
-  // Mock data
-  const [orders, setOrders] = useState([
-    { id: 'ORD-7842', date: '2025-03-08', type: 'Petrol', amount: '25L', status: 'Delivered', price: 19750, location: 'Home', deliveryDate: '2025-03-08', paymentMethod: 'Card' },
-    { id: 'ORD-7835', date: '2025-03-05', type: 'Diesel', amount: '40L', status: 'In Transit', price: 37000, location: 'Office', deliveryDate: '2025-03-06', paymentMethod: 'Card' },
-    { id: 'ORD-7819', date: '2025-02-28', type: 'Petrol', amount: '30L', status: 'Delivered', price: 23700, location: 'Home', deliveryDate: '2025-02-28', paymentMethod: 'Wallet' },
-    { id: 'ORD-7810', date: '2025-02-22', type: 'Kerosene', amount: '15L', status: 'Delivered', price: 12750, location: 'Site', deliveryDate: '2025-02-23', paymentMethod: 'Card' },
-    { id: 'ORD-7796', date: '2025-02-15', type: 'Diesel', amount: '35L', status: 'Delivered', price: 32375, location: 'Office', deliveryDate: '2025-02-15', paymentMethod: 'Wallet' },
-  ]);
+import useOrderStore from '@/stores/useOrderStore';
 
+const OrderHistory = () => {
   // States
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   
-  const ordersPerPage = 5;
+  // Get orders data from store
+  const { 
+    orders, 
+    ordersPagination, 
+    loading, 
+    error, 
+    fetchOrders,
+    getOrderById
+  } = useOrderStore();
 
-  // Filter orders
+  // Fetch orders on component mount
+  useEffect(() => {
+    fetchOrders('/orders/user');
+  }, [fetchOrders]);
+
+  // Filter orders based on search term and status
   const filteredOrders = orders.filter(order => {
-    const matchesSearch = order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         order.type.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = order._id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'All' || order.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
-  
-  // Pagination
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
-  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
-  
-  // Reset to first page when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, statusFilter]);
-  
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case 'Delivered':
-        return 'bg-green-100 text-green-600 dark:bg-green-500/20 dark:text-green-400';
-      case 'In Transit':
-        return 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400';
-      default:
-        return 'bg-gray-100 text-gray-600 dark:bg-gray-500/20 dark:text-gray-400';
-    }
+
+  // Handle pagination
+  const handlePageChange = (page) => {
+    fetchOrders(`/orders/user?page=${page}&limit=${ordersPagination.pageSize}`);
   };
-  
+
+  // Format date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', { 
@@ -97,12 +85,40 @@ const OrderHistory = () => {
       day: 'numeric'
     }).format(date);
   };
+
+  // Get status style
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'delivered':
+      case 'paid':
+        return 'bg-green-100 text-green-600 dark:bg-green-500/20 dark:text-green-400';
+      case 'pending':
+      case 'processing':
+        return 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400';
+      case 'cancelled':
+        return 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400';
+      default:
+        return 'bg-gray-100 text-gray-600 dark:bg-gray-500/20 dark:text-gray-400';
+    }
+  };
+
+  // Format status for display
+  const formatStatus = (status) => {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
+  // View order details
+  // const viewOrderDetails = async (orderId) => {
+  //   await getOrderById(orderId);
+  //   setSelectedOrder(orders.find(order => order._id === orderId));
+  // };
   
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
+      className='w-full max-w-[21rem] md:max-w-full'
     >
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Orders</h1>
@@ -130,14 +146,6 @@ const OrderHistory = () => {
               >
                 <FaFilter size={16} />
               </Button>
-              
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="text-gray-500"
-              >
-                <FaDownload size={16} />
-              </Button>
             </div>
           </div>
           
@@ -154,8 +162,10 @@ const OrderHistory = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="All">All Statuses</SelectItem>
-                  <SelectItem value="Delivered">Delivered</SelectItem>
-                  <SelectItem value="In Transit">In Transit</SelectItem>
+                  <SelectItem value="paid">Paid</SelectItem>
+                  <SelectItem value="processing">Processing</SelectItem>
+                  <SelectItem value="delivered">Delivered</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
                 </SelectContent>
               </Select>
             </motion.div>
@@ -163,102 +173,140 @@ const OrderHistory = () => {
         </CardHeader>
         
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-gray-500 dark:text-gray-400">ID</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400">Date</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400">Type</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400">Status</TableHead>
-                  <TableHead className="text-right text-gray-500 dark:text-gray-400">Price</TableHead>
-                  <TableHead className="w-10"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {currentOrders.length > 0 ? (
-                  currentOrders.map((order) => (
-                    <TableRow key={order.id} className="border-t border-gray-200 dark:border-gray-700/30">
-                      <TableCell className="font-medium text-gray-800 dark:text-white">{order.id}</TableCell>
-                      <TableCell className="text-gray-600 dark:text-gray-300">{formatDate(order.date)}</TableCell>
-                      <TableCell className="text-gray-800 dark:text-white">{order.type} · {order.amount}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className={getStatusStyle(order.status)}>
-                          {order.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right text-gray-800 dark:text-white">₦{order.price.toLocaleString()}</TableCell>
-                      <TableCell>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              onClick={() => setSelectedOrder(order)}
-                              className="p-1"
-                            >
-                              <FaEye size={16} className="text-gray-500" />
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>Order Details · {order.id}</DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                                <div className="text-gray-500 dark:text-gray-400">Order Date</div>
-                                <div>{formatDate(order.date)}</div>
-                                
-                                <div className="text-gray-500 dark:text-gray-400">Status</div>
-                                <div>
-                                  <Badge variant="outline" className={getStatusStyle(order.status)}>
-                                    {order.status}
-                                  </Badge>
-                                </div>
-                                
-                                <div className="text-gray-500 dark:text-gray-400">Fuel Type</div>
-                                <div>{order.type}</div>
-                                
-                                <div className="text-gray-500 dark:text-gray-400">Amount</div>
-                                <div>{order.amount}</div>
-                                
-                                <div className="text-gray-500 dark:text-gray-400">Price</div>
-                                <div>₦{order.price.toLocaleString()}</div>
-                                
-                                <div className="text-gray-500 dark:text-gray-400">Delivery Location</div>
-                                <div>{order.location}</div>
-                                
-                                <div className="text-gray-500 dark:text-gray-400">Payment Method</div>
-                                <div>{order.paymentMethod}</div>
-                              </div>
-                              
-                              {order.status === 'Delivered' && (
-                                <div className="rounded-lg bg-green-50 dark:bg-green-500/10 p-3 text-green-600 dark:text-green-400 text-sm">
-                                  This order was delivered on {formatDate(order.deliveryDate)}.
-                                </div>
-                              )}
-                              
-                              {order.status === 'In Transit' && (
-                                <div className="rounded-lg bg-blue-50 dark:bg-blue-500/10 p-3 text-blue-600 dark:text-blue-400 text-sm">
-                                  Your order is on the way and will be delivered soon.
-                                </div>
-                              )}
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-800 dark:border-white"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center py-6 text-red-500">
+              {error}
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-6 text-gray-500">No orders found</TableCell>
+                    <TableHead className="text-gray-500 dark:text-gray-400">Order ID</TableHead>
+                    <TableHead className="text-gray-500 dark:text-gray-400">Date</TableHead>
+                    <TableHead className="text-gray-500 dark:text-gray-400">Items</TableHead>
+                    <TableHead className="text-gray-500 dark:text-gray-400">Status</TableHead>
+                    <TableHead className="text-right text-gray-500 dark:text-gray-400">Total</TableHead>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {filteredOrders.length > 0 ? (
+                    filteredOrders.map((order) => (
+                      <TableRow key={order._id} className="border-t border-gray-200 dark:border-gray-700/30">
+                        <TableCell className="font-medium text-gray-800 dark:text-white">
+                          {order._id.slice(-6).toUpperCase()}
+                        </TableCell>
+                        <TableCell className="text-gray-600 dark:text-gray-300">
+                          {formatDate(order.createdAt)}
+                        </TableCell>
+                        <TableCell className="text-gray-800 dark:text-white">
+                          {order.orderItems?.length > 0 ? (
+                            `${order.orderItems[0].productName} ${
+                              order.orderItems.length > 1 ? 
+                              `+ ${order.orderItems.length - 1} more` : 
+                              ''
+                            }`
+                          ) : 'No items'}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className={getStatusStyle(order.status)}>
+                            {formatStatus(order.status)}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right text-gray-800 dark:text-white">
+                          ₦{order.totalAmount.toLocaleString()}
+                        </TableCell>
+                        {/* <TableCell>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                onClick={() => viewOrderDetails(order._id)}
+                                className="p-1"
+                              >
+                                <FaEye size={16} className="text-gray-500" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              {selectedOrder && (
+                                <>
+                                  <DialogHeader>
+                                    <DialogTitle>Order Details · {selectedOrder._id.slice(-6).toUpperCase()}</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                                      <div className="text-gray-500 dark:text-gray-400">Order Date</div>
+                                      <div>{formatDate(selectedOrder.createdAt)}</div>
+                                      
+                                      <div className="text-gray-500 dark:text-gray-400">Status</div>
+                                      <div>
+                                        <Badge variant="outline" className={getStatusStyle(selectedOrder.status)}>
+                                          {formatStatus(selectedOrder.status)}
+                                        </Badge>
+                                      </div>
+                                      
+                                      <div className="text-gray-500 dark:text-gray-400">Total Amount</div>
+                                      <div>₦{selectedOrder.totalAmount.toLocaleString()}</div>
+                                    </div>
+                                    
+                                    <div>
+                                      <h3 className="font-medium mb-2">Order Items</h3>
+                                      <div className="space-y-2">
+                                        {selectedOrder.orderItems?.map((item, index) => (
+                                          <div key={item._id} className="bg-gray-50 dark:bg-gray-800/50 p-3 rounded-md">
+                                            <div className="flex justify-between mb-1">
+                                              <span className="font-medium">{item.productName}</span>
+                                              <span>₦{item.price.toLocaleString()}</span>
+                                            </div>
+                                            <div className="text-sm text-gray-500 dark:text-gray-400">
+                                              {item.qunatity} × ₦{item.unitPrice.toLocaleString()}
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                    
+                                    {selectedOrder.status === 'delivered' && (
+                                      <div className="rounded-lg bg-green-50 dark:bg-green-500/10 p-3 text-green-600 dark:text-green-400 text-sm">
+                                        This order was delivered successfully.
+                                      </div>
+                                    )}
+                                    
+                                    {selectedOrder.status === 'processing' && (
+                                      <div className="rounded-lg bg-blue-50 dark:bg-blue-500/10 p-3 text-blue-600 dark:text-blue-400 text-sm">
+                                        Your order is being processed and will be delivered soon.
+                                      </div>
+                                    )}
+                                    
+                                    {selectedOrder.status === 'cancelled' && (
+                                      <div className="rounded-lg bg-red-50 dark:bg-red-500/10 p-3 text-red-600 dark:text-red-400 text-sm">
+                                        This order was cancelled.
+                                      </div>
+                                    )}
+                                  </div>
+                                </>
+                              )}
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell> */}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center py-6 text-gray-500">No orders found</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          )}
           
-          {totalPages > 1 && (
+          {!loading && ordersPagination.totalPages > 1 && (
             <Pagination className="mt-4">
               <PaginationContent>
                 <PaginationItem>
@@ -266,21 +314,23 @@ const OrderHistory = () => {
                     href="#" 
                     onClick={(e) => {
                       e.preventDefault();
-                      if (currentPage > 1) setCurrentPage(currentPage - 1);
+                      if (ordersPagination.hasPreviousPage) {
+                        handlePageChange(ordersPagination.currentPage - 1);
+                      }
                     }}
-                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                    className={!ordersPagination.hasPreviousPage ? "pointer-events-none opacity-50" : ""}
                   />
                 </PaginationItem>
                 
-                {Array.from({ length: totalPages }).map((_, i) => (
+                {Array.from({ length: ordersPagination.totalPages }).map((_, i) => (
                   <PaginationItem key={i}>
                     <PaginationLink 
                       href="#" 
                       onClick={(e) => {
                         e.preventDefault();
-                        setCurrentPage(i + 1);
+                        handlePageChange(i + 1);
                       }}
-                      isActive={currentPage === i + 1}
+                      isActive={ordersPagination.currentPage === i + 1}
                     >
                       {i + 1}
                     </PaginationLink>
@@ -292,9 +342,11 @@ const OrderHistory = () => {
                     href="#" 
                     onClick={(e) => {
                       e.preventDefault();
-                      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                      if (ordersPagination.hasNextPage) {
+                        handlePageChange(ordersPagination.currentPage + 1);
+                      }
                     }}
-                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                    className={!ordersPagination.hasNextPage ? "pointer-events-none opacity-50" : ""}
                   />
                 </PaginationItem>
               </PaginationContent>

@@ -31,6 +31,7 @@ const QuickActions = () => {
         title="Add Location" 
         description="Save delivery address" 
         icon={<FaMapMarkerAlt size={24} />} 
+        onClick={() => navigate('settings')}
       />
     </motion.div>
   );

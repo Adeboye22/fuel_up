@@ -164,7 +164,7 @@ const DashboardHeader = ({ toggleSidebar, isSidebarOpen }) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="flex justify-between items-center mb-6 z-20 bg-background/90 backdrop-blur-xl border-b dark:border-gray-800 rounded-xl px-4 lg:px-8 py-4 sticky top-4 shadow-sm"
+      className="flex justify-between items-center mb-6 z-20 bg-background/90 dark:bg-gray-800/40 backdrop-blur-2xl dark:border-b dark:border-gray-800 border-gray-700/50 rounded-xl px-4 lg:px-8 py-4 sticky top-4 shadow-sm"
     >
       <div className="flex items-center gap-4">
         <button 

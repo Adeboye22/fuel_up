@@ -4,8 +4,28 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 
-const SavedLocations = ({ locations = [] }) => {
+const SavedLocations = ({ addresses = [] }) => {
   const navigate = useNavigate();
+
+  // Format address object into a readable string
+  const formatAddress = (address) => {
+    const parts = [];
+    if (address.street) parts.push(address.street);
+    if (address.city) parts.push(address.city);
+    if (address.state) parts.push(address.state);
+    
+    return parts.join(', ');
+  };
+
+  // Generate a name for the address if not provided
+  const getAddressName = (address, index) => {
+    // Use predefined names for the first three addresses if not provided
+    const defaultNames = ['Home', 'Office', 'Site'];
+    
+    if (address.name) return address.name;
+    if (index < defaultNames.length) return defaultNames[index];
+    return `Location ${index + 1}`;
+  };
 
   return (
     <Card className="col-span-1">
@@ -22,15 +42,18 @@ const SavedLocations = ({ locations = [] }) => {
         </Button>
       </CardHeader>
       <CardContent>
-        {locations.length > 0 ? (
+        {addresses && addresses.length > 0 ? (
           <ul className="space-y-3">
-            {locations.map((location, index) => (
+            {addresses.map((address, index) => (
               <li 
-                key={index} 
+                key={address._id || index} 
                 className="flex items-start border-b border-gray-100 dark:border-gray-800 pb-3 last:border-0 last:pb-0"
               >
                 <FaMapMarkerAlt className="text-emerald-500 mt-1 mr-3 flex-shrink-0" />
-                <p className="text-sm text-gray-600 dark:text-gray-300">{location}</p>
+                <div>
+                  <p className="text-sm font-medium">{getAddressName(address, index)}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">{formatAddress(address)}</p>
+                </div>
               </li>
             ))}
           </ul>

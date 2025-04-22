@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   FaBell, 
-  FaTruck, 
   FaCheck, 
   FaInfoCircle, 
   FaExclamationTriangle,
   FaTrash,
-  FaEllipsisH
+  FaEllipsisH,
+  FaShoppingCart,
+  FaFileInvoice
 } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -24,99 +25,119 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import apiService from '@/lib/api';
 
 const NotificationsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: 'Order Delivered',
-      message: 'Your order #ORD-7842 (25L Petrol) has been delivered.',
-      type: 'success',
-      date: 'Mar 8, 2025',
-      time: '10:15 AM',
-      read: true
-    },
-    {
-      id: 2,
-      title: 'Order In Transit',
-      message: 'Your order #ORD-7835 (40L Diesel) is on its way.',
-      type: 'info',
-      date: 'Mar 5, 2025',
-      time: '11:30 AM',
-      read: true
-    },
-    {
-      id: 3,
-      title: 'Special Offer',
-      message: 'Get 5% off on your next diesel order above 30L. Valid until March 20.',
-      type: 'promo',
-      date: 'Mar 3, 2025',
-      time: '09:00 AM',
-      read: false
-    },
-    {
-      id: 4,
-      title: 'Price Update',
-      message: 'Petrol prices have been updated to ₦790/L effective immediately.',
-      type: 'important',
-      date: 'Mar 1, 2025',
-      time: '12:00 PM',
-      read: false
-    },
-    {
-      id: 5,
-      title: 'Scheduled Maintenance',
-      message: 'Our service will be undergoing maintenance on March 15 from 2AM to 4AM.',
-      type: 'warning',
-      date: 'Feb 28, 2025',
-      time: '03:45 PM',
-      read: true
-    },
-    {
-      id: 6,
-      title: 'Payment Successful',
-      message: 'Your payment of ₦23,700 for order #ORD-7819 was successful.',
-      type: 'success',
-      date: 'Feb 28, 2025',
-      time: '02:50 PM',
-      read: true
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalCount: 0,
+    pageSize: 10,
+    hasNextPage: false,
+    hasPreviousPage: false
+  });
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async (page = 1) => {
+    setLoading(true);
+    try {
+      const response = await apiService.get(`/notifications?page=${page}&limit=10`);
+      
+      if (response.status === "success") {
+        setNotifications(response.data.data);
+        setPagination({
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          totalCount: response.data.totalCount,
+          pageSize: response.data.pageSize,
+          hasNextPage: response.data.hasNextPage,
+          hasPreviousPage: response.data.hasPreviousPage
+        });
+      } else {
+        setError("Failed to load notifications");
+      }
+    } catch (err) {
+      setError("An error occurred while fetching notifications");
+      console.error("Notification fetch error:", err);
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
 
   const filteredNotifications = notifications.filter(notification => {
     if (selectedFilter === 'all') return true;
-    if (selectedFilter === 'unread') return !notification.read;
-    return notification.type === selectedFilter;
+    if (selectedFilter === 'unread') return !notification.isRead;
+    return notification.type.toLowerCase().includes(selectedFilter.toLowerCase());
   });
 
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(notif => ({ ...notif, read: true })));
+  const markAllAsRead = async () => {
+    try {
+      await apiService.patch('/notifications/mark-all-read');
+      setNotifications(notifications.map(notif => ({ ...notif, isRead: true })));
+    } catch (err) {
+      console.error("Error marking all notifications as read:", err);
+    }
   };
 
-  const clearAllNotifications = () => {
-    setNotifications([]);
+  const markAsRead = async (id) => {
+    try {
+      // Updated to use PATCH method as specified
+      const response = await apiService.patch(`/notifications/${id}`);
+      
+      if (response.data.status === "success") {
+        setNotifications(notifications.map(notif => 
+          notif._id === id ? { ...notif, isRead: true } : notif
+        ));
+      }
+    } catch (err) {
+      console.error("Error marking notification as read:", err);
+    }
   };
 
-  const markAsRead = (id) => {
-    setNotifications(notifications.map(notif => 
-      notif.id === id ? { ...notif, read: true } : notif
-    ));
+  const deleteNotification = async (id) => {
+    try {
+      await apiService.delete(`/notifications/${id}`);
+      setNotifications(notifications.filter(notif => notif._id !== id));
+    } catch (err) {
+      console.error("Error deleting notification:", err);
+    }
   };
 
-  const deleteNotification = (id) => {
-    setNotifications(notifications.filter(notif => notif.id !== id));
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  };
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit'
+    });
   };
 
   const getNotificationIcon = (type) => {
-    switch (type) {
-      case 'success':
+    switch (type.toLowerCase()) {
+      case 'order processed':
+      case 'order completed':
         return <FaCheck className="text-emerald-500" />;
-      case 'info':
-      case 'promo':
-        return <FaInfoCircle className="text-blue-500" />;
+      case 'order created':
+        return <FaShoppingCart className="text-blue-500" />;
+      case 'payment':
+        return <FaFileInvoice className="text-purple-500" />;
       case 'warning':
-      case 'important':
+      case 'alert':
         return <FaExclamationTriangle className="text-amber-500" />;
       default:
         return <FaBell className="text-gray-500" />;
@@ -124,23 +145,35 @@ const NotificationsPage = () => {
   };
 
   const getNotificationColor = (type) => {
-    switch (type) {
-      case 'success':
+    switch (type.toLowerCase()) {
+      case 'order processed':
+      case 'order completed':
         return 'bg-emerald-50 dark:bg-emerald-500/10';
-      case 'info':
+      case 'order created':
         return 'bg-blue-50 dark:bg-blue-500/10';
-      case 'promo':
-        return 'bg-indigo-50 dark:bg-indigo-500/10';
+      case 'payment':
+        return 'bg-purple-50 dark:bg-purple-500/10';
       case 'warning':
+      case 'alert':
         return 'bg-amber-50 dark:bg-amber-500/10';
-      case 'important':
-        return 'bg-red-50 dark:bg-red-500/10';
       default:
         return 'bg-gray-50 dark:bg-gray-500/10';
     }
   };
 
-  const unreadCount = notifications.filter(notif => !notif.read).length;
+  const unreadCount = notifications.filter(notif => !notif.isRead).length;
+
+  const loadNextPage = () => {
+    if (pagination.hasNextPage) {
+      fetchNotifications(pagination.currentPage + 1);
+    }
+  };
+
+  const loadPrevPage = () => {
+    if (pagination.hasPreviousPage) {
+      fetchNotifications(pagination.currentPage - 1);
+    }
+  };
 
   return (
     <motion.div 
@@ -167,9 +200,8 @@ const NotificationsPage = () => {
             <SelectContent>
               <SelectItem value="all">All Notifications</SelectItem>
               <SelectItem value="unread">Unread</SelectItem>
-              <SelectItem value="success">Order Updates</SelectItem>
-              <SelectItem value="important">Important</SelectItem>
-              <SelectItem value="promo">Promotions</SelectItem>
+              <SelectItem value="order">Orders</SelectItem>
+              <SelectItem value="payment">Payments</SelectItem>
             </SelectContent>
           </Select>
           
@@ -185,31 +217,64 @@ const NotificationsPage = () => {
                   Mark all as read
                 </DropdownMenuItem>
               )}
-              {notifications.length > 0 && (
-                <DropdownMenuItem 
-                  onClick={clearAllNotifications}
-                  className="cursor-pointer text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Clear all
-                </DropdownMenuItem>
-              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
       
       <div className="w-full space-y-3 mt-2">
-        {filteredNotifications.length > 0 ? (
-          filteredNotifications.map((notification) => (
-            <NotificationItem
-              key={notification.id}
-              notification={notification}
-              getNotificationIcon={getNotificationIcon}
-              getNotificationColor={getNotificationColor}
-              onMarkAsRead={markAsRead}
-              onDelete={deleteNotification}
-            />
-          ))
+        {loading ? (
+          <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+            Loading notifications...
+          </div>
+        ) : error ? (
+          <div className="text-center py-12 text-red-500 dark:text-red-400">
+            {error}
+          </div>
+        ) : filteredNotifications.length > 0 ? (
+          <>
+            {filteredNotifications.map((notification) => (
+              <NotificationItem
+                key={notification._id}
+                notification={{
+                  id: notification._id,
+                  message: notification.message,
+                  type: notification.type,
+                  read: notification.isRead,
+                  date: formatDate(notification.createdAt),
+                  time: formatTime(notification.createdAt)
+                }}
+                getNotificationIcon={getNotificationIcon}
+                getNotificationColor={getNotificationColor}
+                onMarkAsRead={markAsRead}
+                onDelete={deleteNotification}
+              />
+            ))}
+            
+            {(pagination.hasNextPage || pagination.hasPreviousPage) && (
+              <div className="flex justify-center gap-4 mt-6">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={loadPrevPage}
+                  disabled={!pagination.hasPreviousPage}
+                >
+                  Previous
+                </Button>
+                <span className="flex items-center text-sm text-gray-500">
+                  Page {pagination.currentPage} of {pagination.totalPages}
+                </span>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={loadNextPage}
+                  disabled={!pagination.hasNextPage}
+                >
+                  Next
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-12 text-gray-500 dark:text-gray-400">
             No notifications to display
@@ -235,7 +300,7 @@ const NotificationItem = ({ notification, getNotificationIcon, getNotificationCo
         <div className="flex-1">
           <div className="flex items-start justify-between">
             <h3 className={`font-medium ${notification.read ? 'text-gray-800 dark:text-white' : 'text-emerald-700 dark:text-emerald-400'}`}>
-              {notification.title}
+              {notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
             </h3>
             
             <DropdownMenu>

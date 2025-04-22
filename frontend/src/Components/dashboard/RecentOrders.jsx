@@ -19,7 +19,17 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const RecentOrders = ({ orders }) => {
+const RecentOrders = ({ orders, loading, error }) => {
+  // Format date for display
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,60 +50,102 @@ const RecentOrders = ({ orders }) => {
           </Link>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Order ID</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Date</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Type</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Amount</TableHead>
-                  <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Status</TableHead>
-                  <TableHead className="text-right text-gray-500 dark:text-gray-400 font-medium text-sm">Price</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {orders.map((order) => (
-                  <OrderRow key={order.id} order={order} />
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-800 dark:border-white"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center py-6 text-red-500">
+              {error}
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Order ID</TableHead>
+                    <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Date</TableHead>
+                    <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Items</TableHead>
+                    <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-sm">Status</TableHead>
+                    <TableHead className="text-right text-gray-500 dark:text-gray-400 font-medium text-sm">Total</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {orders && orders.length > 0 ? (
+                    orders.map((order) => (
+                      <OrderRow key={order._id} order={order} formatDate={formatDate} />
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-6 text-gray-500">No recent orders</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
     </motion.div>
   );
 };
 
-const OrderRow = ({ order }) => {
+const OrderRow = ({ order, formatDate }) => {
   const getStatusStyle = (status) => {
     switch (status) {
-      case 'Delivered':
+      case 'delivered':
+      case 'paid':
         return 'bg-green-100 text-green-600 dark:bg-green-500/20 dark:text-green-400';
-      case 'In Transit':
+      case 'pending':
+      case 'processing':
         return 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400';
+      case 'cancelled':
+        return 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400';
       default:
         return 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-400';
     }
   };
 
+  // Format status for display
+  const formatStatus = (status) => {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
+  // Get item summary
+  const getItemSummary = () => {
+    if (!order.orderItems || order.orderItems.length === 0) {
+      return 'No items';
+    }
+    
+    return `${order.orderItems[0].productName} ${
+      order.orderItems.length > 1 ? 
+      `+ ${order.orderItems.length - 1} more` : 
+      ''
+    }`;
+  };
+
   return (
     <TableRow className="border-t border-gray-200 dark:border-gray-700/30">
-      <TableCell className="text-sm text-gray-800 dark:text-white">{order.id}</TableCell>
+      <TableCell className="text-sm text-gray-800 dark:text-white">
+        {order._id.slice(-6).toUpperCase()}
+      </TableCell>
       <TableCell className="text-sm text-gray-600 dark:text-gray-300">
         <div className="flex items-center">
           <FaCalendarAlt className="mr-2 text-gray-400 dark:text-gray-500" size={12} />
-          {order.date}
+          {formatDate(order.createdAt)}
         </div>
       </TableCell>
-      <TableCell className="text-sm text-gray-800 dark:text-white">{order.type}</TableCell>
-      <TableCell className="text-sm text-gray-800 dark:text-white">{order.amount}</TableCell>
+      <TableCell className="text-sm text-gray-800 dark:text-white">
+        {getItemSummary()}
+      </TableCell>
       <TableCell className="text-sm">
-        <Badge variant="outline" className={`${getStatusStyle(order.status)}`}>
-          {order.status}
+        <Badge variant="outline" className={getStatusStyle(order.status)}>
+          {formatStatus(order.status)}
         </Badge>
       </TableCell>
-      <TableCell className="text-sm text-right text-gray-800 dark:text-white">₦{order.price.toLocaleString()}</TableCell>
+      <TableCell className="text-sm text-right text-gray-800 dark:text-white">
+        ₦{order.totalAmount.toLocaleString()}
+      </TableCell>
     </TableRow>
   );
 };
