@@ -346,14 +346,14 @@ const SignUp = () => {
           </motion.button>
 
           {/* Divider */}
-          <div className="flex items-center my-6">
+          {/* <div className="flex items-center my-6">
             <div className="flex-grow border-t border-gray-700"></div>
             <span className="flex-shrink mx-4 text-gray-400 text-sm">or sign up with</span>
             <div className="flex-grow border-t border-gray-700"></div>
-          </div>
+          </div> */}
 
           {/* Social Sign Up Options */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* <div className="grid grid-cols-2 gap-4">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -372,7 +372,7 @@ const SignUp = () => {
               <FaApple className="mr-2" />
               Apple
             </motion.button>
-          </div>
+          </div> */}
         </motion.form>
 
         {/* Sign In Link */}

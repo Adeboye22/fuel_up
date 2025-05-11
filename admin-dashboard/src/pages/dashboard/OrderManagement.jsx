@@ -628,7 +628,7 @@ const OrderManagement = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="initiated">Initiated</SelectItem>
-                    <SelectItem value="processing">Processing</SelectItem>
+                    <SelectItem value="processing">Processing</SelectItem> 
                     <SelectItem value="shipping">Shipping</SelectItem>
                     <SelectItem value="delivered">Delivered</SelectItem>
                     <SelectItem value="paid">Paid</SelectItem>
