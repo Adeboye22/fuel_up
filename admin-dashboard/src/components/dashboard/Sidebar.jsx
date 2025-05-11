@@ -12,7 +12,6 @@ import {
   FaTimes
 } from 'react-icons/fa';
 import FuelupLogo from '../FuelupLogo';
-import FuelupLogo2 from '../FuelupLogo2';
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   return (
@@ -44,7 +43,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       >
         <div className="flex justify-between items-center mb-6 px-4">
           <Link to="/admin" className="inline-block" onClick={toggleSidebar}>
-            <FuelupLogo2 />
+            <FuelupLogo />
           </Link>
           <button 
             onClick={toggleSidebar}
@@ -69,7 +68,7 @@ const SidebarContent = ({ toggleSidebar }) => {
     <>
       <div className="mb-10 px-4 lg:block hidden">
         <Link to="/admin" className="inline-block">
-          <FuelupLogo2 />
+          <FuelupLogo />
         </Link>
       </div>
       

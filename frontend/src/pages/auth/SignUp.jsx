@@ -4,6 +4,7 @@ import { FaUser, FaEnvelope, FaLock, FaGoogle, FaApple, FaArrowRight, FaPhone } 
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import useAuthStore from '@/stores/useAuthStore';
+import FuelupLogo from '@/components/FuelupLogo';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const SignUp = () => {
           className="text-center mb-8"
         >
           <Link to="/" className="inline-block mb-6">
-            <img src="/Logo.png" alt="FuelUp" className="h-12" />
+            <FuelupLogo />
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2">Create an Account</h1>
           <p className="text-gray-400">Get started with FuelUp delivery services</p>

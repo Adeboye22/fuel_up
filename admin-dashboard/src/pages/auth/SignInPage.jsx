@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import useAuthStore from '@/stores/useAuthStore';
 import toast from 'react-hot-toast';
+import FuelupLogo from '@/components/FuelupLogo';
 
 const SignInPage = () => {
   const [formData, setFormData] = useState({
@@ -116,7 +117,7 @@ const SignInPage = () => {
           className="text-center mb-8"
         >
           <Link to="/" className="inline-block mb-6">
-            <img src="/Logo.png" alt="Admin Portal" className="h-12" />
+            <FuelupLogo />
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2">Admin Portal</h1>
           <p className="text-gray-400">Sign in to access the admin dashboard</p>

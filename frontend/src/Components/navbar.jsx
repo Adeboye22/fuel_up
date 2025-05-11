@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { ModeToggle } from './mode-toggle';
 import FuelupLogo from './FuelupLogo';
-import FuelupLogo2 from './FuelupLogo2';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,8 +79,7 @@ const Navbar = () => {
             >
               <div className="flex items-center">
                 {/* <img src="Logo.png" className='h-12 lg:h-14' alt="logo" /> */}
-                <FuelupLogo2 />
-                {/* <FuelupLogo2 /> */}
+                <FuelupLogo />
               </div>
             </motion.div>
             
