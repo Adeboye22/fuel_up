@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGasPump, FaTruck, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaUsers, FaMapMarkerAlt, FaChartBar, FaCog } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const QuickActions = () => {
@@ -14,25 +14,32 @@ const QuickActions = () => {
       className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
     >
       <ActionCard 
-        title="Order Fuel" 
-        description="Quick fuel delivery" 
-        icon={<FaGasPump size={24} />} 
+        title="Dashboard" 
+        description="View analytics" 
+        icon={<FaChartBar size={24} />} 
         primary 
-        onClick={() => navigate('/admin/orders/new')}
-      />
-      
-      <ActionCard 
-        title="Track Orders" 
-        description="Check delivery status" 
-        icon={<FaTruck size={24} />} 
-        onClick={() => navigate('/admin/orders')}
+        onClick={() => navigate('/admin/dashboard')}
       />
       
       <ActionCard 
         title="Manage Users" 
         description="View and edit users" 
-        icon={<FaMapMarkerAlt size={24} />} 
+        icon={<FaUsers size={24} />} 
         onClick={() => navigate('/admin/users')}
+      />
+      
+      <ActionCard 
+        title="Manage Locations" 
+        description="View delivery points" 
+        icon={<FaMapMarkerAlt size={24} />} 
+        onClick={() => navigate('/admin/locations')}
+      />
+
+      <ActionCard 
+        title="System Settings" 
+        description="Configure application" 
+        icon={<FaCog size={24} />} 
+        onClick={() => navigate('/admin/settings')}
       />
     </motion.div>
   );

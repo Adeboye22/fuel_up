@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaCalendarAlt } from 'react-icons/fa';
@@ -19,7 +19,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const RecentOrders = ({ orders, loading, error }) => {
+import apiService from '@/lib/api';
+
+const RecentOrders = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   // Format date for display
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -29,6 +35,30 @@ const RecentOrders = ({ orders, loading, error }) => {
       year: 'numeric'
     }).format(date);
   };
+
+  // Fetch the 4 most recent orders
+  useEffect(() => {
+    const fetchRecentOrders = async () => {
+      try {
+        setLoading(true);
+        // Get only the first page with 4 items
+        const response = await apiService.get('/orders?page=1&limit=4');
+        
+        if (response.status === 'success') {
+          setOrders(response.data.data || []);
+        } else {
+          setError('Failed to fetch orders');
+        }
+      } catch (err) {
+        console.error('Error fetching recent orders:', err);
+        setError('Failed to load recent orders');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecentOrders();
+  }, []);
 
   return (
     <motion.div
@@ -43,7 +73,7 @@ const RecentOrders = ({ orders, loading, error }) => {
             Recent Orders
           </CardTitle>
           <Link 
-            to="/history" 
+            to="/admin/orders" 
             className="text-emerald-600 dark:text-emerald-400 text-sm hover:text-emerald-500 dark:hover:text-emerald-300 transition-colors"
           >
             View All
