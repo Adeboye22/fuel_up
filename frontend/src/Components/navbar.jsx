@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { ModeToggle } from './mode-toggle';
@@ -9,6 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const mobileMenuRef = useRef(null);
   const menuButtonRef = useRef(null);
 
@@ -53,11 +54,85 @@ const Navbar = () => {
     closeNavBar();
   };
 
+  // Function to scroll to services section
+  const scrollToServices = (e) => {
+    e.preventDefault();
+    
+    // If we're not on the home page, navigate there first
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollToServices: true } });
+    } else {
+      // Close mobile menu before scrolling
+      closeNavBar();
+      
+      // Add a small delay to ensure menu is closed before scrolling
+      setTimeout(() => {
+        // Scroll to services section
+        const servicesSection = document.getElementById('services');
+        if (servicesSection) {
+          servicesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    }
+  };
+
+  useEffect(() => {
+    if (location.state?.scrollToServices) {
+      // Ensure the component is fully mounted and the section exists
+      setTimeout(() => {
+        const servicesSection = document.getElementById('services');
+        if (servicesSection) {
+          servicesSection.scrollIntoView({ behavior: 'smooth' });
+          // Highlight the services section in the nav
+          setIsServicesActive(true);
+        }
+        // Clean up state
+        navigate(location.pathname, { replace: true, state: {} });
+      }, 500);
+    }
+  }, [location.state, navigate]);
+
   // Animation variants
   const navItemVariants = {
     hidden: { opacity: 0, y: -5 },
     visible: { opacity: 1, y: 0 }
   };
+
+  // Check if services section is in view for highlighting nav
+  const [isServicesActive, setIsServicesActive] = useState(false);
+  
+  useEffect(() => {
+    const checkServicesInView = () => {
+      if (location.pathname === '/') {
+        const servicesSection = document.getElementById('services');
+        if (servicesSection) {
+          const rect = servicesSection.getBoundingClientRect();
+          // Consider a larger portion of the viewport for mobile
+          const topThreshold = window.innerHeight * 0.4;
+          const bottomThreshold = window.innerHeight * 0.6;
+          const isInView = (
+            (rect.top <= bottomThreshold && rect.bottom >= topThreshold) || 
+            (location.hash === '#services')
+          );
+          setIsServicesActive(isInView);
+        }
+      } else {
+        setIsServicesActive(false);
+      }
+    };
+    
+    // Initial check
+    checkServicesInView();
+    
+    // Set up event listeners
+    window.addEventListener('scroll', checkServicesInView);
+    window.addEventListener('resize', checkServicesInView);
+    
+    return () => {
+      window.removeEventListener('scroll', checkServicesInView);
+      window.removeEventListener('resize', checkServicesInView);
+    };
+  }, [location.pathname, location.hash]);
 
   return (
     <nav 
@@ -78,7 +153,6 @@ const Navbar = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="flex items-center">
-                {/* <img src="Logo.png" className='h-12 lg:h-14' alt="logo" /> */}
                 <FuelupLogo />
               </div>
             </motion.div>
@@ -97,11 +171,11 @@ const Navbar = () => {
                   <motion.div variants={navItemVariants}>
                     <NavLink 
                       to="/" 
-                      className={({ isActive }) => `
-                        ${scrolled ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-200'} 
+                      className={({ isActive }) => 
+                        `${scrolled ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-200'} 
                         hover:text-emerald-500 dark:hover:text-emerald-400 px-2 py-1 text-sm font-medium transition-all duration-300 relative
-                        ${isActive ? 'font-semibold' : ''}
-                      `}
+                        ${isActive ? 'font-semibold' : ''}`
+                      }
                     >
                       {({ isActive }) => (
                         <>
@@ -121,29 +195,24 @@ const Navbar = () => {
                   </motion.div>
                   
                   <motion.div variants={navItemVariants}>
-                    <NavLink 
-                      to="/services" 
-                      className={({ isActive }) => `
-                        ${scrolled ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-200'} 
-                        hover:text-emerald-500 dark:hover:text-emerald-400 px-2 py-1 text-sm font-medium transition-all duration-300 relative
-                        ${isActive ? 'font-semibold' : ''}
-                      `}
+                    <a 
+                      href="#services" 
+                      onClick={scrollToServices}
+                      className={`${scrolled ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-200'} 
+                      hover:text-emerald-500 dark:hover:text-emerald-400 px-2 py-1 text-sm font-medium transition-all duration-300 relative
+                      ${isServicesActive ? 'font-semibold' : ''}`}
                     >
-                      {({ isActive }) => (
-                        <>
-                          Services
-                          {isActive && (
-                            <motion.span 
-                              className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-500 dark:bg-emerald-400"
-                              layoutId="navHighlight"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ duration: 0.3 }}
-                            />
-                          )}
-                        </>
+                      Services
+                      {isServicesActive && (
+                        <motion.span 
+                          className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-500 dark:bg-emerald-400"
+                          layoutId="navHighlight"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
                       )}
-                    </NavLink>
+                    </a>
                   </motion.div>
                 </motion.div>
                 
@@ -160,11 +229,11 @@ const Navbar = () => {
                   <motion.div variants={navItemVariants}>
                     <NavLink 
                       to="/signup" 
-                      className={({ isActive }) => `
-                        ${scrolled ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-200'} 
+                      className={({ isActive }) => 
+                        `${scrolled ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-200'} 
                         hover:text-emerald-500 dark:hover:text-emerald-400 px-2 py-1 text-sm font-medium transition-all duration-300 relative
-                        ${isActive ? 'font-semibold' : ''}
-                      `}
+                        ${isActive ? 'font-semibold' : ''}`
+                      }
                     >
                       {({ isActive }) => (
                         <>
@@ -277,17 +346,32 @@ const Navbar = () => {
                     closed: { opacity: 0, y: -10 }
                   }}
                 >
-                  <NavLink
-                    to="/services"
-                    className={({ isActive }) =>
-                      `block px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-200 ${
-                        isActive ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-emerald-500 dark:hover:text-emerald-400'
-                      }`
-                    }
-                    onClick={closeNavBar}
+                  <a
+                    href="#services"
+                    className={`block px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-200 ${
+                      isServicesActive ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-emerald-500 dark:hover:text-emerald-400'
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      closeNavBar();
+                      
+                      // Add delay to ensure menu is closed before scrolling
+                      setTimeout(() => {
+                        // If not on home page, navigate home first
+                        if (location.pathname !== '/') {
+                          navigate('/', { state: { scrollToServices: true } });
+                        } else {
+                          // Scroll to services section
+                          const servicesSection = document.getElementById('services');
+                          if (servicesSection) {
+                            servicesSection.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }
+                      }, 300); // Longer delay for mobile menu animation
+                    }}
                   >
                     Services
-                  </NavLink>
+                  </a>
                 </motion.div>
                 
                 <motion.div

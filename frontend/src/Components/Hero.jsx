@@ -43,21 +43,21 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="flex flex-col lg:flex-row gap-4 lg:gap-6 justify-center w-72 lg:w-full lg:max-w-xl"
       >
-        <div
-          // whileHover={{ scale: 1.05 }}
-          // whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 w-full bg-emerald-600 text-white font-bold rounded-full shadow-lg hover:bg-emerald-500 transition-colors duration-300 flex items-center justify-center"
-        >
-          <Link to="/signup">Get Started</Link>
-          <FaArrowRight className="ml-2" />
-        </div>
-        <div
-          // whileHover={{ scale: 1.05 }}
-          // whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 w-full bg-transparent text-white border-2 border-white font-bold rounded-full hover:bg-white/10 transition-colors duration-300"
-        >
-          <Link to="/signin">Log In</Link>
-        </div>
+        <Link to="/signup">
+          <div
+            className="px-8 py-4 w-full bg-emerald-600 text-white font-bold rounded-full shadow-lg hover:bg-emerald-500 transition-colors duration-300 flex items-center justify-center"
+          >
+            Get Started
+            <FaArrowRight className="ml-2" />
+          </div>
+        </Link>
+        <Link to="/signin">
+          <div
+            className="px-8 py-4 w-full bg-transparent text-white border-2 border-white font-bold rounded-full hover:bg-white/10 transition-colors duration-300"
+          >
+            Log In
+          </div>
+        </Link>
       </motion.div>
       
       <motion.div
