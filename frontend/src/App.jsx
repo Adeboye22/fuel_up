@@ -8,8 +8,6 @@ import useAuthStore from './stores/useAuthStore';
 import PublicRoute from './routes/PublicRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 
-// Loading spinner
-import LoadingSpinner from './components/LoadingSpinner';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts
@@ -47,35 +45,35 @@ function App() {
         <Routes>
           {/* Auth routes without layout */}
           <Route path="/signin" element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <PublicRoute>
                 <SignInPage />
               </PublicRoute>
             </Suspense>
           } />
           <Route path="/signup" element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <PublicRoute>
                 <SignUpPage />
               </PublicRoute>
             </Suspense>
           } />
           <Route path="/forgot-password" element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <PublicRoute>
                 <ForgotPasswordPage />
               </PublicRoute>
             </Suspense>
           } />
           <Route path="/verify-email" element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <PublicRoute>
                 <VerifyEmailPage />
               </PublicRoute>
             </Suspense>
           } />
           <Route path="/reset-password" element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <PublicRoute>
                 <ResetPasswordPage />
               </PublicRoute>
@@ -84,7 +82,7 @@ function App() {
 
           {/* Dashboard routes */}
           <Route path="/dashboard" element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <ProtectedRoute>  {/* Change this from PublicRoute to ProtectedRoute */}
                 <DashboardLayout /> 
               </ProtectedRoute>
@@ -98,7 +96,7 @@ function App() {
           </Route>
           {/* Main routes with MainLayout - wrap with PublicRoute */}
           <Route element={
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <PublicRoute>
                 <MainLayout />
               </PublicRoute>
