@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, Check, Trash2, Filter, RefreshCw } from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Bell, Check, Trash2, Filter, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -14,33 +14,46 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
 import { toast } from 'react-hot-toast';
 import apiService from '@/lib/api';
+import CreateNotification from '@/components/dashboard/CreateNotification';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalCount: 0,
+    pageSize: 10,
+    hasNextPage: false,
+    hasPreviousPage: false
+  });
 
   useEffect(() => {
-    fetchNotifications();
+    fetchNotifications(1);
   }, []);
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await apiService.get('/admin/notifications');
+      const response = await apiService.get(`/notifications?page=${page}&limit=10`);
       if (response.status === 'success') {
-        setNotifications(response.data);
+        setNotifications(response.data.data);
+        setPagination({
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          totalCount: response.data.totalCount,
+          pageSize: response.data.pageSize,
+          hasNextPage: response.data.hasNextPage,
+          hasPreviousPage: response.data.hasPreviousPage
+        });
       }
     } catch (err) {
       console.error('Error fetching notifications:', err);
       setError('Failed to load notifications');
-      // Use sample data if API fails
-      setNotifications(sampleNotifications);
     } finally {
       setLoading(false);
     }
@@ -48,9 +61,9 @@ const Notifications = () => {
 
   const markAsRead = async (id) => {
     try {
-      await apiService.put(`/admin/notifications/${id}/read`);
+      await apiService.put(`/notifications/${id}/read`);
       setNotifications(notifications.map(notification => 
-        notification._id === id ? { ...notification, read: true } : notification
+        notification._id === id ? { ...notification, isRead: true } : notification
       ));
       toast.success('Notification marked as read');
     } catch (err) {
@@ -61,8 +74,8 @@ const Notifications = () => {
 
   const markAllAsRead = async () => {
     try {
-      await apiService.put('/admin/notifications/read-all');
-      setNotifications(notifications.map(notification => ({ ...notification, read: true })));
+      await apiService.put('/notifications/read-all');
+      setNotifications(notifications.map(notification => ({ ...notification, isRead: true })));
       toast.success('All notifications marked as read');
     } catch (err) {
       console.error('Error marking all notifications as read:', err);
@@ -72,7 +85,7 @@ const Notifications = () => {
 
   const deleteNotification = async (id) => {
     try {
-      await apiService.delete(`/admin/notifications/${id}`);
+      await apiService.delete(`/notifications/${id}`);
       setNotifications(notifications.filter(notification => notification._id !== id));
       toast.success('Notification deleted');
     } catch (err) {
@@ -83,7 +96,7 @@ const Notifications = () => {
 
   const clearAllNotifications = async () => {
     try {
-      await apiService.delete('/admin/notifications');
+      await apiService.delete('/notifications');
       setNotifications([]);
       toast.success('All notifications cleared');
     } catch (err) {
@@ -93,41 +106,30 @@ const Notifications = () => {
   };
 
   const refreshNotifications = () => {
-    fetchNotifications();
+    fetchNotifications(pagination.currentPage);
     toast.success('Notifications refreshed');
+  };
+
+  const handleNextPage = () => {
+    if (pagination.hasNextPage) {
+      fetchNotifications(pagination.currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (pagination.hasPreviousPage) {
+      fetchNotifications(pagination.currentPage - 1);
+    }
   };
 
   const filteredNotifications = () => {
     switch (filter) {
       case 'unread':
-        return notifications.filter(notification => !notification.read);
+        return notifications.filter(notification => !notification.isRead);
       case 'read':
-        return notifications.filter(notification => notification.read);
-      case 'orders':
-        return notifications.filter(notification => notification.type === 'order');
-      case 'users':
-        return notifications.filter(notification => notification.type === 'user');
-      case 'system':
-        return notifications.filter(notification => notification.type === 'system');
+        return notifications.filter(notification => notification.isRead);
       default:
         return notifications;
-    }
-  };
-
-  const getNotificationIcon = (type) => {
-    switch (type) {
-      case 'order':
-        return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">Order</Badge>;
-      case 'user':
-        return <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">User</Badge>;
-      case 'payment':
-        return <Badge variant="outline" className="bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">Payment</Badge>;
-      case 'alert':
-        return <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Alert</Badge>;
-      case 'system':
-        return <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">System</Badge>;
-      default:
-        return <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">Info</Badge>;
     }
   };
 
@@ -140,7 +142,9 @@ const Notifications = () => {
             Manage and view your system notifications
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap justify-end">
+          <CreateNotification onNotificationCreated={refreshNotifications} />
+          
           <Button
             variant="outline"
             size="sm"
@@ -150,6 +154,7 @@ const Notifications = () => {
             <RefreshCw className="h-4 w-4" />
             Refresh
           </Button>
+          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="flex items-center gap-1">
@@ -169,18 +174,9 @@ const Notifications = () => {
               <DropdownMenuItem onClick={() => setFilter('read')}>
                 Read Only
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setFilter('orders')}>
-                Order Notifications
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilter('users')}>
-                User Notifications
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilter('system')}>
-                System Notifications
-              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
@@ -208,7 +204,6 @@ const Notifications = () => {
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="unread">Unread</TabsTrigger>
           <TabsTrigger value="today">Today</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         
         <TabsContent value="all" className="mt-6">
@@ -219,11 +214,16 @@ const Notifications = () => {
             markAsRead={markAsRead}
             deleteNotification={deleteNotification}
           />
+          <PaginationControls 
+            pagination={pagination}
+            onNextPage={handleNextPage}
+            onPreviousPage={handlePreviousPage}
+          />
         </TabsContent>
         
         <TabsContent value="unread" className="mt-6">
           <NotificationsList 
-            notifications={notifications.filter(n => !n.read)} 
+            notifications={notifications.filter(n => !n.isRead)} 
             loading={loading} 
             error={error}
             markAsRead={markAsRead}
@@ -246,42 +246,40 @@ const Notifications = () => {
             emptyMessage="No notifications today"
           />
         </TabsContent>
-        
-        <TabsContent value="settings" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notification Settings</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <NotificationSetting 
-                title="Order Notifications" 
-                description="Receive notifications for new orders and status changes" 
-              />
-              <Separator />
-              <NotificationSetting 
-                title="User Notifications" 
-                description="Receive notifications for new user registrations and activities" 
-              />
-              <Separator />
-              <NotificationSetting 
-                title="Payment Notifications" 
-                description="Receive notifications for payment confirmations and issues" 
-              />
-              <Separator />
-              <NotificationSetting 
-                title="System Alerts" 
-                description="Receive critical system notifications and alerts" 
-                defaultChecked={true}
-              />
-              <Separator />
-              <NotificationSetting 
-                title="Email Notifications" 
-                description="Receive notifications via email in addition to the dashboard" 
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
       </Tabs>
+    </div>
+  );
+};
+
+const PaginationControls = ({ pagination, onNextPage, onPreviousPage }) => {
+  if (pagination.totalPages <= 1) return null;
+  
+  return (
+    <div className="flex items-center justify-between mt-6">
+      <p className="text-sm text-gray-500">
+        Page {pagination.currentPage} of {pagination.totalPages} 
+        ({pagination.totalCount} notifications)
+      </p>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onPreviousPage}
+          disabled={!pagination.hasPreviousPage}
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onNextPage}
+          disabled={!pagination.hasNextPage}
+        >
+          Next
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 };
@@ -340,7 +338,7 @@ const NotificationItem = ({ notification, markAsRead, deleteNotification }) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className={`border-l-4 ${notification.read ? 'border-l-gray-300 dark:border-l-gray-700' : 'border-l-blue-500'}`}>
+      <Card className={`border-l-4 ${notification.isRead ? 'border-l-gray-300 dark:border-l-gray-700' : 'border-l-blue-500'}`}>
         <CardContent className="p-0">
           <div className="flex justify-between items-center p-4">
             <div className="flex items-center space-x-4">
@@ -348,8 +346,8 @@ const NotificationItem = ({ notification, markAsRead, deleteNotification }) => {
                 {getNotificationIcon(notification.type)}
               </div>
               <div className="space-y-1">
-                <p className={`text-sm font-medium ${notification.read ? 'text-gray-600 dark:text-gray-400' : 'text-gray-900 dark:text-white'}`}>
-                  {notification.title}
+                <p className={`text-sm font-medium ${notification.isRead ? 'text-gray-600 dark:text-gray-400' : 'text-gray-900 dark:text-white'}`}>
+                  {notification.type}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {notification.message}
@@ -360,7 +358,7 @@ const NotificationItem = ({ notification, markAsRead, deleteNotification }) => {
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              {!notification.read && (
+              {!notification.isRead && (
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -386,100 +384,23 @@ const NotificationItem = ({ notification, markAsRead, deleteNotification }) => {
   );
 };
 
-const NotificationSetting = ({ title, description, defaultChecked = false }) => {
-  const [enabled, setEnabled] = useState(defaultChecked);
-
-  return (
-    <div className="flex items-center justify-between">
-      <div className="space-y-0.5">
-        <h3 className="text-base font-medium">{title}</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>
-      </div>
-      <Switch 
-        checked={enabled} 
-        onCheckedChange={setEnabled} 
-        aria-label={`${title} toggle`}
-      />
-    </div>
-  );
-};
-
 // Helper function to generate notification icon
 const getNotificationIcon = (type) => {
-  switch (type) {
-    case 'order':
-      return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">Order</Badge>;
-    case 'user':
-      return <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">User</Badge>;
-    case 'payment':
-      return <Badge variant="outline" className="bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">Payment</Badge>;
-    case 'alert':
-      return <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Alert</Badge>;
-    case 'system':
-      return <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">System</Badge>;
-    default:
-      return <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">Info</Badge>;
+  const lowerType = type ? type.toLowerCase() : '';
+  
+  if (lowerType.includes('order')) {
+    return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">Order</Badge>;
+  } else if (lowerType.includes('user')) {
+    return <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">User</Badge>;
+  } else if (lowerType.includes('payment')) {
+    return <Badge variant="outline" className="bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">Payment</Badge>;
+  } else if (lowerType.includes('alert')) {
+    return <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Alert</Badge>;
+  } else if (lowerType.includes('system')) {
+    return <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">System</Badge>;
+  } else {
+    return <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">Info</Badge>;
   }
 };
-
-// Sample notifications data for fallback
-const sampleNotifications = [
-  {
-    _id: '1',
-    title: 'New Order Placed',
-    message: 'Order #12345 has been placed for 500L of diesel',
-    type: 'order',
-    read: false,
-    createdAt: new Date(new Date().setHours(new Date().getHours() - 1)),
-  },
-  {
-    _id: '2',
-    title: 'Payment Received',
-    message: 'Payment of ₦250,000 has been confirmed for Order #12345',
-    type: 'payment',
-    read: false,
-    createdAt: new Date(new Date().setHours(new Date().getHours() - 3)),
-  },
-  {
-    _id: '3',
-    title: 'New User Registration',
-    message: 'A new user has registered: John Doe (john.doe@example.com)',
-    type: 'user',
-    read: true,
-    createdAt: new Date(new Date().setDate(new Date().getDate() - 1)),
-  },
-  {
-    _id: '4',
-    title: 'Low Inventory Alert',
-    message: 'Petrol inventory is below threshold at Lagos Main Terminal',
-    type: 'alert',
-    read: false,
-    createdAt: new Date(new Date().setDate(new Date().getDate() - 2)),
-  },
-  {
-    _id: '5',
-    title: 'System Maintenance',
-    message: 'Scheduled maintenance will occur on Sunday at 2:00 AM',
-    type: 'system',
-    read: true,
-    createdAt: new Date(new Date().setDate(new Date().getDate() - 3)),
-  },
-  {
-    _id: '6',
-    title: 'Order Status Updated',
-    message: 'Order #12340 has been marked as delivered',
-    type: 'order',
-    read: true,
-    createdAt: new Date(new Date().setDate(new Date().getDate() - 3)),
-  },
-  {
-    _id: '7',
-    title: 'Price Update',
-    message: 'Fuel prices have been updated. Petrol: ₦700/L, Diesel: ₦750/L',
-    type: 'system',
-    read: false,
-    createdAt: new Date(new Date().setDate(new Date().getDate() - 4)),
-  }
-];
 
 export default Notifications;

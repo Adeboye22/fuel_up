@@ -27,6 +27,7 @@ import UserManagement from './pages/dashboard/UserManagement';
 import OrderManagement from './pages/dashboard/OrderManagement';
 import AdminSettings from './pages/dashboard/AdminSettings';
 import Notifications from './pages/dashboard/Notifications';
+import AdminTicketManagement from './pages/dashboard/AdminTicketManagement';
 
 function App() {
   const { checkAuth } = useAuthStore();
@@ -101,6 +102,7 @@ function App() {
             <Route path="users" element={<UserManagement />} />
             <Route path="orders" element={<OrderManagement />} />
             <Route path="notifications" element={<Notifications />} />
+            <Route path="ticket-management" element={<AdminTicketManagement />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
 
