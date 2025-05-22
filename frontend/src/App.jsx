@@ -9,7 +9,7 @@ import PublicRoute from './routes/PublicRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 // Loading spinner
-import LoadingSpinner from './components/LoadingSpinner.jsx';
+import LoadingSpinner from './components/LoadingSpinner';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts
