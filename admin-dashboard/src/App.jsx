@@ -8,8 +8,6 @@ import useAuthStore from './stores/useAuthStore';
 import PublicRoute from './routes/PublicRoute';
 import AdminRoute from './routes/AdminRoute';
 
-// Loading spinner
-import LoadingSpinner from './components/LoadingSpinner';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts
@@ -47,7 +45,7 @@ function App() {
           <Route
             path="/signin"
             element={
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense>
                 <PublicRoute restricted={true}>
                   <SignInPage />
                 </PublicRoute>
@@ -57,7 +55,7 @@ function App() {
           <Route
             path="/forgot-password"
             element={
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense>
                 <PublicRoute restricted={true}>
                   <ForgotPasswordPage />
                 </PublicRoute>
@@ -67,7 +65,7 @@ function App() {
           <Route
             path="/reset-password"
             element={
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense>
                 <PublicRoute restricted={true}>
                   <ResetPasswordPage />
                 </PublicRoute>
@@ -79,7 +77,7 @@ function App() {
           <Route
             path="/unauthorized"
             element={
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense>
                 <PublicRoute>
                   <Unauthorized />
                 </PublicRoute>
@@ -91,7 +89,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense>
                 <AdminRoute>
                   <AdminLayout />
                 </AdminRoute>
