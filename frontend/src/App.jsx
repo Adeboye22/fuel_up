@@ -39,7 +39,6 @@ function App() {
   }, [checkAuth]);
 
   return (
-    // <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Toaster position="top-right" />
         <Routes>
@@ -107,7 +106,6 @@ function App() {
         </Routes>
         <ScrollToTop />
       </Router>
-    /* </ThemeProvider> */
   );
 }
 
