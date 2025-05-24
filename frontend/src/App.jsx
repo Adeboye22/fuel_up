@@ -8,7 +8,7 @@ import useAuthStore from './stores/useAuthStore';
 import PublicRoute from './routes/PublicRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './Components/ScrollToTop';
 
 // Layouts
 const MainLayout = lazy(() => import('./layouts/MainLayout'));
