@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { ThemeProvider } from '@/components/theme-provider';
+// import { ThemeProvider } from '@/Components/theme-provider';
 import useAuthStore from './stores/useAuthStore';
 
 // Routes
@@ -39,7 +39,7 @@ function App() {
   }, [checkAuth]);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    // <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Toaster position="top-right" />
         <Routes>
@@ -107,7 +107,7 @@ function App() {
         </Routes>
         <ScrollToTop />
       </Router>
-    </ThemeProvider>
+    {/* </ThemeProvider> */}
   );
 }
 
