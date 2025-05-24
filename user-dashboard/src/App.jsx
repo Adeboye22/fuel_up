@@ -95,13 +95,15 @@ function App() {
             <Route path="settings" element={<Settings />} />
           </Route> */}
           {/* Main routes with MainLayout - wrap with PublicRoute */}
-          <Route element={
-            <Suspense>
-              <PublicRoute>
-                <MainLayout />
-              </PublicRoute>
-            </Suspense>
-          }>
+          <Route 
+          // element={
+          //   <Suspense>
+          //     <PublicRoute>
+          //       <MainLayout />
+          //     </PublicRoute>
+          //   </Suspense>
+          // }
+          >
             <Route index element={<Home />} />
           </Route>
         </Routes>
