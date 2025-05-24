@@ -44,7 +44,7 @@ function App() {
         <Toaster position="top-right" />
         <Routes>
           {/* Auth routes without layout */}
-          <Route path="/signin" element={
+          {/* <Route path="/signin" element={
             <Suspense>
               <PublicRoute>
                 <SignInPage />
@@ -78,12 +78,12 @@ function App() {
                 <ResetPasswordPage />
               </PublicRoute>
             </Suspense>
-          } />
+          } /> */}
 
           {/* Dashboard routes */}
-          <Route path="/dashboard" element={
+          {/* <Route path="/dashboard" element={
             <Suspense>
-              <ProtectedRoute>  {/* Change this from PublicRoute to ProtectedRoute */}
+              <ProtectedRoute> 
                 <DashboardLayout /> 
               </ProtectedRoute>
             </Suspense>
@@ -93,7 +93,7 @@ function App() {
             <Route path="order-history" element={<OrderHistory />} />
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="settings" element={<Settings />} />
-          </Route>
+          </Route> */}
           {/* Main routes with MainLayout - wrap with PublicRoute */}
           <Route element={
             <Suspense>
