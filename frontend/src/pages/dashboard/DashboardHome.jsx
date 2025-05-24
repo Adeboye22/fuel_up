@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import SavedLocations from '../../components/dashboard/SavedLocations';
-import RecentOrders from '../../components/dashboard/RecentOrders';
-import FuelPrices from '../../components/dashboard/FuelPrices';
-import QuickActions from '../../components/dashboard/QuickActions';
 import useAuthStore from '@/stores/useAuthStore';
 import useOrderStore from '@/stores/useOrderStore';
+import SavedLocations from '@/Components/dashboard/SavedLocations';
+import QuickActions from '@/Components/dashboard/QuickActions';
+import FuelPrices from '@/Components/dashboard/FuelPrices';
+import RecentOrders from '@/Components/dashboard/RecentOrders';
 
 const DashboardHome = () => {
   const { user } = useAuthStore();
