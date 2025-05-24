@@ -25,7 +25,7 @@ const VerifyEmailPage = lazy(() => import('./pages/auth/VerifyEmailPage'));
 const ResetPasswordPage = lazy(() => import('./pages/auth/ResetPasswordPage'));
 
 // Dashboard pages
-const DashboardHome = lazy(() => import('./pages/dashboard/DashBoardHome'));
+const DashboardHome = lazy(() => import('./pages/dashboard/DashboardHome'));
 const OrderFuel = lazy(() => import('./pages/dashboard/OrderFuel'));
 const OrderHistory = lazy(() => import('./pages/dashboard/OrderHistory'));
 const NotificationsPage = lazy(() => import('./pages/dashboard/NotificationsPage'));
