@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import NotificationBell from "./NotificationBell"
-import UserAvatar from "./UserAvatar"
-import { ModeToggle } from "../mode-toggle"
 import { useNavigate } from "react-router-dom"
 import useAuthStore from "@/stores/useAuthStore"
 import { MapPin, Menu, X, Plus, Trash2, Edit, LogOut, Check } from "lucide-react"
@@ -25,6 +23,8 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "react-hot-toast"
+import { ModeToggle } from "../mode-toggle"
+import UserAvatar from "./UserAvatar"
 
 const DashboardHeader = ({ toggleSidebar, isSidebarOpen }) => {
   const { logout, user } = useAuthStore()

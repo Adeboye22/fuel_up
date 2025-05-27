@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { Suspense } from 'react';
-import useAuthStore from '../stores/useAuthStore';
+import useAuthStore from '@/stores/useAuthStore';
 
 const PublicRoute = ({ children }) => {
   const location = useLocation();
