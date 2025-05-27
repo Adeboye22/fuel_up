@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Hero from '../components/Hero';
-import OurService from '../components/OurService';
-import AboutUs from '../components/AboutUs';
-import Packages from '../components/Packages';
-import Location from '../components/Location';
 import { FaChevronDown } from 'react-icons/fa';
 import Marquee from 'react-fast-marquee';
-import ContactSection from '../components/ContactSection';
 import { TbTruckDelivery } from 'react-icons/tb';
+import Hero from '@/Components/Hero';
+import OurService from '@/Components/OurService';
+import Location from '@/Components/Location';
+import ContactSection from '@/Components/ContactSection';
+import AboutUs from '@/Components/AboutUs';
+import Packages from '@/Components/Packages';
 
 const Home = () => {
   useEffect(() => {

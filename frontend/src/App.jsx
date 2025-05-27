@@ -1,14 +1,14 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { ThemeProvider } from '@/components/theme-provider';
+// import { ThemeProvider } from '@/Components/theme-provider';
 import useAuthStore from './stores/useAuthStore';
 
 // Routes
 import PublicRoute from './routes/PublicRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './Components/ScrollToTop';
 
 // Layouts
 const MainLayout = lazy(() => import('./layouts/MainLayout'));
@@ -25,7 +25,7 @@ const VerifyEmailPage = lazy(() => import('./pages/auth/VerifyEmailPage'));
 const ResetPasswordPage = lazy(() => import('./pages/auth/ResetPasswordPage'));
 
 // Dashboard pages
-const DashboardHome = lazy(() => import('./pages/dashboard/DashBoardHome'));
+const DashboardHome = lazy(() => import('./pages/dashboard/DashboardHome'));
 const OrderFuel = lazy(() => import('./pages/dashboard/OrderFuel'));
 const OrderHistory = lazy(() => import('./pages/dashboard/OrderHistory'));
 const NotificationsPage = lazy(() => import('./pages/dashboard/NotificationsPage'));
@@ -39,7 +39,6 @@ function App() {
   }, [checkAuth]);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Toaster position="top-right" />
         <Routes>
@@ -107,7 +106,6 @@ function App() {
         </Routes>
         <ScrollToTop />
       </Router>
-    </ThemeProvider>
   );
 }
 
