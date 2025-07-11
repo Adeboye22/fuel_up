@@ -1,24 +1,5 @@
 {
-  "projects": {
-    "admin-dashboard": {
-      "source": "admin-dashboard/**",
-      "buildCommand": "cd admin-dashboard && npm install && npm run build",
-      "outputDirectory": "admin-dashboard/dist"
-    },
-    "dispatch-dashboard": {
-      "source": "fuelup-dispatch/**",
-      "buildCommand": "cd fuelup-dispatch && npm install && npm run build",
-      "outputDirectory": "fuelup-dispatch/dist"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/admin/:path*",
-      "destination": "/admin-dashboard/:path*"
-    },
-    {
-      "source": "/dispatch/:path*",
-      "destination": "/dispatch-dashboard/:path*"
-    }
-  ]
-}
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/" }
+    ]
+  }
