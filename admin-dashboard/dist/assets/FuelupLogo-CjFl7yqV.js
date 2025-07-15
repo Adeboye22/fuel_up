@@ -1,0 +1,1 @@
+import{j as e}from"./index-DyAsnBHk.js";const s=()=>e.jsxs("div",{className:"flex items-center gap-2 p-4",children:[e.jsx("div",{className:"flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500 text-white font-bold text-lg",children:"FU"}),e.jsx("div",{className:"text-2xl font-semibold text-gray-100",children:"FuelUp"})]});export{s as F};
